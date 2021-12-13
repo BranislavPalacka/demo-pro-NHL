@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Team registration</title>
+</head>
+<body>
+    <div align="center">
+        <h1>Team registration</h1>
+        <form  method="post" action="#" th:action="@{/register}" th:object="${team}">
+
+            <label>Jméno teamu</label>
+                <input type="text" th:field="*{name}" /><br/>
+
+            <label>Division</label>
+                <select th:field="*{division}">
+                    <option th:each="d : ${teamList}" th:value="${d}" th:text="${d}"></option>
+                </select><br/>
+
+            <button type="submit">Register</button>
+        </form>
+    </div>
+
+</body>
+</html>
