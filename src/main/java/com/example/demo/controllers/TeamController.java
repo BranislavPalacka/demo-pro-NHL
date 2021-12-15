@@ -31,12 +31,12 @@ public class TeamController {
 //        return "teams";
 //    }
 
-    @RequestMapping("/teams")
+    @RequestMapping("/teams_2019")
     public String getAllTeams(Model model){
-        model.addAttribute("Atlantic", teamService.teamListDivision("Atlantic"));
-        model.addAttribute("Metropolitan", teamService.teamListDivision("Metropolitan"));
-        model.addAttribute("Central", teamService.teamListDivision("Central"));
-        model.addAttribute("Pacific", teamService.teamListDivision("Pacific"));
+        model.addAttribute("Atlantic", teamService.teamListDivision("Atlantic",2019));
+        model.addAttribute("Metropolitan", teamService.teamListDivision("Metropolitan",2019));
+        model.addAttribute("Central", teamService.teamListDivision("Central",2019));
+        model.addAttribute("Pacific", teamService.teamListDivision("Pacific",2019));
         return "teams";
     }
 

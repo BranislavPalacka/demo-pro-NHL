@@ -14,7 +14,11 @@ public class Team {
 
     private String conference;
 
-    private String division;
+    private String division_2018;
+
+    private String division_2019;
+
+    private String division_2021;
 
     private String logo;
 
@@ -45,12 +49,28 @@ public class Team {
         this.conference = conference;
     }
 
-    public String getDivision() {
-        return division;
+    public String getDivision_2019() {
+        return division_2019;
     }
 
-    public void setDivision(String division) {
-        this.division = division;
+    public void setDivision_2019(String division_2019) {
+        this.division_2019 = division_2019;
+    }
+
+    public String getDivision_2018() {
+        return division_2018;
+    }
+
+    public void setDivision_2018(String division_2018) {
+        this.division_2018 = division_2018;
+    }
+
+    public String getDivision_2021() {
+        return division_2021;
+    }
+
+    public void setDivision_2021(String division_2021) {
+        this.division_2021 = division_2021;
     }
 
     public String getLogo() {
@@ -67,7 +87,9 @@ public class Team {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", conference='" + conference + '\'' +
-                ", division='" + division + '\'' +
+                ", division_2018='" + division_2018 + '\'' +
+                ", division_2019='" + division_2019 + '\'' +
+                ", division_2021='" + division_2021 + '\'' +
                 ", logo='" + logo + '\'' +
                 '}';
     }
