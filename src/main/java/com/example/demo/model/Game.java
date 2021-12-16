@@ -13,7 +13,9 @@ public class Game {
     @GeneratedValue
     public Long id;
 
-    private Integer round;
+    private Integer round_home;
+
+    private Integer round_guest;
 
     private Date date;
 
@@ -41,6 +43,13 @@ public class Game {
 
     private String prodlouzeni4vysledek;
 
+    private String homeTeam;
+
+    private String guestTeam;
+
+    public Game() {
+    }
+
     public Long getId() {
         return id;
     }
@@ -49,12 +58,20 @@ public class Game {
         this.id = id;
     }
 
-    public Integer getRound() {
-        return round;
+    public Integer getRound_home() {
+        return round_home;
     }
 
-    public void setRound(Integer round) {
-        this.round = round;
+    public void setRound_home(Integer round_home) {
+        this.round_home = round_home;
+    }
+
+    public Integer getRound_guest() {
+        return round_guest;
+    }
+
+    public void setRound_guest(Integer round_guest) {
+        this.round_guest = round_guest;
     }
 
     public Date getDate() {
@@ -161,11 +178,28 @@ public class Game {
         this.prodlouzeni4vysledek = prodlouzeni4vysledek;
     }
 
+    public String getHomeTeam() {
+        return homeTeam;
+    }
+
+    public void setHomeTeam(String homeTeam) {
+        this.homeTeam = homeTeam;
+    }
+
+    public String getGuestTeam() {
+        return guestTeam;
+    }
+
+    public void setGuestTeam(String guestTeam) {
+        this.guestTeam = guestTeam;
+    }
+
     @Override
     public String toString() {
         return "Game{" +
                 "id=" + id +
-                ", round=" + round +
+                ", roundHome=" + round_home +
+                ", roundGuest=" + round_guest +
                 ", date=" + date +
                 ", home=" + home +
                 ", guest=" + guest +
@@ -179,6 +213,8 @@ public class Game {
                 ", tretina3vysledek='" + tretina3vysledek + '\'' +
                 ", prodlouzeni4sazka=" + prodlouzeni4sazka +
                 ", prodlouzeni4vysledek='" + prodlouzeni4vysledek + '\'' +
+                ", homeTeam='" + homeTeam + '\'' +
+                ", guestTeam='" + guestTeam + '\'' +
                 '}';
     }
 }

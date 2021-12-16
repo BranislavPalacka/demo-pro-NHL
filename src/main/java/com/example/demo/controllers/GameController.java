@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 @Controller
 public class GameController {
@@ -49,6 +51,13 @@ public class GameController {
     @PostMapping("/game_registration")
     public String odeslanyFormular(@ModelAttribute("game") Game game){
         gameRepositoryNew.save(game);
+
+        String homeTeam = teamRepositoryNew.findById(game.getHome().longValue()).get().getName();
+        game.setHomeTeam(homeTeam);
+
+        String guestTeam = teamRepositoryNew.findById(game.getGuest().longValue()).get().getName();
+        game.setGuestTeam(guestTeam);
+
         return "game_registration_success";
     }
 }
