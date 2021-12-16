@@ -71,4 +71,10 @@ public class TeamController {
         model.addAttribute("listOfPlayers",playersList);
         return "team_all_players_for_season";
     }
+
+    @GetMapping("/import")
+    public String importovani(){
+        teamService.importovani("nhl2018_2019_data.csv");
+        return "import";
+    }
 }

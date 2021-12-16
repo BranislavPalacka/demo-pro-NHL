@@ -52,4 +52,9 @@ public class TeamServiceImpl implements TeamService {
     public List<Player> getTeamAllPlayersForSeason(String teamName, Integer season) {
         return teamRepository.teamAllPlayersForSeason(teamName,season);
     }
+
+    @Override
+    public void importovani(String fileName) {
+        teamRepository.importovaniCSV(fileName);
+    }
 }

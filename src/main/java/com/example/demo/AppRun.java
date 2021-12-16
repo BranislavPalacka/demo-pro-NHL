@@ -1,14 +1,20 @@
 package com.example.demo;
 
 import com.example.demo.Services.TeamService;
+import com.example.demo.model.Game;
 import com.example.demo.model.Team;
 import com.example.demo.repositories.TeamRepositoryNew;
+import com.opencsv.CSVReader;
+import com.opencsv.CSVReaderBuilder;
+import com.opencsv.exceptions.CsvException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.List;
 
 @Component
@@ -75,5 +81,8 @@ public class AppRun {
 //        deleteTeam(5L);
 //        System.out.println(queryForTeams());
     }
+
+
+
 
 }

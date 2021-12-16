@@ -1,20 +1,32 @@
 package com.example.demo.repositories;
 
+import com.example.demo.model.Game;
 import com.example.demo.model.Player;
 import com.example.demo.model.Team;
+import com.opencsv.CSVParser;
+import com.opencsv.CSVParserBuilder;
+import com.opencsv.CSVReader;
+import com.opencsv.CSVReaderBuilder;
+import com.opencsv.exceptions.CsvException;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.io.FileReader;
+import java.io.IOException;
+import java.sql.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class TeamRepository {
     @PersistenceContext
-    private EntityManager entityManager;
+    private final EntityManager entityManager;
+    private final GameRepositoryNew gameRepositoryNew;
 
-    public TeamRepository(EntityManager entityManager) {
+    public TeamRepository(EntityManager entityManager, GameRepositoryNew gameRepositoryNew) {
         this.entityManager = entityManager;
+        this.gameRepositoryNew = gameRepositoryNew;
     }
 
     public List<Team> queryForTeams() {
@@ -39,8 +51,41 @@ public class TeamRepository {
         return  teamId;
     }
 
-    public List<Player> teamAllPlayersForSeason(String teamName, Integer season){
-        List<Player> playersList = entityManager.createNativeQuery("SELECT * FROM player WHERE team_id_"+season+"="+teamIdByName(teamName),Player.class).getResultList();
+    public List<Player> teamAllPlayersForSeason(String teamName, Integer season) {
+        List<Player> playersList = entityManager.createNativeQuery("SELECT * FROM player WHERE team_id_" + season + "=" + teamIdByName(teamName), Player.class).getResultList();
         return playersList;
+    }
+
+    public void importovaniCSV(String fileName){
+//        File f = new File("Files/nhl2018_2019_data.csv");
+//        if(f.exists() && !f.isDirectory()) {
+//            System.out.println("\n \n ANO");
+//        }
+
+        try{
+            CSVParser parser = new CSVParserBuilder().withSeparator(';').build();
+
+            CSVReader reader=
+                    new CSVReaderBuilder(new FileReader("Files/nhl2018_2019_data.csv")).
+                            withCSVParser(parser).
+                            withSkipLines(1). // Skiping firstline as it is header
+                            build();
+            List<Game> csv_objectList = reader.readAll().stream().map(data-> {
+                Game gameImportedCsv = new Game();
+                gameImportedCsv.setDate(Date.valueOf((data[0])));
+                gameImportedCsv.setHomeTeam(data[1]);
+                gameImportedCsv.setGuestTeam(data[2]);
+                gameImportedCsv.setHome(teamIdByName(data[1]));
+                gameImportedCsv.setGuest(teamIdByName(data[2]));
+                return gameImportedCsv;
+            }).collect(Collectors.toList());
+
+            csv_objectList.forEach(gameRepositoryNew::save);
+//            csv_objectList.forEach(System.out::println);
+
+        } catch (IOException | CsvException e) {
+            e.printStackTrace();
+        }
+
     }
 }
