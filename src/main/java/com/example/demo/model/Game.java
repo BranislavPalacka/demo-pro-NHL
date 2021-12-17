@@ -47,6 +47,8 @@ public class Game {
 
     private String guestTeam;
 
+    private Integer season;
+
     public Game() {
     }
 
@@ -194,12 +196,20 @@ public class Game {
         this.guestTeam = guestTeam;
     }
 
+    public Integer getSeason() {
+        return season;
+    }
+
+    public void setSeason(Integer season) {
+        this.season = season;
+    }
+
     @Override
     public String toString() {
         return "Game{" +
                 "id=" + id +
-                ", roundHome=" + round_home +
-                ", roundGuest=" + round_guest +
+                ", round_home=" + round_home +
+                ", round_guest=" + round_guest +
                 ", date=" + date +
                 ", home=" + home +
                 ", guest=" + guest +
@@ -215,6 +225,7 @@ public class Game {
                 ", prodlouzeni4vysledek='" + prodlouzeni4vysledek + '\'' +
                 ", homeTeam='" + homeTeam + '\'' +
                 ", guestTeam='" + guestTeam + '\'' +
+                ", season=" + season +
                 '}';
     }
 }

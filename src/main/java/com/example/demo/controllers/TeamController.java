@@ -1,5 +1,6 @@
 package com.example.demo.controllers;
 
+import com.example.demo.Services.GameService;
 import com.example.demo.Services.TeamService;
 import com.example.demo.model.Player;
 import com.example.demo.model.Team;
@@ -19,10 +20,12 @@ public class TeamController {
 
     private final TeamRepositoryNew teamRepositoryNew;
     private final TeamService teamService;
+    private final GameService gameService;
 
-    public TeamController(TeamRepositoryNew teamRepositoryNew, TeamService teamService) {
+    public TeamController(TeamRepositoryNew teamRepositoryNew, TeamService teamService, GameService gameService) {
         this.teamRepositoryNew = teamRepositoryNew;
         this.teamService = teamService;
+        this.gameService = gameService;
     }
 
 //    @RequestMapping("/teams")
@@ -75,6 +78,7 @@ public class TeamController {
     @GetMapping("/import")
     public String importovani(){
         teamService.importovani("nhl2018_2019_data.csv");
+        gameService.roundFill();
         return "import";
     }
 }

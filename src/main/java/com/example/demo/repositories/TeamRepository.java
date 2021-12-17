@@ -9,6 +9,7 @@ import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 import com.opencsv.exceptions.CsvException;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -20,6 +21,7 @@ import java.util.stream.Collectors;
 
 @Component
 public class TeamRepository {
+
     @PersistenceContext
     private final EntityManager entityManager;
     private final GameRepositoryNew gameRepositoryNew;
@@ -56,36 +58,35 @@ public class TeamRepository {
         return playersList;
     }
 
-    public void importovaniCSV(String fileName){
+    @Transactional
+    public void importovaniCSV(String fileName) {
 //        File f = new File("Files/nhl2018_2019_data.csv");
 //        if(f.exists() && !f.isDirectory()) {
 //            System.out.println("\n \n ANO");
 //        }
 
-        try{
+        try {
             CSVParser parser = new CSVParserBuilder().withSeparator(';').build();
 
-            CSVReader reader=
+            CSVReader reader =
                     new CSVReaderBuilder(new FileReader("Files/nhl2018_2019_data.csv")).
                             withCSVParser(parser).
                             withSkipLines(1). // Skiping firstline as it is header
                             build();
-            List<Game> csv_objectList = reader.readAll().stream().map(data-> {
+            List<Game> csv_objectList = reader.readAll().stream().map(data -> {
                 Game gameImportedCsv = new Game();
                 gameImportedCsv.setDate(Date.valueOf((data[0])));
                 gameImportedCsv.setHomeTeam(data[1]);
                 gameImportedCsv.setGuestTeam(data[2]);
                 gameImportedCsv.setHome(teamIdByName(data[1]));
                 gameImportedCsv.setGuest(teamIdByName(data[2]));
+                gameImportedCsv.setSeason(2018);
                 return gameImportedCsv;
             }).collect(Collectors.toList());
 
             csv_objectList.forEach(gameRepositoryNew::save);
-//            csv_objectList.forEach(System.out::println);
-
         } catch (IOException | CsvException e) {
             e.printStackTrace();
         }
-
     }
 }
