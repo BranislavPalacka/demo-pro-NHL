@@ -76,8 +76,8 @@ public class TeamRepository {
             List<Game> csv_objectList = reader.readAll().stream().map(data -> {
                 Game gameImportedCsv = new Game();
                 gameImportedCsv.setDate(Date.valueOf((data[0])));
-                gameImportedCsv.setHomeTeam(data[1]);
-                gameImportedCsv.setGuestTeam(data[2]);
+                gameImportedCsv.setHome_team(data[1]);
+                gameImportedCsv.setGuest_team(data[2]);
                 gameImportedCsv.setHome(teamIdByName(data[1]));
                 gameImportedCsv.setGuest(teamIdByName(data[2]));
                 gameImportedCsv.setSeason(2018);

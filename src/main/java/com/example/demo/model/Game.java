@@ -43,9 +43,9 @@ public class Game {
 
     private String prodlouzeni4vysledek;
 
-    private String homeTeam;
+    private String home_team;
 
-    private String guestTeam;
+    private String guest_team;
 
     private Integer season;
 
@@ -180,20 +180,20 @@ public class Game {
         this.prodlouzeni4vysledek = prodlouzeni4vysledek;
     }
 
-    public String getHomeTeam() {
-        return homeTeam;
+    public String getHome_team() {
+        return home_team;
     }
 
-    public void setHomeTeam(String homeTeam) {
-        this.homeTeam = homeTeam;
+    public void setHome_team(String home_team) {
+        this.home_team = home_team;
     }
 
-    public String getGuestTeam() {
-        return guestTeam;
+    public String getGuest_team() {
+        return guest_team;
     }
 
-    public void setGuestTeam(String guestTeam) {
-        this.guestTeam = guestTeam;
+    public void setGuest_team(String guest_team) {
+        this.guest_team = guest_team;
     }
 
     public Integer getSeason() {
@@ -223,8 +223,8 @@ public class Game {
                 ", tretina3vysledek='" + tretina3vysledek + '\'' +
                 ", prodlouzeni4sazka=" + prodlouzeni4sazka +
                 ", prodlouzeni4vysledek='" + prodlouzeni4vysledek + '\'' +
-                ", homeTeam='" + homeTeam + '\'' +
-                ", guestTeam='" + guestTeam + '\'' +
+                ", homeTeam='" + home_team + '\'' +
+                ", guestTeam='" + guest_team + '\'' +
                 ", season=" + season +
                 '}';
     }

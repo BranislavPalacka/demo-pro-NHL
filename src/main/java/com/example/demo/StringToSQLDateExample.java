@@ -37,8 +37,8 @@ public class StringToSQLDateExample {
             List<Game> csv_objectList = reader.readAll().stream().map(data-> {
                 Game gameImportedCsv = new Game();
                 gameImportedCsv.setDate(Date.valueOf((data[0])));
-                gameImportedCsv.setHomeTeam(data[1]);
-                gameImportedCsv.setGuestTeam(data[2]);
+                gameImportedCsv.setHome_team(data[1]);
+                gameImportedCsv.setGuest_team(data[2]);
 //                gameImportedCsv.setHome(teamService.getTeamIdByName(data[1]));
 //                gameImportedCsv.setGuest(teamService.getTeamIdByName(data[2]));
                 return gameImportedCsv;
