@@ -1,31 +1,30 @@
 package com.example.demo.controllers;
 
+import com.example.demo.Services.GoalService;
 import com.example.demo.Services.TeamService;
 import com.example.demo.model.Game;
 import com.example.demo.model.Goal;
 import com.example.demo.model.Player;
 import com.example.demo.model.Team;
 import com.example.demo.repositories.GameRepositoryNew;
-import com.example.demo.repositories.TeamRepository;
 import com.example.demo.repositories.TeamRepositoryNew;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 public class GameController {
 
     private final GameRepositoryNew gameRepositoryNew;
-//    private final GameService gameService;
+    private final GoalService goalService;
     private final TeamRepositoryNew teamRepositoryNew;
     private final TeamService teamService;
 
-    public GameController(GameRepositoryNew gameRepositoryNew, TeamRepositoryNew teamRepositoryNew, TeamService teamService) {
+    public GameController(GameRepositoryNew gameRepositoryNew, GoalService goalService, TeamRepositoryNew teamRepositoryNew, TeamService teamService) {
         this.gameRepositoryNew = gameRepositoryNew;
+        this.goalService = goalService;
         this.teamRepositoryNew = teamRepositoryNew;
         this.teamService = teamService;
     }
@@ -73,7 +72,6 @@ public class GameController {
 
     @PostMapping("/games")
     public String odeslanyGamesFormular(@ModelAttribute("game") Game game){
-
         return "game_fill";
     }
 
@@ -94,7 +92,28 @@ public class GameController {
         List<Player> guest_players = teamService.getTeamAllPlayersForSeason(game.getGuest_team(),2019);
         model.addAttribute("guest_players", guest_players);
 
+        List<Goal> goalList = goalService.goalsFromGame(Integer.valueOf(id));
+        model.addAttribute("goalList",goalList);
+
         return "game_fill";
+    }
+
+    @PostMapping("/game_fill")
+    public String ulozenaVyplnenaHra(Model model){
+        return "game_filled";
+    }
+
+    @PostMapping("/game_filled/{id}")
+    public String vyplnenaHra(@PathVariable String id,@ModelAttribute("goal") Goal goal){
+        Long IDcko = Long.valueOf(id);
+        Game game = gameRepositoryNew.findById(IDcko).get();
+        System.out.println(game);
+
+        System.out.println(goal);
+
+
+
+        return "game_filled";
     }
 
 }

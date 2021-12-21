@@ -6,5 +6,7 @@ import java.util.List;
 
 public interface GoalService {
     List<Goal> getAllGoals();
+    List<Goal> generatedListOfGoals (Integer numberOfGoals);
+    List<Goal> goalsFromGame(Integer gameID);
 
 }

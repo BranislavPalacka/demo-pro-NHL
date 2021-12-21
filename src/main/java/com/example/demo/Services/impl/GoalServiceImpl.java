@@ -23,4 +23,14 @@ public class GoalServiceImpl implements GoalService {
     public List<Goal> getAllGoals() {
         return (List<Goal>) goalRepositoryNew.findAll();
     }
+
+    @Override
+    public List<Goal> generatedListOfGoals(Integer numberOfGoals) {
+        return goalRepository.generatedListOfGoals(numberOfGoals);
+    }
+
+    @Override
+    public List<Goal> goalsFromGame(Integer gameID) {
+        return goalRepository.goalsFromGame(gameID);
+    }
 }

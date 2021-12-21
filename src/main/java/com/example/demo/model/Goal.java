@@ -20,6 +20,12 @@ public class Goal {
 
     private Integer assistance2;
 
+    private String author_name;
+
+    private String assistance1_name;
+
+    private String assistance2_name;
+
     public Goal() {
     }
 
@@ -71,6 +77,30 @@ public class Goal {
         this.assistance2 = assistance2;
     }
 
+    public String getAuthor_name() {
+        return author_name;
+    }
+
+    public void setAuthor_name(String author_name) {
+        this.author_name = author_name;
+    }
+
+    public String getAssistance1_name() {
+        return assistance1_name;
+    }
+
+    public void setAssistance1_name(String assistance1_name) {
+        this.assistance1_name = assistance1_name;
+    }
+
+    public String getAssistance2_name() {
+        return assistance2_name;
+    }
+
+    public void setAssistance2_name(String assistance2_name) {
+        this.assistance2_name = assistance2_name;
+    }
+
     @Override
     public String toString() {
         return "Goal{" +
@@ -80,6 +110,9 @@ public class Goal {
                 ", author=" + author +
                 ", assistance1=" + assistance1 +
                 ", assistance2=" + assistance2 +
+                ", author_name='" + author_name + '\'' +
+                ", assistance1_name='" + assistance1_name + '\'' +
+                ", assistance2_name='" + assistance2_name + '\'' +
                 '}';
     }
 }

@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Teams registration</title>
+    <title>Game - fill</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
 </head>
@@ -14,109 +14,144 @@
     </div>
 
     <div class="container col-10">
-                <div class="row row-cols">
-                    <div class="col" align="right">
-                        <table class="table table-striped">
-                            <thead>
-                            <tr>
-                                <th scope="col">ID</th>
-                                <th scope="col">datum</th>
-                                <th scope="col">domácí</th>
-                                <th scope="col">hosté</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td th:text="${game.id}"></td>
-                                <td th:text="${game.date}"></td>
-                                <td class="h5 text-primary" th:text="${game.home_team}"></td>
-                                <td class="h5 text-danger" th:text="${game.guest_team}"></td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+        <div class="row row-cols">
+            <div class="col" align="right">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">datum</th>
+                        <th scope="col">domácí</th>
+                        <th scope="col">hosté</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td th:text="${game.id}"></td>
+                        <td th:text="${game.date}"></td>
+                        <td class="h5 text-primary" th:text="${game.home_team}"></td>
+                        <td class="h5 text-danger" th:text="${game.guest_team}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
-    <div class="container"></br></div>
+
     <div class="container col-10">
-    <form  method="post" action="#" th:action="@{/game_info}" th:object="${goal}">
-                <div class="row col-12">
-                    <table class="table col-5">
-                        <thead class="table-primary">
+        <div class="row col-12">
+            <form  class="col-6" method="post" action="#" th:action="@{'http://localhost:8080/game_filled/'+${game.id}}" th:object="${goal}">
+                <table class="table col-5">
+                    <thead class="table-primary">
                         <tr>
                             <th scope="col">minute</th>
                             <th scope="col">author</th>
                             <th scope="col">assistance 1</th>
                             <th scope="col">assistance 2</th>
+                            <th scope="col"></th>
                         </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td class="col-1">
-                                    <input type="text" class="form-control form-control-sm form-control" th:field="*{minute}" />
-                                </td>
-                                <td class="col-1">
-                                    <select class="form-select" th:field="*{author}" >
-                                        <option selected th:value="null">null</option>
-                                        <option th:each="d : ${home_players}" th:value="${d.id}" th:text="${d.name}"></option>
-                                    </select>
-                                </td>
-                                <td class="col-1">
-                                        <select class="form-select" th:field="*{assistance1}">
-                                            <option selected th:value="null">null</option>
-                                            <option th:each="e : ${home_players}" th:value="${e.id}" th:text="${e.name}"></option>
-                                        </select>
-                                </td>
-                                <td class="col-1">
-                                    <select class="form-select" th:field="*{assistance2}">
-                                        <option selected th:value="null">null</option>
-                                        <option th:each="f : ${home_players}" th:value="${f.id}" th:text="${f.name}"></option>
-                                    </select>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <div class="col-1"></div>
-                    <table class="table col-5">
-                        <thead class="table-danger">
-                            <tr>
-                                <th scope="col">minute</th>
-                                <th scope="col">author</th>
-                                <th scope="col">assistance 1</th>
-                                <th scope="col">assistance 2</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td class="col-1">
-                                    <input type="text" class="form-control form-control-sm" th:field="*{minute}" />
-                                </td>
-                                <td class="col-1">
-                                    <select class="form-select" th:field="*{author}" >
-                                        <option selected th:value="null">null</option>
-                                        <option th:each="d : ${home_players}" th:value="${d.id}" th:text="${d.name}"></option>
-                                    </select>
-                                </td>
-                                <td class="col-1">
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="col-1">
+                                <input type="text" class="form-control form-control-sm form-control" th:field="*{minute}" />
+                            </td>
+                            <td class="col-1">
+                                <select class="form-select" th:field="*{author}" >
+                                    <option selected th:value="null">null</option>
+                                    <option th:each="d : ${home_players}" th:value="${d.id}" th:text="${d.name}"></option>
+                                </select>
+                            </td>
+                            <td class="col-1">
                                     <select class="form-select" th:field="*{assistance1}">
                                         <option selected th:value="null">null</option>
                                         <option th:each="e : ${home_players}" th:value="${e.id}" th:text="${e.name}"></option>
                                     </select>
-                                </td>
-                                <td class="col-1">
-                                    <select class="form-select" th:field="*{assistance2}">
-                                        <option selected th:value="null">null</option>
-                                        <option th:each="f : ${home_players}" th:value="${f.id}" th:text="${f.name}"></option>
-                                    </select>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-<!--                        <button type="submit">Register</button>-->
-                </div>
+                            </td>
+                            <td class="col-1">
+                                <select class="form-select" th:field="*{assistance2}">
+                                    <option selected th:value="null">null</option>
+                                    <option th:each="f : ${home_players}" th:value="${f.id}" th:text="${f.name}"></option>
+                                </select>
+                            </td>
+                            <td class="col-1">
+                                <button class="btn btn-primary" type="submit">Uložit</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </form>
+
+            <form class="col-6" method="post" action="#" th:action="@{'http://localhost:8080/game_filled/'+${game.id}}" th:object="${goal}">
+                <table class="table col-5">
+                    <thead class="table-danger">
+                        <tr>
+                            <th scope="col">minute</th>
+                            <th scope="col">author</th>
+                            <th scope="col">assistance 1</th>
+                            <th scope="col">assistance 2</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="col-1">
+                                <input type="text" class="form-control form-control-sm" th:field="*{minute}" />
+                            </td>
+                            <td class="col-1">
+                                <select class="form-select" th:field="*{author}" >
+                                    <option selected th:value="null">null</option>
+                                    <option th:each="d : ${guest_players}" th:value="${d.id}" th:text="${d.name}"></option>
+                                </select>
+                            </td>
+                            <td class="col-1">
+                                <select class="form-select" th:field="*{assistance1}">
+                                    <option selected th:value="null">null</option>
+                                    <option th:each="e : ${guest_players}" th:value="${e.id}" th:text="${e.name}"></option>
+                                </select>
+                            </td>
+                            <td class="col-1">
+                                <select class="form-select" th:field="*{assistance2}">
+                                    <option selected th:value="null">null</option>
+                                    <option th:each="f : ${guest_players}" th:value="${f.id}" th:text="${f.name}"></option>
+                                </select>
+                            </td>
+                            <td class="col-1">
+                                <button class="btn btn-danger" type="submit">Uložit</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </form>
+        </div>
     </div>
 
+    </br></br>
+    <div class="container col-10">
+        <div class="row">
+            <div class="col-5">
+                <h4>Game - goals</h4>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">minute</th>
+                            <th scope="col">author</th>
+                            <th scope="col">assistance1</th>
+                            <th scope="col">assistance2</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="goal : ${goalList}">
+                            <td th:text="${goal.minute}"></td>
+                            <td th:text="${goal.author_name}"></td>
+                            <td th:text="${goal.assistance1_name}"></td>
+                            <td th:text="${goal.assistance2_name}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 
 </body>
 </html>
