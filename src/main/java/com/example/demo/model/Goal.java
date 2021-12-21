@@ -2,6 +2,7 @@ package com.example.demo.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
@@ -20,11 +21,15 @@ public class Goal {
 
     private Integer assistance2;
 
+    private Long team;
+
     private String author_name;
 
     private String assistance1_name;
 
     private String assistance2_name;
+
+    private String team_name;
 
     public Goal() {
     }
@@ -101,6 +106,22 @@ public class Goal {
         this.assistance2_name = assistance2_name;
     }
 
+    public Long getTeam() {
+        return team;
+    }
+
+    public void setTeam(Long team) {
+        this.team = team;
+    }
+
+    public String getTeam_name() {
+        return team_name;
+    }
+
+    public void setTeam_name(String team_name) {
+        this.team_name = team_name;
+    }
+
     @Override
     public String toString() {
         return "Goal{" +
@@ -110,9 +131,11 @@ public class Goal {
                 ", author=" + author +
                 ", assistance1=" + assistance1 +
                 ", assistance2=" + assistance2 +
+                ", team=" + team +
                 ", author_name='" + author_name + '\'' +
                 ", assistance1_name='" + assistance1_name + '\'' +
                 ", assistance2_name='" + assistance2_name + '\'' +
+                ", team_name='" + team_name + '\'' +
                 '}';
     }
 }

@@ -40,7 +40,7 @@
 
     <div class="container col-10">
         <div class="row col-12">
-            <form  class="col-6" method="post" action="#" th:action="@{'http://localhost:8080/game_filled/'+${game.id}}" th:object="${goal}">
+            <form  class="col-6" method="post" action="#" th:action="@{'http://localhost:8080/game_fill/'+${game.id}}" th:object="${goal}">
                 <table class="table col-5">
                     <thead class="table-primary">
                         <tr>
@@ -58,19 +58,19 @@
                             </td>
                             <td class="col-1">
                                 <select class="form-select" th:field="*{author}" >
-                                    <option selected th:value="null">null</option>
+                                    <option selected th:value="@{-1}"></option>
                                     <option th:each="d : ${home_players}" th:value="${d.id}" th:text="${d.name}"></option>
                                 </select>
                             </td>
                             <td class="col-1">
                                     <select class="form-select" th:field="*{assistance1}">
-                                        <option selected th:value="null">null</option>
+                                        <option selected th:value="@{-1}"></option>
                                         <option th:each="e : ${home_players}" th:value="${e.id}" th:text="${e.name}"></option>
                                     </select>
                             </td>
                             <td class="col-1">
                                 <select class="form-select" th:field="*{assistance2}">
-                                    <option selected th:value="null">null</option>
+                                    <option selected th:value="@{-1}"></option>
                                     <option th:each="f : ${home_players}" th:value="${f.id}" th:text="${f.name}"></option>
                                 </select>
                             </td>
@@ -82,7 +82,7 @@
                 </table>
             </form>
 
-            <form class="col-6" method="post" action="#" th:action="@{'http://localhost:8080/game_filled/'+${game.id}}" th:object="${goal}">
+            <form class="col-6" method="post" action="#" th:action="@{'http://localhost:8080/game_fill/'+${game.id}}" th:object="${goal}">
                 <table class="table col-5">
                     <thead class="table-danger">
                         <tr>
@@ -100,19 +100,19 @@
                             </td>
                             <td class="col-1">
                                 <select class="form-select" th:field="*{author}" >
-                                    <option selected th:value="null">null</option>
+                                    <option selected th:value="@{-1}"></option>
                                     <option th:each="d : ${guest_players}" th:value="${d.id}" th:text="${d.name}"></option>
                                 </select>
                             </td>
                             <td class="col-1">
                                 <select class="form-select" th:field="*{assistance1}">
-                                    <option selected th:value="null">null</option>
+                                    <option selected th:value="@{-1}"></option>
                                     <option th:each="e : ${guest_players}" th:value="${e.id}" th:text="${e.name}"></option>
                                 </select>
                             </td>
                             <td class="col-1">
                                 <select class="form-select" th:field="*{assistance2}">
-                                    <option selected th:value="null">null</option>
+                                    <option selected th:value="@{-1}"></option>
                                     <option th:each="f : ${guest_players}" th:value="${f.id}" th:text="${f.name}"></option>
                                 </select>
                             </td>
@@ -129,7 +129,7 @@
     </br></br>
     <div class="container col-10">
         <div class="row">
-            <div class="col-5">
+            <div class="col-6">
                 <h4>Game - goals</h4>
                 <table class="table table-striped">
                     <thead>
@@ -138,6 +138,7 @@
                             <th scope="col">author</th>
                             <th scope="col">assistance1</th>
                             <th scope="col">assistance2</th>
+                            <th scope="col">team</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -146,6 +147,7 @@
                             <td th:text="${goal.author_name}"></td>
                             <td th:text="${goal.assistance1_name}"></td>
                             <td th:text="${goal.assistance2_name}"></td>
+                            <td th:text="${goal.team_name}"></td>
                         </tr>
                     </tbody>
                 </table>

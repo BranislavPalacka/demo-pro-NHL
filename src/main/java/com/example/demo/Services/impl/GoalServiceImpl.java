@@ -33,4 +33,9 @@ public class GoalServiceImpl implements GoalService {
     public List<Goal> goalsFromGame(Integer gameID) {
         return goalRepository.goalsFromGame(gameID);
     }
+
+    @Override
+    public Goal goalToSave(Goal goal, Long gameID, String season) {
+        return goalRepository.saveGoal(goal,gameID,season);
+    }
 }

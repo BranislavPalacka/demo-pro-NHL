@@ -8,5 +8,6 @@ public interface GoalService {
     List<Goal> getAllGoals();
     List<Goal> generatedListOfGoals (Integer numberOfGoals);
     List<Goal> goalsFromGame(Integer gameID);
+    Goal goalToSave (Goal goal,Long gameID,String season);
 
 }

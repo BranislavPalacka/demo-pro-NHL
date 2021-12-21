@@ -10,6 +10,8 @@ public class Player {
 
     private String name;
 
+    private Long team_id_2018;
+
     private Long team_id_2019;
 
     private Long team_id_2020;
@@ -59,11 +61,20 @@ public class Player {
         this.team_id_2021 = team_id_2021;
     }
 
+    public Long getTeam_id_2018() {
+        return team_id_2018;
+    }
+
+    public void setTeam_id_2018(Long team_id_2018) {
+        this.team_id_2018 = team_id_2018;
+    }
+
     @Override
     public String toString() {
         return "Player{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", team_id_2018=" + team_id_2018 +
                 ", team_id_2019=" + team_id_2019 +
                 ", team_id_2020=" + team_id_2020 +
                 ", team_id_2021=" + team_id_2021 +

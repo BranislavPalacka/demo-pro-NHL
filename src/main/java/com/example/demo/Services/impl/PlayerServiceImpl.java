@@ -15,4 +15,13 @@ public class PlayerServiceImpl implements PlayerService {
         this.playerRepository = playerRepository;
     }
 
+    @Override
+    public String playerNameById(Integer playerID) {
+        return playerRepository.playerNameById(playerID);
+    }
+
+    @Override
+    public Long playerTeamById(Integer playerID, String season) {
+        return playerRepository.playerTeamById(playerID, season);
+    }
 }
