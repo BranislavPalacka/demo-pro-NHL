@@ -9,5 +9,5 @@ public interface GoalService {
     List<Goal> generatedListOfGoals (Integer numberOfGoals);
     List<Goal> goalsFromGame(Integer gameID);
     Goal goalToSave (Goal goal,Long gameID,String season);
-
+    List<Goal> goalsForPeriod(Integer gameID, Integer period);
 }

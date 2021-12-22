@@ -7,11 +7,152 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
 </head>
 <body>
-    <div class="row">
-        <div class="col" align="center">
-            <h1>Game - vyplněná</h1>
+    <div class="container col-12">
+        <div class="row">
+            <div class="col" align="center">
+                <h1>Game overview</h1>
+            </div>
+        </div>
+        <div class="row col-12">
+            <div class="col-1"></div>
+            <div class="col-10">
+                <table class="table table-striped table-bordered table-primary">
+                    <thead>
+                        <tr align="center">
+                            <th scope="col">id</th>
+                            <th scope="col">date</th>
+                            <th scope="col">home</th>
+                            <th scope="col">guest</th>
+                            <th scope="col">result</th>
+                            <th scope="col">result.bet</th>
+                            <th scope="col">period1</th>
+                            <th scope="col">result1.bet</th>
+                            <th scope="col">period2</th>
+                            <th scope="col">result2.bet</th>
+                            <th scope="col">period3</th>
+                            <th scope="col">result3.bet</th>
+                            <th scope="col">overtime</th>
+                            <th scope="col">overtime.bet</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr align="center">
+                            <td th:text="${game.id}"></td>
+                            <td th:text="${game.date}"></td>
+                            <td th:text="${game.home_team}"></td>
+                            <td th:text="${game.guest_team}"></td>
+                            <td th:text="${game.vysledek}"></td>
+                            <td th:text="${game.vysledek_sazka}"></td>
+                            <td th:text="${game.tretina1vysledek}"></td>
+                            <td th:text="${game.tretina1sazka}"></td>
+                            <td th:text="${game.tretina2vysledek}"></td>
+                            <td th:text="${game.tretina2sazka}"></td>
+                            <td th:text="${game.tretina3vysledek}"></td>
+                            <td th:text="${game.tretina3sazka}"></td>
+                            <td th:text="${game.prodlouzeni4vysledek}"></td>
+                            <td th:text="${game.prodlouzeni4sazka}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row"></br></div>
+        <div class="container col-10">
+            <div class="row">
+                <div class="col-6">
+                    <h4>First period</h4>
+                    <table class="table table-striped table-hover">
+                        <thead>
+                        <tr>
+                            <th scope="col">minute</th>
+                            <th scope="col">author</th>
+                            <th scope="col">assistance1</th>
+                            <th scope="col">assistance2</th>
+                            <th scope="col">team</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="goal : ${goalListFirstPeriod}">
+                            <td th:text="${goal.minute}"></td>
+                            <td th:text="${goal.author_name}"></td>
+                            <td th:text="${goal.assistance1_name}"></td>
+                            <td th:text="${goal.assistance2_name}"></td>
+                            <td th:text="${goal.team_name}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-6">
+                    <h4>Second period</h4>
+                    <table class="table table-striped table-hover">
+                        <thead>
+                        <tr>
+                            <th scope="col">minute</th>
+                            <th scope="col">author</th>
+                            <th scope="col">assistance1</th>
+                            <th scope="col">assistance2</th>
+                            <th scope="col">team</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="goal : ${goalListSecondPeriod}">
+                            <td th:text="${goal.minute}"></td>
+                            <td th:text="${goal.author_name}"></td>
+                            <td th:text="${goal.assistance1_name}"></td>
+                            <td th:text="${goal.assistance2_name}"></td>
+                            <td th:text="${goal.team_name}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-6">
+                    <h4>Third period</h4>
+                    <table class="table table-striped table-hover">
+                        <thead>
+                        <tr>
+                            <th scope="col">minute</th>
+                            <th scope="col">author</th>
+                            <th scope="col">assistance1</th>
+                            <th scope="col">assistance2</th>
+                            <th scope="col">team</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="goal : ${goalListThirdPeriod}">
+                            <td th:text="${goal.minute}"></td>
+                            <td th:text="${goal.author_name}"></td>
+                            <td th:text="${goal.assistance1_name}"></td>
+                            <td th:text="${goal.assistance2_name}"></td>
+                            <td th:text="${goal.team_name}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-6">
+                    <h4>Overtime</h4>
+                    <table class="table table-striped table-hover">
+                        <thead>
+                        <tr>
+                            <th scope="col">minute</th>
+                            <th scope="col">author</th>
+                            <th scope="col">assistance1</th>
+                            <th scope="col">assistance2</th>
+                            <th scope="col">team</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="goal : ${goalListOvertime}">
+                            <td th:text="${goal.minute}"></td>
+                            <td th:text="${goal.author_name}"></td>
+                            <td th:text="${goal.assistance1_name}"></td>
+                            <td th:text="${goal.assistance2_name}"></td>
+                            <td th:text="${goal.team_name}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
-
 </body>
 </html>

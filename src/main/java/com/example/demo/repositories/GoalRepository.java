@@ -36,7 +36,7 @@ public class GoalRepository {
     }
 
     public List<Goal> goalsFromGame(Integer gameID){
-        return entityManager.createNativeQuery("SELECT * FROM goal WHERE game="+gameID,Goal.class).getResultList();
+        return entityManager.createNativeQuery("SELECT * FROM goal WHERE game="+gameID+" ORDER BY minute",Goal.class).getResultList();
     }
 
     // pozor na sezonu
@@ -52,5 +52,20 @@ public class GoalRepository {
             goalRepositoryNew.save(goal);
         }
         return goal;
+    }
+
+    public List<Goal> goalsForPeriod(Integer gameID, Integer period){
+
+        List<Goal> goalList = new ArrayList<>();
+        if (period == 1) {
+            goalList = entityManager.createNativeQuery("SELECT * FROM goal WHERE game=" + gameID + " AND minute>-1 AND minute<20 ORDER BY minute", Goal.class).getResultList();
+        }else if(period == 2){
+            goalList = entityManager.createNativeQuery("SELECT * FROM goal WHERE game=" + gameID + " AND minute>19 AND minute<40 ORDER BY minute", Goal.class).getResultList();
+        }else if(period == 3) {
+            goalList = entityManager.createNativeQuery("SELECT * FROM goal WHERE game=" + gameID + " AND minute>39 AND minute<60 ORDER BY minute", Goal.class).getResultList();
+        }else if(period == 4) {
+            goalList = entityManager.createNativeQuery("SELECT * FROM goal WHERE game=" + gameID + " AND minute>59 ORDER BY minute", Goal.class).getResultList();
+        }
+        return goalList;
     }
 }

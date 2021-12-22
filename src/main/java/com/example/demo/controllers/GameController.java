@@ -1,11 +1,13 @@
 package com.example.demo.controllers;
 
+import com.example.demo.Services.GameService;
 import com.example.demo.Services.GoalService;
 import com.example.demo.Services.TeamService;
 import com.example.demo.model.Game;
 import com.example.demo.model.Goal;
 import com.example.demo.model.Player;
 import com.example.demo.model.Team;
+import com.example.demo.repositories.GameRepository;
 import com.example.demo.repositories.GameRepositoryNew;
 import com.example.demo.repositories.TeamRepositoryNew;
 import org.springframework.stereotype.Controller;
@@ -21,12 +23,14 @@ public class GameController {
     private final GoalService goalService;
     private final TeamRepositoryNew teamRepositoryNew;
     private final TeamService teamService;
+    private final GameService gameService;
 
-    public GameController(GameRepositoryNew gameRepositoryNew, GoalService goalService, TeamRepositoryNew teamRepositoryNew, TeamService teamService) {
+    public GameController(GameRepositoryNew gameRepositoryNew, GoalService goalService, TeamRepositoryNew teamRepositoryNew, TeamService teamService, GameService gameService) {
         this.gameRepositoryNew = gameRepositoryNew;
         this.goalService = goalService;
         this.teamRepositoryNew = teamRepositoryNew;
         this.teamService = teamService;
+        this.gameService = gameService;
     }
 
     @GetMapping("/game_registration")
@@ -123,18 +127,24 @@ public class GameController {
     }
 
 
-//    @PostMapping("/game_fill")
-//    public String ulozenaVyplnenaHra(Model model){
-//        return "game_filled";
-//    }
-//
-//    @PostMapping("/game_filled/{id}")
-//    public String vyplnenaHra(@PathVariable String id,@ModelAttribute("goal") Goal goal){
-//        Long IDcko = Long.valueOf(id);
-//        Game game = gameRepositoryNew.findById(IDcko).get();
-//        System.out.println(game);
-//
-//        return "game_filled";
-//    }
+
+    @GetMapping("/game_filled/{id}")
+    public String vyplnenaHra(@PathVariable String id, Model model){
+        Integer ID = Integer.valueOf(id);
+
+        List<Goal> goalListFirstPeriod = goalService.goalsForPeriod(ID,1);
+        model.addAttribute("goalListFirstPeriod",goalListFirstPeriod);
+        List<Goal> goalListSecondPeriod = goalService.goalsForPeriod(ID,2);
+        model.addAttribute("goalListSecondPeriod",goalListSecondPeriod);
+        List<Goal> goalListThirdPeriod = goalService.goalsForPeriod(ID,3);
+        model.addAttribute("goalListThirdPeriod",goalListThirdPeriod);
+        List<Goal> goalListOvertime = goalService.goalsForPeriod(ID,4);
+        model.addAttribute("goalListOvertime",goalListOvertime);
+
+        Game game = gameService.gameSave(ID);
+        model.addAttribute("game",game);
+
+        return "game_filled";
+    }
 
 }

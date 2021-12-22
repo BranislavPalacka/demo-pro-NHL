@@ -29,7 +29,7 @@ public class PlayerRepository {
     public String playerNameById(Integer playerID){
         return(String) entityManager.createNativeQuery("SELECT name FROM player WHERE id="+playerID).getResultList().get(0);
     }
-
+    // pozor na sezonu
     public Long playerTeamById(Integer playerID, String season){
         Player player = (Player) entityManager.createNativeQuery("SELECT * FROM player WHERE id=" + playerID, Player.class).getResultList().get(0);
         return player.getTeam_id_2019();

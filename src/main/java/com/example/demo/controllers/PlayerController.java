@@ -42,7 +42,7 @@ public class PlayerController {
 
         model.addAttribute("player", player);
 
-        Integer teamId = teamService.getTeamIdByName("Winnipeg Jets");
+        Integer teamId = teamService.getTeamIdByName("New Jersey Devils");
         List<Integer> teamList = Arrays.asList(teamId);
         model.addAttribute("team",teamList);
 
