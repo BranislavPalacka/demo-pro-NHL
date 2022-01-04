@@ -12,4 +12,5 @@ public interface TeamService {
     Integer getTeamIdByName (String teamName);
     List<Player> getTeamAllPlayersForSeason(String teamName, Integer season);
     void importovani(String fileName);
+    String teamNameById(Long id);
 }

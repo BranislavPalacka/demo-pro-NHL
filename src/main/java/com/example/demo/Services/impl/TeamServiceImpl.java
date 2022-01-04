@@ -57,4 +57,9 @@ public class TeamServiceImpl implements TeamService {
     public void importovani(String fileName) {
         teamRepository.importovaniCSV(fileName);
     }
+
+    @Override
+    public String teamNameById(Long id) {
+        return teamRepository.teamNameById(id);
+    }
 }

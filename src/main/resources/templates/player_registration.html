@@ -15,26 +15,66 @@
 
     <div class="container">
             <form  method="post" action="#" th:action="@{/player_registration}" th:object="${player}">
-
-                <div class="row">
-                    <div class="col-sm-5">
-                        <label>Jméno hráče</label>
-                        <input type="text" class="form-control" th:field="*{name}" />
-                    </div>
-                    <div class="col-sm">
-                        <label>Jméno teamu</label><br/>
-                        <select class="form-select form-select-lg" th:field="*{team_id_2019}" >
-                            <option th:each="c : ${team}" th:value="${c}" th:text="${c}"></option>
-                        </select>
-                    </div>
-                    <div class="col-sm">
-                        <button type="submit">Register</button>
-                    </div>
+                <div class="row row-cols">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th scope="col">jméno hráče</th>
+                            <th scope="col">team</th>
+                            <th scope="col">sezóna</th>
+                            <th scope="col"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <input type="text" class="form-control" th:field="*{name}" />
+                                </td>
+                                <td>
+                                    <select class="form-select" th:field="*{__${season}__}" >
+                                    <option th:value="${team1.id}" th:text="${team1.name}"></option>
+                                    <option th:value="${team2.id}" th:text="${team2.name}"></option>
+                                    </select>
+                                </td>
+                                <td class="h3"  th:text="${game.season}"></td>
+                                <td>
+                                    <button type="submit" class="btn btn-outline-primary">Register</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
-
             </form>
     </div>
-
+    <div class="container col-10">
+        <div class="row">
+            <div>
+                <h4>poslední přidaný hráč</h4>
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col">id</th>
+                        <th scope="col">jméno hráče</th>
+                        <th scope="col">team 2018</th>
+                        <th scope="col">team 2019</th>
+                        <th scope="col">team 2020</th>
+                        <th scope="col">team 2021</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td th:text="${lastAddedPlayer.id}"></td>
+                            <td th:text="${lastAddedPlayer.name}"></td>
+                            <td th:text="${player_teams[0]}"></td>
+                            <td th:text="${player_teams[1]}"></td>
+                            <td th:text="${player_teams[2]}"></td>
+                            <td th:text="${player_teams[3]}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 
 </body>
 </html>

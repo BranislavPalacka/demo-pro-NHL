@@ -7,4 +7,6 @@ import java.util.List;
 public interface PlayerService {
     String playerNameById(Integer playerID);
     Long playerTeamById(Integer playerID, String season);
+    Player lastPayerAdded();
+    public List <String> playersTeamsBySeasons(Player player);
 }

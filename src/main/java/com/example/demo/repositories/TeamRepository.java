@@ -24,11 +24,14 @@ public class TeamRepository {
 
     @PersistenceContext
     private final EntityManager entityManager;
-    private final GameRepositoryNew gameRepositoryNew;
 
-    public TeamRepository(EntityManager entityManager, GameRepositoryNew gameRepositoryNew) {
+    private final GameRepositoryNew gameRepositoryNew;
+    private final TeamRepositoryNew teamRepositoryNew;
+
+    public TeamRepository(EntityManager entityManager, GameRepositoryNew gameRepositoryNew, TeamRepositoryNew teamRepositoryNew) {
         this.entityManager = entityManager;
         this.gameRepositoryNew = gameRepositoryNew;
+        this.teamRepositoryNew = teamRepositoryNew;
     }
 
     public List<Team> queryForTeams() {
@@ -51,6 +54,11 @@ public class TeamRepository {
     public Integer teamIdByName(String teamName){
         Integer teamId = (Integer) entityManager.createNativeQuery("SELECT id FROM team WHERE name='"+teamName+"'").getSingleResult();
         return  teamId;
+    }
+
+    public String teamNameById(Long id){
+        if (id != null) return teamRepositoryNew.findById(id).get().getName();
+        return "";
     }
 
     public List<Player> teamAllPlayersForSeason(String teamName, Integer season) {
