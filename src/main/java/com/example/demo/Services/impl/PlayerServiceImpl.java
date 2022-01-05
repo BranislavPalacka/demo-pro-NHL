@@ -38,4 +38,24 @@ public class PlayerServiceImpl implements PlayerService {
     public List<String> playersTeamsBySeasons(Player player) {
         return playerRepository.playersTeamsBySeasons(player);
     }
+
+    @Override
+    public String[][] last5PlayersTeamsBySeasons() {
+        return playerRepository.last5PlayersTeamsBySeasons();
+    }
+
+    @Override
+    public Player testNewPlayerTeamsBeforeSaving(Player player) {
+        return playerRepository.testNewPlayerTeamsBeforeSaving(player);
+    }
+
+    @Override
+    public boolean anySeasonTeamFilled(Player player) {
+        return playerRepository.anySeasonTeamFilled(player);
+    }
+
+    @Override
+    public void mergePlayer(Player newPlayer) {
+        playerRepository.mergePlayer(newPlayer);
+    }
 }

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Players registration - NEW</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="row">
+        <div class="col" align="center">
+            <h1>Registrace nového hráče</h1>
+        </div>
+    </div>
+    <div class="container"><br></div>
+    <div class="container">
+        <form  method="post" action="#" th:action="@{'http://localhost:8080/player_registration_new/'}" th:object="${playerNew}">
+            <div class="row row-cols">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col">jméno hráče</th>
+                        <th scope="col">team 2018</th>
+                        <th scope="col">team 2019</th>
+                        <th scope="col">team 2020</th>
+                        <th scope="col">team 2021</th>
+                        <th scope="col"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <input type="text" class="form-control" th:field="*{name}" />
+                            </td>
+                            <td>
+                                <select class="form-select" th:field="*{team_id_2018}" >
+                                        <option selected th:value="@{-1}"></option>
+                                        <option th:each="d : ${teamList}" th:value="${d.id}" th:text="${d.name}"></option>
+                                </select>
+                            </td>
+                            <td>
+                                <select class="form-select" th:field="*{team_id_2019}" >
+                                        <option selected th:value="@{-1}"></option>
+                                        <option th:each="d : ${teamList}" th:value="${d.id}" th:text="${d.name}"></option>
+                                </select>
+                            </td>
+                            <td>
+                                <select class="form-select" th:field="*{team_id_2020}" >
+                                    <option selected th:value="@{-1}"></option>
+                                    <option th:each="d : ${teamList}" th:value="${d.id}" th:text="${d.name}"></option>
+                                </select>
+                            </td>
+                            <td>
+                                <select class="form-select" th:field="*{team_id_2021}" >
+                                    <option selected th:value="@{-1}"></option>
+                                    <option th:each="d : ${teamList}" th:value="${d.id}" th:text="${d.name}"></option>
+                                </select>
+                            </td>
+                            <td>
+                                <button type="submit" class="btn btn-outline-success">Register</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </form>
+    </div>
+    <div class="container"> <br><br><br></div>
+    <div class="container col-10">
+        <div class="row">
+            <div>
+                <h5>poslední přidaní hráči</h5>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">id</th>
+                            <th scope="col">jméno hráče</th>
+                            <th scope="col">team 2018</th>
+                            <th scope="col">team 2019</th>
+                            <th scope="col">team 2020</th>
+                            <th scope="col">team 2021</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="player : ${last5PlayersTeamsBySeasons}">
+                            <td th:text="${player[0]}"></td>
+                            <td th:text="${player[1]}"></td>
+                            <td th:text="${player[2]}"></td>
+                            <td th:text="${player[3]}"></td>
+                            <td th:text="${player[4]}"></td>
+                            <td th:text="${player[5]}"></td>
+                            <td>
+                                <a class="btn btn-sm btn-outline-primary" th:href="@{'http://localhost:8080/player_registration_edit/'+${player[0]}+'e'}" role="button">EDIT</a>
+                                <a class="btn btn-sm btn-outline-danger" th:href="@{'http://localhost:8080/player_registration_new/'+${player[0]}+'d'}" role="button">DEL</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="container"><br>
+        <h3 class="text-danger" th:text="${message}"></h3>
+    </div>
+
+</body>
+</html>

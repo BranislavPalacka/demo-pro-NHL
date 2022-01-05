@@ -57,7 +57,10 @@ public class TeamRepository {
     }
 
     public String teamNameById(Long id){
-        if (id != null) return teamRepositoryNew.findById(id).get().getName();
+        if (id != null && id !=-1) {
+            String s = String.valueOf(entityManager.createNativeQuery("SELECT name FROM team where id="+id).getSingleResult());
+            return s;
+        }
         return "";
     }
 

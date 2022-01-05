@@ -8,5 +8,9 @@ public interface PlayerService {
     String playerNameById(Integer playerID);
     Long playerTeamById(Integer playerID, String season);
     Player lastPayerAdded();
-    public List <String> playersTeamsBySeasons(Player player);
+    List <String> playersTeamsBySeasons(Player player);
+    String[][] last5PlayersTeamsBySeasons();
+    Player testNewPlayerTeamsBeforeSaving(Player player);
+    boolean anySeasonTeamFilled (Player player);
+    void mergePlayer(Player newPlayer);
 }

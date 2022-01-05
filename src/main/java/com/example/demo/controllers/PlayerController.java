@@ -9,6 +9,7 @@ import com.example.demo.repositories.GameRepositoryNew;
 import com.example.demo.repositories.PlayerRepositoryNew;
 import com.example.demo.repositories.TeamRepositoryNew;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -45,19 +46,6 @@ public class PlayerController {
 //    }
 
 
-//    @GetMapping("/player_registration")
-//    public String formular(Model model){
-//        Player player = new Player();
-//
-//        model.addAttribute("player", player);
-//
-//        Integer teamId = teamService.getTeamIdByName("New Jersey Devils");
-//        List<Integer> teamList = Arrays.asList(teamId);
-//        model.addAttribute("team",teamList);
-//
-//        return "player_registration";
-//    }
-
     @PostMapping("/player_registration")
     public String odeslanyFormular(@ModelAttribute("player") Player player){
         playerRepositoryNew.save(player);
@@ -67,6 +55,7 @@ public class PlayerController {
     public String odeslanyFormularZeHry(@PathVariable String id, Model model){
         String teamSelected = id.substring(id.length()-1);
         String IDs = id.substring(0,(id.length()-1));
+        model.addAttribute("gameID",IDs);
         Long ID = Long.valueOf(IDs);
         Team team1 = new Team();
         Team team2 = new Team();
@@ -101,5 +90,127 @@ public class PlayerController {
         model.addAttribute("player_teams",teamsBySeasons);
 
         return "player_registration";
+    }
+
+    @GetMapping("/player_registration_new")
+    public String pripravenyFormularNovyHrac(Model model){
+        String message = "";
+        model.addAttribute("massage",message);
+
+        Player playerNew = new Player();
+        model.addAttribute("playerNew",playerNew);
+
+        List<Team> teamList = (List<Team>) teamRepositoryNew.findAll();
+        model.addAttribute("teamList",teamList);
+
+        String [][] last5PlayersTeamsBySeasons = playerService.last5PlayersTeamsBySeasons();
+        model.addAttribute("last5PlayersTeamsBySeasons",last5PlayersTeamsBySeasons);
+
+        return "/player_registration_new";
+    }
+
+    @GetMapping("/player_registration_new/{id}")
+    public String FormularNovyHracDEL(@PathVariable String id, Model model){
+        String actionSelected = id.substring(id.length()-1);
+        Long ID = Long.valueOf(id.substring(0,(id.length()-1)));
+
+        if (actionSelected.equals("d")){
+            String message = "deleted player: "+playerService.playerNameById(ID.intValue());
+            model.addAttribute("message",message);
+
+            playerRepositoryNew.deleteById(ID);
+        }
+        
+        if (actionSelected.equals("s")){
+            Player playerToSave = playerRepositoryNew.findById(ID).get();
+
+            String message = "deleted player: "+playerService.playerNameById(ID.intValue());
+            model.addAttribute("message",message);
+            
+            if (!playerToSave.getName().isEmpty() && playerService.anySeasonTeamFilled(playerToSave)){
+                playerToSave = playerService.testNewPlayerTeamsBeforeSaving(playerToSave);
+                playerRepositoryNew.save(playerToSave);
+            }
+            
+        }
+
+        Player playerNew = new Player();
+        model.addAttribute("playerNew",playerNew);
+
+        List<Team> teamList = (List<Team>) teamRepositoryNew.findAll();
+        model.addAttribute("teamList",teamList);
+
+        String [][] last5PlayersTeamsBySeasons = playerService.last5PlayersTeamsBySeasons();
+        model.addAttribute("last5PlayersTeamsBySeasons",last5PlayersTeamsBySeasons);
+
+        return "/player_registration_new";
+    }
+
+    @PostMapping("/player_registration_new")
+    public String odeslanyFormularNovyHrac(@ModelAttribute("playerNew") Player playerToSave, Model model){
+        if (!playerToSave.getName().isEmpty() && playerService.anySeasonTeamFilled(playerToSave)){
+            playerToSave = playerService.testNewPlayerTeamsBeforeSaving(playerToSave);
+            playerRepositoryNew.save(playerToSave);
+        }
+
+        String message = "";
+        model.addAttribute("message",message);
+
+        Player playerNew = new Player();
+        model.addAttribute("playerNew",playerNew);
+
+        List<Team> teamList = (List<Team>) teamRepositoryNew.findAll();
+        model.addAttribute("teamList",teamList);
+
+        String [][] last5PlayersTeamsBySeasons = playerService.last5PlayersTeamsBySeasons();
+        model.addAttribute("last5PlayersTeamsBySeasons",last5PlayersTeamsBySeasons);
+
+        return "/player_registration_new";
+    }
+
+    @Transactional
+    @PostMapping("/player_registration_new/{id}")
+    public String odeslanyFormularNovyHracEDIT(@ModelAttribute("playerNew") Player playerToSave, Model model){
+
+        if (!playerToSave.getName().isEmpty() && playerService.anySeasonTeamFilled(playerToSave)){
+            playerToSave = playerService.testNewPlayerTeamsBeforeSaving(playerToSave);
+            playerService.mergePlayer(playerToSave);
+        }
+
+        String message = "změněný hráč: "+playerToSave.getName();
+        model.addAttribute("message",message);
+
+        Player playerNew = new Player();
+        model.addAttribute("playerNew",playerNew);
+
+        List<Team> teamList = (List<Team>) teamRepositoryNew.findAll();
+        model.addAttribute("teamList",teamList);
+
+        String [][] last5PlayersTeamsBySeasons = playerService.last5PlayersTeamsBySeasons();
+        model.addAttribute("last5PlayersTeamsBySeasons",last5PlayersTeamsBySeasons);
+
+        return "/player_registration_new";
+    }
+
+    @GetMapping("/player_registration_edit/{id}")
+    public String editaceFormularNovyHrac(@PathVariable String id, Model model){
+        String actionSelected = id.substring(id.length()-1);
+        Long ID = Long.valueOf(id.substring(0,(id.length()-1)));
+
+        String nadpis = "";
+        if (actionSelected.equals("e")) nadpis = "Editování Hráče";
+        if (actionSelected.equals("p")) nadpis = "Zadaný hráč již existuje";
+        model.addAttribute("nadpis",nadpis);
+
+        Player playerNew = playerRepositoryNew.findById(ID).get();
+        model.addAttribute("playerNew",playerNew);
+
+        List<Team> teamList = (List<Team>) teamRepositoryNew.findAll();
+        model.addAttribute("teamList",teamList);
+
+        List <String> teamsBySeasons = playerService.playersTeamsBySeasons(playerNew);
+        model.addAttribute("player_teams",teamsBySeasons);
+
+        return "/player_registration_edit";
     }
 }

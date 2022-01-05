@@ -15,6 +15,7 @@
                 <a class="nav-link" th:href="@{'http://localhost:8080/game_filled/'+${game.id}}"><button type="button" class="btn btn-outline-success">ULOŽIT HRU</button></a>
         </div>
     </div>
+    <div class="container col-10"><br></div>
 
     <div class="container col-10">
         <div class="row row-cols">
@@ -22,17 +23,21 @@
                 <table class="table table-striped">
                     <thead>
                     <tr>
-                        <th scope="col">ID</th>
-                        <th scope="col">datum</th>
-                        <th scope="col">domácí</th>
-                        <th scope="col">hosté</th>
+                        <th scope="col" class="col-1">ID</th>
+                        <th scope="col" class="col-1">datum</th>
+                        <th scope="col" class="col-1"></th>
+                        <th scope="col" class="col-3">domácí</th>
+                        <th scope="col" class="col-1"></th>
+                        <th scope="col" class="col-3">hosté</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr>
                         <td th:text="${game.id}"></td>
                         <td th:text="${game.date}"></td>
+                        <td><a type="button" class="btn btn-outline-primary btn-sm" th:href="@{'http://localhost:8080/player_registration/'+${game.id}+'h'}" role="button">Hráč+</a></td>
                         <td class="h5 text-primary" th:text="${game.home_team}"></td>
+                        <td><a type="button" class="btn btn-outline-danger btn-sm" th:href="@{'http://localhost:8080/player_registration/'+${game.id}+'g'}" role="button">Hráč+</a></td>
                         <td class="h5 text-danger" th:text="${game.guest_team}"></td>
                     </tr>
                     </tbody>
@@ -40,6 +45,8 @@
             </div>
         </div>
     </div>
+
+    <div class="container col-10"><br></div>
 
     <div class="container col-10">
         <div class="row col-12">
@@ -78,7 +85,7 @@
                                 </select>
                             </td>
                             <td class="col-1">
-                                <button class="btn btn-primary" type="submit">Uložit</button>
+                                <button class="btn btn-primary btn-sm" type="submit">Uložit</button>
                             </td>
                         </tr>
                     </tbody>
@@ -120,7 +127,7 @@
                                 </select>
                             </td>
                             <td class="col-1">
-                                <button class="btn btn-danger" type="submit">Uložit</button>
+                                <button class="btn btn-danger btn-sm" type="submit">Uložit</button>
                             </td>
                         </tr>
                     </tbody>
