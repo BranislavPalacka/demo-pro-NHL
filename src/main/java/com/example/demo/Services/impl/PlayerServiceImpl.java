@@ -58,4 +58,9 @@ public class PlayerServiceImpl implements PlayerService {
     public void mergePlayer(Player newPlayer) {
         playerRepository.mergePlayer(newPlayer);
     }
+
+    @Override
+    public Player findPlayerByName(String playerName) {
+        return playerRepository.findPlayerByName(playerName);
+    }
 }

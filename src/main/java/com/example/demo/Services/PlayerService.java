@@ -13,4 +13,5 @@ public interface PlayerService {
     Player testNewPlayerTeamsBeforeSaving(Player player);
     boolean anySeasonTeamFilled (Player player);
     void mergePlayer(Player newPlayer);
+    Player findPlayerByName(String playerName);
 }

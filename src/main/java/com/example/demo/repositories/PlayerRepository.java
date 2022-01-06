@@ -99,4 +99,11 @@ public class PlayerRepository {
         oldPlayer = newPlayer;
         entityManager.merge(oldPlayer); // zapíšu objekt do databáze
     }
+
+    public Player findPlayerByName(String playerName){
+        List<Player> players = entityManager.createNativeQuery("SELECT * FROM player WHERE name='"+playerName+"'",Player.class).getResultList();
+        if (players.size()==0) return null;
+        return players.get(0);
+    }
+
 }

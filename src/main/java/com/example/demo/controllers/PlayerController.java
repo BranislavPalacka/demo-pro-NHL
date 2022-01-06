@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.sql.SQLOutput;
 import java.util.ArrayList;
@@ -148,12 +149,19 @@ public class PlayerController {
 
     @PostMapping("/player_registration_new")
     public String odeslanyFormularNovyHrac(@ModelAttribute("playerNew") Player playerToSave, Model model){
+        String message = "";
+
         if (!playerToSave.getName().isEmpty() && playerService.anySeasonTeamFilled(playerToSave)){
             playerToSave = playerService.testNewPlayerTeamsBeforeSaving(playerToSave);
-            playerRepositoryNew.save(playerToSave);
+            if (playerService.findPlayerByName(playerToSave.getName())==null) {
+                playerRepositoryNew.save(playerToSave);
+                message = "saved player - "+playerToSave.getName();
+            }else{
+                Player playerEdit = playerService.findPlayerByName(playerToSave.getName());
+                return "redirect:/player_registration_edit/"+playerEdit.getId()+"p";
+            }
         }
 
-        String message = "";
         model.addAttribute("message",message);
 
         Player playerNew = new Player();
@@ -164,6 +172,7 @@ public class PlayerController {
 
         String [][] last5PlayersTeamsBySeasons = playerService.last5PlayersTeamsBySeasons();
         model.addAttribute("last5PlayersTeamsBySeasons",last5PlayersTeamsBySeasons);
+
 
         return "/player_registration_new";
     }
