@@ -8,7 +8,7 @@ import java.util.List;
 public interface TeamService {
     List<Team> getAllTeams();
     List<String> teamList();
-    List<String> teamListDivision(String division, Integer season);
+    List<Team> teamListDivision(String division, Integer season);
     Integer getTeamIdByName (String teamName);
     List<Player> getTeamAllPlayersForSeason(String teamName, Integer season);
     void importovani(String fileName);

@@ -48,8 +48,8 @@ public class TeamRepository {
         return teamNames;
     }
 
-    public List<String> teamListDivision(String divisionName, Integer season){
-        List<String> teamListDivision = entityManager.createNativeQuery("SELECT name FROM team WHERE division_"+season+"='"+divisionName+"'").getResultList();
+    public List<Team> teamListDivision(String divisionName, Integer season){
+        List<Team> teamListDivision = entityManager.createNativeQuery("SELECT * FROM team WHERE division_"+season+"='"+divisionName+"'",Team.class).getResultList();
         return teamListDivision;
     }
 

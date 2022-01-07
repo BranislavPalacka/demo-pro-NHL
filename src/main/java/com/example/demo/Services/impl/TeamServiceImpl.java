@@ -39,7 +39,7 @@ public class TeamServiceImpl implements TeamService {
     }
 
     @Override
-    public List<String> teamListDivision(String division, Integer season) {
+    public List<Team> teamListDivision(String division, Integer season) {
         return teamRepository.teamListDivision(division,season);
     }
 

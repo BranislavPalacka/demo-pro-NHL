@@ -42,6 +42,7 @@ public class TeamController {
         model.addAttribute("Metropolitan", teamService.teamListDivision("Metropolitan",season));
         model.addAttribute("Central", teamService.teamListDivision("Central",season));
         model.addAttribute("Pacific", teamService.teamListDivision("Pacific",season));
+        model.addAttribute("season",season);
         return "teams";
     }
 
