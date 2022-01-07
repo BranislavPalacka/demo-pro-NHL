@@ -121,19 +121,6 @@ public class PlayerController {
 
             playerRepositoryNew.deleteById(ID);
         }
-        
-        if (actionSelected.equals("s")){
-            Player playerToSave = playerRepositoryNew.findById(ID).get();
-
-            String message = "deleted player: "+playerService.playerNameById(ID.intValue());
-            model.addAttribute("message",message);
-            
-            if (!playerToSave.getName().isEmpty() && playerService.anySeasonTeamFilled(playerToSave)){
-                playerToSave = playerService.testNewPlayerTeamsBeforeSaving(playerToSave);
-                playerRepositoryNew.save(playerToSave);
-            }
-            
-        }
 
         Player playerNew = new Player();
         model.addAttribute("playerNew",playerNew);
@@ -172,7 +159,6 @@ public class PlayerController {
 
         String [][] last5PlayersTeamsBySeasons = playerService.last5PlayersTeamsBySeasons();
         model.addAttribute("last5PlayersTeamsBySeasons",last5PlayersTeamsBySeasons);
-
 
         return "/player_registration_new";
     }

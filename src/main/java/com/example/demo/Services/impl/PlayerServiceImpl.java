@@ -63,4 +63,14 @@ public class PlayerServiceImpl implements PlayerService {
     public Player findPlayerByName(String playerName) {
         return playerRepository.findPlayerByName(playerName);
     }
+
+    @Override
+    public void removePlayerFromTeamSeason(Long playerId, Long season) {
+        playerRepository.removePlayerFromTeamSeason(playerId,season);
+    }
+
+    @Override
+    public void addPlayerForTeamSeason(Long playerId, Long season, Long teamId) {
+        playerRepository.addPlayerForTeamSeason(playerId,season,teamId);
+    }
 }

@@ -106,4 +106,29 @@ public class PlayerRepository {
         return players.get(0);
     }
 
+    @Transactional
+    public void removePlayerFromTeamSeason(Long playerId, Long season){
+        Player player = playerRepositoryNew.findById(playerId).get();
+
+        entityManager.clear();
+        entityManager.detach(player);
+            if (season==2018) player.setTeam_id_2018(null);
+            if (season==2019) player.setTeam_id_2019(null);
+            if (season==2020) player.setTeam_id_2020(null);
+            if (season==2021) player.setTeam_id_2021(null);
+        entityManager.merge(player);
+    }
+
+    @Transactional
+    public void addPlayerForTeamSeason(Long playerId, Long season, Long teamId){
+        Player player = playerRepositoryNew.findById(playerId).get();
+
+        entityManager.clear();
+        entityManager.detach(player);
+            if (season==2018) player.setTeam_id_2018(teamId);
+            if (season==2019) player.setTeam_id_2019(teamId);
+            if (season==2020) player.setTeam_id_2020(teamId);
+            if (season==2021) player.setTeam_id_2021(teamId);
+        entityManager.merge(player);
+    }
 }

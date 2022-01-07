@@ -27,11 +27,13 @@ public class TeamRepository {
 
     private final GameRepositoryNew gameRepositoryNew;
     private final TeamRepositoryNew teamRepositoryNew;
+    private final PlayerRepositoryNew playerRepositoryNew;
 
-    public TeamRepository(EntityManager entityManager, GameRepositoryNew gameRepositoryNew, TeamRepositoryNew teamRepositoryNew) {
+    public TeamRepository(EntityManager entityManager, GameRepositoryNew gameRepositoryNew, TeamRepositoryNew teamRepositoryNew, PlayerRepositoryNew playerRepositoryNew) {
         this.entityManager = entityManager;
         this.gameRepositoryNew = gameRepositoryNew;
         this.teamRepositoryNew = teamRepositoryNew;
+        this.playerRepositoryNew = playerRepositoryNew;
     }
 
     public List<Team> queryForTeams() {
@@ -100,4 +102,5 @@ public class TeamRepository {
             e.printStackTrace();
         }
     }
+
 }

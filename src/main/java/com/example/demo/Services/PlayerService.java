@@ -14,4 +14,6 @@ public interface PlayerService {
     boolean anySeasonTeamFilled (Player player);
     void mergePlayer(Player newPlayer);
     Player findPlayerByName(String playerName);
+    void removePlayerFromTeamSeason(Long playerId, Long season);
+    void addPlayerForTeamSeason(Long playerId, Long season, Long teamId);
 }
