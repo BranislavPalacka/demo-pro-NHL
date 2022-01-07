@@ -125,6 +125,10 @@ public class GameRepository {
         Long guest_goals = goalsForGame.stream()
                 .filter(goal -> goal.getTeam() == guestID.longValue())
                 .count();
+
+        Game game = gameRepositoryNew.findById(gameId).get();
+        if (game.getProdlouzeni4sazka() != 0) return home_goals +":"+ guest_goals + "p";
+
         return home_goals+":"+guest_goals;
     }
 

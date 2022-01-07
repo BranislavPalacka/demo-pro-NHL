@@ -144,7 +144,7 @@ public class GameController {
         List<Player> guest_players = teamService.getTeamAllPlayersForSeason(game.getGuest_team(),game.getSeason());
         model.addAttribute("guest_players", guest_players);
 
-        vstrelenygoal = goalService.goalToSave(vstrelenygoal,gameId,"2019");
+        vstrelenygoal = goalService.goalToSave(vstrelenygoal,gameId,(game.getSeason()).toString());
 
         List<Goal> goalList = goalService.goalsFromGame(gameId);
         model.addAttribute("goalList",goalList);
