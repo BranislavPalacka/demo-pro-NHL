@@ -35,7 +35,7 @@ public class GoalRepository {
         return goalEmptyList;
     }
 
-    public List<Goal> goalsFromGame(Integer gameID){
+    public List<Goal> goalsFromGame(Long gameID){
         return entityManager.createNativeQuery("SELECT * FROM goal WHERE game="+gameID+" ORDER BY minute",Goal.class).getResultList();
     }
 
@@ -54,7 +54,7 @@ public class GoalRepository {
         return goal;
     }
 
-    public List<Goal> goalsForPeriod(Integer gameID, Integer period){
+    public List<Goal> goalsForPeriod(Long gameID, Integer period){
 
         List<Goal> goalList = new ArrayList<>();
         if (period == 1) {

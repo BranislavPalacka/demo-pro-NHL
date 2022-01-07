@@ -7,12 +7,15 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
 </head>
 <body>
-    <div class="row">
-        <div class="col" align="center">
-            <h1>Game - vyplnění informací</h1>
-        </div>
-        <div class="col" align="center">
-                <a class="nav-link" th:href="@{'http://localhost:8080/game_filled/'+${game.id}}"><button type="button" class="btn btn-outline-success">ULOŽIT HRU</button></a>
+    <div class="container col-10">
+        <br>
+        <div class="row">
+            <div class="col" align="center">
+                <h1>Game - vyplnění informací</h1>
+            </div>
+            <div class="col" align="center">
+                <a type="button" class="btn btn-outline-success" th:href="@{'http://localhost:8080/game_filled/'+${game.id}}" role="button">ULOŽIT HRU</a>
+            </div>
         </div>
     </div>
     <div class="container col-10"><br></div>
@@ -158,6 +161,9 @@
                             <td th:text="${goal.assistance1_name}"></td>
                             <td th:text="${goal.assistance2_name}"></td>
                             <td th:text="${goal.team_name}"></td>
+                            <td>
+                                <a class="btn btn-sm btn-outline-danger" th:href="@{'http://localhost:8080/game_fill/'+${game.id}+'/'+${goal.id}}" role="button">DEL</a>
+                            </td>
                         </tr>
                     </tbody>
                 </table>

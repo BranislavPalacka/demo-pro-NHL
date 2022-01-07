@@ -8,11 +8,11 @@ import java.util.List;
 
 public interface GameService {
     List<Team> roundFill();
-    String periodResult (Integer gameId, Integer period);
-    Integer gameTeamID (Integer gameId, String side);
-    List<Goal> gameTeamGoalsPeriod(Integer gameId, Integer teamId, Integer period);
-    Integer gameBet (Integer gameId);
-    Integer periodBet (Integer gameId, Integer period);
-    String gameResult(Integer gameId);
-    Game gameSave(Integer gameId);
+    String periodResult (Long gameId, Integer period);
+    Integer gameTeamID (Long gameId, String side);
+    List<Goal> gameTeamGoalsPeriod(Long gameId, Integer teamId, Integer period);
+    Integer gameBet (Long gameId);
+    Integer periodBet (Long gameId, Integer period);
+    String gameResult(Long gameId);
+    Game gameSave(Long gameId);
 }

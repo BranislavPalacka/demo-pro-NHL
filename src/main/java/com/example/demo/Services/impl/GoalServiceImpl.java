@@ -30,7 +30,7 @@ public class GoalServiceImpl implements GoalService {
     }
 
     @Override
-    public List<Goal> goalsFromGame(Integer gameID) {
+    public List<Goal> goalsFromGame(Long gameID) {
         return goalRepository.goalsFromGame(gameID);
     }
 
@@ -40,7 +40,7 @@ public class GoalServiceImpl implements GoalService {
     }
 
     @Override
-    public List<Goal> goalsForPeriod(Integer gameID, Integer period) {
+    public List<Goal> goalsForPeriod(Long gameID, Integer period) {
         return goalRepository.goalsForPeriod(gameID, period);
     }
 }

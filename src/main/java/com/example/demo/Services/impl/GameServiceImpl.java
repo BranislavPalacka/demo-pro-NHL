@@ -27,37 +27,37 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public String periodResult(Integer gameId, Integer period) {
+    public String periodResult(Long gameId, Integer period) {
         return gameRepository.periodResult(gameId,period);
     }
 
     @Override
-    public Integer gameTeamID(Integer gameId, String side) {
+    public Integer gameTeamID(Long gameId, String side) {
         return gameRepository.gameTeamID(gameId,side);
     }
 
     @Override
-    public List<Goal> gameTeamGoalsPeriod(Integer gameId, Integer teamId, Integer period) {
+    public List<Goal> gameTeamGoalsPeriod(Long gameId, Integer teamId, Integer period) {
         return gameRepository.gameTeamGoalsPeriod(gameId,teamId,period);
     }
 
     @Override
-    public Integer gameBet(Integer gameId) {
+    public Integer gameBet(Long gameId) {
         return gameRepository.gameBet(gameId);
     }
 
     @Override
-    public Integer periodBet(Integer gameId, Integer period) {
+    public Integer periodBet(Long gameId, Integer period) {
         return gameRepository.periodBet(gameId,period);
     }
 
     @Override
-    public String gameResult(Integer gameId) {
+    public String gameResult(Long gameId) {
         return gameRepository.gameResult(gameId);
     }
 
     @Override
-    public Game gameSave(Integer gameId) {
+    public Game gameSave(Long gameId) {
         return gameRepository.gameSave(gameId);
     }
 }

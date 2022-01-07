@@ -60,11 +60,11 @@ public class GameRepository {
         return teamList;
     }
 
-    public Integer gameTeamID (Integer gameId, String side){
+    public Integer gameTeamID (Long gameId, String side){
         return (Integer) entityManager.createNativeQuery("SELECT " +side+ " FROM game WHERE id=" +gameId).getResultList().get(0);
     }
 
-    public List<Goal> gameTeamGoalsPeriod(Integer gameId, Integer teamId, Integer period){
+    public List<Goal> gameTeamGoalsPeriod(Long gameId, Integer teamId, Integer period){
         List<Goal> goalsForPeriod = goalService.goalsForPeriod(gameId,period);
         goalsForPeriod = goalsForPeriod.stream()
                                 .filter(goal -> goal.getTeam() == teamId.longValue())
@@ -72,7 +72,7 @@ public class GameRepository {
         return goalsForPeriod;
     }
 
-    public String periodResult (Integer gameId, Integer period){
+    public String periodResult (Long gameId, Integer period){
         Integer homeID = gameTeamID(gameId,"home");
         Integer guestID = gameTeamID(gameId,"guest");
 
@@ -82,7 +82,7 @@ public class GameRepository {
         return home_goals+":"+guest_goals;
     }
 
-    public Integer periodBet (Integer gameId, Integer period){
+    public Integer periodBet (Long gameId, Integer period){
         Integer homeID = gameTeamID(gameId,"home");
         Integer guestID = gameTeamID(gameId,"guest");
         int home_goals = gameTeamGoalsPeriod(gameId,homeID,period).size();
@@ -93,7 +93,7 @@ public class GameRepository {
         return result;
     }
 
-    public Integer gameBet(Integer gameId){
+    public Integer gameBet(Long gameId){
         Integer homeID = gameTeamID(gameId,"home");
         Integer guestID = gameTeamID(gameId,"guest");
 
@@ -114,7 +114,7 @@ public class GameRepository {
         return result;
     }
 
-    public String gameResult(Integer gameId){
+    public String gameResult(Long gameId){
         Integer homeID = gameTeamID(gameId,"home");
         Integer guestID = gameTeamID(gameId,"guest");
 
@@ -129,8 +129,8 @@ public class GameRepository {
     }
 
     @Transactional
-    public Game gameSave(Integer gameId) {
-        Game game = gameRepositoryNew.findById(gameId.longValue()).get();
+    public Game gameSave(Long gameId) {
+        Game game = gameRepositoryNew.findById(gameId).get();
 
         game.setTretina1sazka(periodBet(gameId,1));
         game.setTretina2sazka(periodBet(gameId,2));

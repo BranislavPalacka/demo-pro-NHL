@@ -7,7 +7,7 @@ import java.util.List;
 public interface GoalService {
     List<Goal> getAllGoals();
     List<Goal> generatedListOfGoals (Integer numberOfGoals);
-    List<Goal> goalsFromGame(Integer gameID);
+    List<Goal> goalsFromGame(Long gameID);
     Goal goalToSave (Goal goal,Long gameID,String season);
-    List<Goal> goalsForPeriod(Integer gameID, Integer period);
+    List<Goal> goalsForPeriod(Long gameID, Integer period);
 }
