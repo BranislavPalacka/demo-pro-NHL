@@ -60,4 +60,14 @@ public class GameServiceImpl implements GameService {
     public Game gameSave(Long gameId) {
         return gameRepository.gameSave(gameId);
     }
+
+    @Override
+    public List<Game> gamesForSeason(Long season) {
+        return gameRepository.gamesForSeason(season);
+    }
+
+    @Override
+    public List<Game> teamGames(Long teamId, Long season, String side) {
+        return gameRepository.teamGames(teamId,season,side);
+    }
 }

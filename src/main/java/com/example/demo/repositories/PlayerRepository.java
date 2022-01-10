@@ -131,4 +131,14 @@ public class PlayerRepository {
             if (season==2021) player.setTeam_id_2021(teamId);
         entityManager.merge(player);
     }
+
+    public List<Player> prijmeniAjmeno(List<Player> playersList){
+        for (Player player : playersList) {
+            int poloha =  (player.getName().indexOf(' ') + 1);
+            String prijmeni = player.getName().substring(poloha);
+            String jmeno = player.getName().substring(0,poloha-1);
+            player.setName(prijmeni+" "+jmeno);
+        }
+        return playersList;
+    }
 }

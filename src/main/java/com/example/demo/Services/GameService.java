@@ -15,4 +15,6 @@ public interface GameService {
     Integer periodBet (Long gameId, Integer period);
     String gameResult(Long gameId);
     Game gameSave(Long gameId);
+    List<Game> gamesForSeason(Long season);
+    List<Game> teamGames(Long teamId, Long season, String side);
 }

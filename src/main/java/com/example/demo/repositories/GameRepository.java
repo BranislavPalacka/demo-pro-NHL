@@ -28,12 +28,6 @@ public class GameRepository {
     }
 
 
-//    public Integer getRound(String side, String teamName){
-//        Integer gameRound = (Integer) entityManager.createNativeQuery("SELECT max(round_"+side+") FROM game WHERE "+side+"_team = "+teamName).getSingleResult();
-//        if (gameRound == null) gameRound = 0;
-//        return gameRound;
-//    }
-
     @Transactional
     public List<Team> roundFill() {
         List<Team> teamList = entityManager.createNativeQuery("SELECT * FROM team WHERE division_2018 IS NOT NULL", Team.class).getResultList();
@@ -147,7 +141,16 @@ public class GameRepository {
         game.setVysledek_sazka(gameBet(gameId));
         game.setVysledek(gameResult(gameId));
 
-//        gameRepositoryNew.save(game);
         return game;
+    }
+
+    public List<Game> gamesForSeason(Long season){
+        return entityManager.createNativeQuery("SELECT * FROM game WHERE season="+season,Game.class).getResultList();
+    }
+
+    public List<Game> teamGames(Long teamId, Long season, String side){
+        if (side.equals("home")) return entityManager.createNativeQuery("SELECT * FROM game WHERE home="+ teamId +" AND season="+ season,Game.class ).getResultList();
+
+        return entityManager.createNativeQuery("SELECT * FROM game WHERE guest="+ teamId +" AND season="+ season,Game.class ).getResultList();
     }
 }

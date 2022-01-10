@@ -16,4 +16,5 @@ public interface PlayerService {
     Player findPlayerByName(String playerName);
     void removePlayerFromTeamSeason(Long playerId, Long season);
     void addPlayerForTeamSeason(Long playerId, Long season, Long teamId);
+    List<Player> prijmeniAjmeno(List<Player> playersList);
 }

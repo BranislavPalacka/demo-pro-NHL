@@ -73,4 +73,9 @@ public class PlayerServiceImpl implements PlayerService {
     public void addPlayerForTeamSeason(Long playerId, Long season, Long teamId) {
         playerRepository.addPlayerForTeamSeason(playerId,season,teamId);
     }
+
+    @Override
+    public List<Player> prijmeniAjmeno(List<Player> playersList) {
+        return playerRepository.prijmeniAjmeno(playersList);
+    }
 }

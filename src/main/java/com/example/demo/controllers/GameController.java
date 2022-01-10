@@ -2,6 +2,7 @@ package com.example.demo.controllers;
 
 import com.example.demo.Services.GameService;
 import com.example.demo.Services.GoalService;
+import com.example.demo.Services.PlayerService;
 import com.example.demo.Services.TeamService;
 import com.example.demo.model.Game;
 import com.example.demo.model.Goal;
@@ -25,14 +26,16 @@ public class GameController {
     private final TeamService teamService;
     private final GameService gameService;
     private final GoalRepositoryNew goalRepositoryNew;
+    private final PlayerService playerService;
 
-    public GameController(GameRepositoryNew gameRepositoryNew, GoalService goalService, TeamRepositoryNew teamRepositoryNew, TeamService teamService, GameService gameService, GoalRepositoryNew goalRepositoryNew) {
+    public GameController(GameRepositoryNew gameRepositoryNew, GoalService goalService, TeamRepositoryNew teamRepositoryNew, TeamService teamService, GameService gameService, GoalRepositoryNew goalRepositoryNew, PlayerService playerService) {
         this.gameRepositoryNew = gameRepositoryNew;
         this.goalService = goalService;
         this.teamRepositoryNew = teamRepositoryNew;
         this.teamService = teamService;
         this.gameService = gameService;
         this.goalRepositoryNew = goalRepositoryNew;
+        this.playerService = playerService;
     }
 
     @GetMapping("/game_registration")
@@ -65,11 +68,30 @@ public class GameController {
         return "game_registration_success";
     }
 
-    @GetMapping("/games")
-    public String gamesList(Model model){
+    @GetMapping("/games/{season}")
+    public String gamesList(@PathVariable Long season, Model model){
 
-        List<Game> gameList = (List<Game>) gameRepositoryNew.findAll();
+        List<Game> gameList = gameService.gamesForSeason(season);
         model.addAttribute("gameList",gameList);
+        model.addAttribute("season",season);
+        List<Team> teamList = (List<Team>) teamRepositoryNew.findAll();
+        model.addAttribute("teamList",teamList);
+
+        return "games";
+    }
+
+    @GetMapping("/games/{season}/{teamIdS}")
+    public String gamesListTeam(@PathVariable Long season,@PathVariable String teamIdS, Model model){
+        String sideSelected = teamIdS.substring(teamIdS.length()-1);
+        if (sideSelected.equals("h")){
+            sideSelected = "home";
+        }else sideSelected = "guest";
+
+        Long teamId = Long.valueOf(teamIdS.substring(0,(teamIdS.length()-1)));
+
+        List<Game> gameList = gameService.teamGames(teamId,season,sideSelected);
+        model.addAttribute("gameList",gameList);
+        model.addAttribute("season",season);
 
         return "games";
     }
@@ -90,9 +112,11 @@ public class GameController {
         model.addAttribute("goal",goal);
 
         List<Player> home_players = teamService.getTeamAllPlayersForSeason(game.getHome_team(),game.getSeason());
+        playerService.prijmeniAjmeno(home_players);
         model.addAttribute("home_players", home_players);
 
         List<Player> guest_players = teamService.getTeamAllPlayersForSeason(game.getGuest_team(),game.getSeason());
+        playerService.prijmeniAjmeno(guest_players);
         model.addAttribute("guest_players", guest_players);
 
         List<Goal> goalList = goalService.goalsFromGame(gameId);
@@ -116,9 +140,11 @@ public class GameController {
         model.addAttribute("goal",goal);
 
         List<Player> home_players = teamService.getTeamAllPlayersForSeason(game.getHome_team(),game.getSeason());
+        playerService.prijmeniAjmeno(home_players);
         model.addAttribute("home_players", home_players);
 
         List<Player> guest_players = teamService.getTeamAllPlayersForSeason(game.getGuest_team(),game.getSeason());
+        playerService.prijmeniAjmeno(guest_players);
         model.addAttribute("guest_players", guest_players);
 
         List<Goal> goalList = goalService.goalsFromGame(gameId);
