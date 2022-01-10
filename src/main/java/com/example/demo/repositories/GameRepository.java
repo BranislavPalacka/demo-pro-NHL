@@ -145,7 +145,7 @@ public class GameRepository {
     }
 
     public List<Game> gamesForSeason(Long season){
-        return entityManager.createNativeQuery("SELECT * FROM game WHERE season="+season,Game.class).getResultList();
+        return entityManager.createNativeQuery("SELECT * FROM game WHERE season="+ season +" AND vysledek is null",Game.class).getResultList();
     }
 
     public List<Game> teamGames(Long teamId, Long season, String side){

@@ -122,9 +122,6 @@ public class GameController {
 
         List<Goal> goalList = goalService.goalsFromGame(gameId);
         model.addAttribute("goalList",goalList);
-        for (Goal p:goalList) {
-            System.out.println(p);
-        }
 
         return "game_fill";
     }
@@ -164,10 +161,13 @@ public class GameController {
         model.addAttribute("goal",goal);
 
         List<Player> home_players = teamService.getTeamAllPlayersForSeason(game.getHome_team(),game.getSeason());
+        playerService.prijmeniAjmeno(home_players);
         model.addAttribute("home_players", home_players);
 
         List<Player> guest_players = teamService.getTeamAllPlayersForSeason(game.getGuest_team(),game.getSeason());
+        playerService.prijmeniAjmeno(guest_players);
         model.addAttribute("guest_players", guest_players);
+
 
         List<Goal> goalList = goalService.goalsFromGame(gameId);
         model.addAttribute("goalList",goalList);
