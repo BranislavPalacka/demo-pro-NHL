@@ -32,19 +32,24 @@ public class PlayerRepository {
         return teamNames;
     }
 
-    public String playerNameById(Integer playerID){
+    public String playerNameById(Long playerID){
         return(String) entityManager.createNativeQuery("SELECT name FROM player WHERE id="+playerID).getResultList().get(0);
     }
-    // pozor na sezonu
-    public Long playerTeamById(Integer playerID, String season){
-        Player player = (Player) entityManager.createNativeQuery("SELECT * FROM player WHERE id=" + playerID, Player.class).getResultList().get(0);
-        return player.getTeam_id_2019();
+
+    public Long playerTeamById(Long playerID, String season){
+        Player player = (Player) entityManager.createNativeQuery("SELECT * FROM player WHERE id="+ playerID +" AND team_id_"+ season, Player.class).getResultList().get(0);
+        if (season.equals("2018")) return player.getTeam_id_2018();
+        if (season.equals("2019")) return player.getTeam_id_2019();
+        if (season.equals("2020")) return player.getTeam_id_2020();
+        if (season.equals("2021")) return player.getTeam_id_2021();
+        return null;
     }
 
     public Player lastPayerAdded(){
         Player player = (Player) entityManager.createNativeQuery("SELECT * FROM player ORDER BY id DESC LIMIT 1",Player.class).getResultList().get(0);
         return player;
     }
+
     public List <String> playersTeamsBySeasons(Player player) {
         List<String> teamsBySeasons = new ArrayList<>();
             teamsBySeasons.add(teamService.teamNameById(player.getTeam_id_2018()));

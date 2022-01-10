@@ -126,7 +126,7 @@ public class TeamController {
         String message= "";
 
         if (actionSelected.equals("d")){
-        message ="deleted player " + playerService.playerNameById(Math.toIntExact(playerID));
+        message ="deleted player " + playerService.playerNameById(playerID);
         playerService.removePlayerFromTeamSeason(playerID,Long.valueOf(season));
         }
 

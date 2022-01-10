@@ -72,19 +72,19 @@
                             <td class="col-1">
                                 <select class="form-select" th:field="*{author}" >
                                     <option selected th:value="@{-1}"></option>
-                                    <option th:each="d : ${home_players}" th:value="${d.id}" th:text="${d.name}"></option>
+                                    <option th:each="player : ${home_players}" th:value="${player.id}" th:text="${player.name}"></option>
                                 </select>
                             </td>
                             <td class="col-1">
-                                    <select class="form-select" th:field="*{assistance1}">
-                                        <option selected th:value="@{-1}"></option>
-                                        <option th:each="e : ${home_players}" th:value="${e.id}" th:text="${e.name}"></option>
-                                    </select>
+                                <select class="form-select" th:field="*{assistance1}">
+                                    <option selected th:value="@{-1}"></option>
+                                    <option th:each="player : ${home_players}" th:value="${player.id}" th:text="${player.name}"></option>
+                                </select>
                             </td>
                             <td class="col-1">
                                 <select class="form-select" th:field="*{assistance2}">
                                     <option selected th:value="@{-1}"></option>
-                                    <option th:each="f : ${home_players}" th:value="${f.id}" th:text="${f.name}"></option>
+                                    <option th:each="player : ${home_players}" th:value="${player.id}" th:text="${player.name}"></option>
                                 </select>
                             </td>
                             <td class="col-1">
@@ -114,19 +114,19 @@
                             <td class="col-1">
                                 <select class="form-select" th:field="*{author}" >
                                     <option selected th:value="@{-1}"></option>
-                                    <option th:each="d : ${guest_players}" th:value="${d.id}" th:text="${d.name}"></option>
+                                    <option th:each="player : ${guest_players}" th:value="${player.id}" th:text="${player.name}"></option>
                                 </select>
                             </td>
                             <td class="col-1">
                                 <select class="form-select" th:field="*{assistance1}">
                                     <option selected th:value="@{-1}"></option>
-                                    <option th:each="e : ${guest_players}" th:value="${e.id}" th:text="${e.name}"></option>
+                                    <option th:each="player : ${guest_players}" th:value="${player.id}" th:text="${player.name}"></option>
                                 </select>
                             </td>
                             <td class="col-1">
                                 <select class="form-select" th:field="*{assistance2}">
                                     <option selected th:value="@{-1}"></option>
-                                    <option th:each="f : ${guest_players}" th:value="${f.id}" th:text="${f.name}"></option>
+                                    <option th:each="player : ${guest_players}" th:value="${player.id}" th:text="${player.name}"></option>
                                 </select>
                             </td>
                             <td class="col-1">

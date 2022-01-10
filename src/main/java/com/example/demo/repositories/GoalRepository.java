@@ -39,7 +39,6 @@ public class GoalRepository {
         return entityManager.createNativeQuery("SELECT * FROM goal WHERE game="+gameID+" ORDER BY minute",Goal.class).getResultList();
     }
 
-    // pozor na sezonu
     public Goal saveGoal(Goal goal, Long gameID, String season){
         if (goal.getMinute() != null && goal.getAuthor() !=-1 ){
                 goal.setGame(gameID);

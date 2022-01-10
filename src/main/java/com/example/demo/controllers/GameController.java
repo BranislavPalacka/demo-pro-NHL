@@ -108,8 +108,9 @@ public class GameController {
         Game game = gameRepositoryNew.findById(gameId).get();
         model.addAttribute("game",game);
 
+
         Goal goal = new Goal();
-        model.addAttribute("goal",goal);
+        model.addAttribute("goal",goal);;
 
         List<Player> home_players = teamService.getTeamAllPlayersForSeason(game.getHome_team(),game.getSeason());
         playerService.prijmeniAjmeno(home_players);
@@ -121,16 +122,15 @@ public class GameController {
 
         List<Goal> goalList = goalService.goalsFromGame(gameId);
         model.addAttribute("goalList",goalList);
-
-        String text = "pokus";
-        model.addAttribute("zkouska",text);
+        for (Goal p:goalList) {
+            System.out.println(p);
+        }
 
         return "game_fill";
     }
 
     @GetMapping("/game_fill/{gameId}/{goalId}")
     public String vyplnenaHraVymazaniGolu(@PathVariable Long gameId,@PathVariable Long goalId, Model model){
-
         goalRepositoryNew.deleteById(goalId);
 
         Game game = gameRepositoryNew.findById(gameId).get();
@@ -150,14 +150,13 @@ public class GameController {
         List<Goal> goalList = goalService.goalsFromGame(gameId);
         model.addAttribute("goalList",goalList);
 
-        String text = "pokus";
-        model.addAttribute("zkouska",text);
-
         return "game_fill";
     }
 
     @PostMapping("/game_fill/{gameId}")
     public String get1(@PathVariable Long gameId,@ModelAttribute("goal") Goal vstrelenygoal,Model model) {
+        goalService.goalToSave(vstrelenygoal,gameId,gameRepositoryNew.findById(gameId).get().getSeason().toString());
+
         Game game = gameRepositoryNew.findById(gameId).get();
         model.addAttribute("game",game);
 
@@ -169,8 +168,6 @@ public class GameController {
 
         List<Player> guest_players = teamService.getTeamAllPlayersForSeason(game.getGuest_team(),game.getSeason());
         model.addAttribute("guest_players", guest_players);
-
-        vstrelenygoal = goalService.goalToSave(vstrelenygoal,gameId,(game.getSeason()).toString());
 
         List<Goal> goalList = goalService.goalsFromGame(gameId);
         model.addAttribute("goalList",goalList);

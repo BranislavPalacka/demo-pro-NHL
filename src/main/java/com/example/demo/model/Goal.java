@@ -15,11 +15,11 @@ public class Goal {
 
     private Integer minute;
 
-    private Integer author;
+    private Long author;
 
-    private Integer assistance1;
+    private Long assistance1;
 
-    private Integer assistance2;
+    private Long assistance2;
 
     private Long team;
 
@@ -58,28 +58,36 @@ public class Goal {
         this.minute = minute;
     }
 
-    public Integer getAuthor() {
+    public Long getAuthor() {
         return author;
     }
 
-    public void setAuthor(Integer author) {
+    public void setAuthor(Long author) {
         this.author = author;
     }
 
-    public Integer getAssistance1() {
+    public Long getAssistance1() {
         return assistance1;
     }
 
-    public void setAssistance1(Integer assistance1) {
+    public void setAssistance1(Long assistance1) {
         this.assistance1 = assistance1;
     }
 
-    public Integer getAssistance2() {
+    public Long getAssistance2() {
         return assistance2;
     }
 
-    public void setAssistance2(Integer assistance2) {
+    public void setAssistance2(Long assistance2) {
         this.assistance2 = assistance2;
+    }
+
+    public Long getTeam() {
+        return team;
+    }
+
+    public void setTeam(Long team) {
+        this.team = team;
     }
 
     public String getAuthor_name() {
@@ -104,14 +112,6 @@ public class Goal {
 
     public void setAssistance2_name(String assistance2_name) {
         this.assistance2_name = assistance2_name;
-    }
-
-    public Long getTeam() {
-        return team;
-    }
-
-    public void setTeam(Long team) {
-        this.team = team;
     }
 
     public String getTeam_name() {

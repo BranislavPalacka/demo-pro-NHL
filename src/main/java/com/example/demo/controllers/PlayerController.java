@@ -82,8 +82,6 @@ public class PlayerController {
         model.addAttribute("season",season);
 
 
-//        Team team = (teamRepositoryNew.findById(playerService.lastPayerAdded().getTeam_id_2019())).get();
-
         Player lastAddedPlayer = playerService.lastPayerAdded();
         model.addAttribute("lastAddedPlayer",lastAddedPlayer);
 
@@ -116,7 +114,7 @@ public class PlayerController {
         Long ID = Long.valueOf(id.substring(0,(id.length()-1)));
 
         if (actionSelected.equals("d")){
-            String message = "deleted player: "+playerService.playerNameById(ID.intValue());
+            String message = "deleted player: "+playerService.playerNameById(ID);
             model.addAttribute("message",message);
 
             playerRepositoryNew.deleteById(ID);

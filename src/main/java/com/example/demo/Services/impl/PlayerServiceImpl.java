@@ -20,12 +20,12 @@ public class PlayerServiceImpl implements PlayerService {
     }
 
     @Override
-    public String playerNameById(Integer playerID) {
+    public String playerNameById(Long playerID) {
         return playerRepository.playerNameById(playerID);
     }
 
     @Override
-    public Long playerTeamById(Integer playerID, String season) {
+    public Long playerTeamById(Long playerID, String season) {
         return playerRepository.playerTeamById(playerID, season);
     }
 
