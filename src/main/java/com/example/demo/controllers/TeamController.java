@@ -86,6 +86,26 @@ public class TeamController {
         return "team_all_players_for_season";
     }
 
+//    @GetMapping("/team_all_players_for_season/{season}/{teamId}/{gameId}")
+//    public String teamPlayersAddFromGame (@PathVariable Integer season,@PathVariable Long teamId,@PathVariable Long gameId, Model model){
+//        Team team = teamRepositoryNew.findById(teamId).get();
+//        model.addAttribute("team",team);
+//
+//        List<Player> playersList = teamService.getTeamAllPlayersForSeason(team.getName(),season);
+//        model.addAttribute("listOfPlayers",playersList);
+//
+//        model.addAttribute("gameId",gameId);
+//        model.addAttribute("season",season);
+//
+//        Player player = new Player();
+//        model.addAttribute("playerNew",player);
+//
+//        String message ="";
+//        model.addAttribute("message",message);
+//
+//        return "team_all_players_for_season";
+//    }
+
     @Transactional
     @PostMapping("/team_all_players_for_season/{season}/{teamId}")
     public String teamPlayersAdd (@PathVariable Integer season,@PathVariable Long teamId,@ModelAttribute("playerNew") Player playerToSave, Model model){
