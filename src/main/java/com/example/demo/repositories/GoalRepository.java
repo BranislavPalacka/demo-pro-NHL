@@ -65,6 +65,8 @@ public class GoalRepository {
         }else if(period == 4) {
             goalList = entityManager.createNativeQuery("SELECT * FROM goal WHERE game=" + gameID + " AND minute>59 ORDER BY minute", Goal.class).getResultList();
         }
+
+        if (goalList.isEmpty()) goalList = new ArrayList<>();
         return goalList;
     }
 
@@ -76,4 +78,5 @@ public class GoalRepository {
         }
         return goals.get(goals.size()-1);
     }
+
 }

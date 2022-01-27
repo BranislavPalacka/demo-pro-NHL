@@ -113,15 +113,15 @@ public class GameController {
         model.addAttribute("goal",goal);;
 
         List<Player> home_players = teamService.getTeamAllPlayersForSeason(game.getHome_team(),game.getSeason());
-        playerService.prijmeniAjmeno(home_players);
         model.addAttribute("home_players", home_players);
 
         List<Player> guest_players = teamService.getTeamAllPlayersForSeason(game.getGuest_team(),game.getSeason());
-        playerService.prijmeniAjmeno(guest_players);
         model.addAttribute("guest_players", guest_players);
 
-        List<Goal> goalList = goalService.goalsFromGame(gameId);
-        model.addAttribute("goalList",goalList);
+        model.addAttribute("goalListPeriod1",goalService.goalsForPeriod(gameId,1));
+        model.addAttribute("goalListPeriod2",goalService.goalsForPeriod(gameId,2));
+        model.addAttribute("goalListPeriod3",goalService.goalsForPeriod(gameId,3));
+        model.addAttribute("goalListOvertime",goalService.goalsForPeriod(gameId,4));
 
         String prubeznyVysledek = gameService.prubeznyVysledekZapasu(gameId);
         model.addAttribute("prubeznyVysledek",prubeznyVysledek);
@@ -150,8 +150,10 @@ public class GameController {
         playerService.prijmeniAjmeno(guest_players);
         model.addAttribute("guest_players", guest_players);
 
-        List<Goal> goalList = goalService.goalsFromGame(gameId);
-        model.addAttribute("goalList",goalList);
+        model.addAttribute("goalListPeriod1",goalService.goalsForPeriod(gameId,1));
+        model.addAttribute("goalListPeriod2",goalService.goalsForPeriod(gameId,2));
+        model.addAttribute("goalListPeriod3",goalService.goalsForPeriod(gameId,3));
+        model.addAttribute("goalListOvertime",goalService.goalsForPeriod(gameId,4));
 
         String prubeznyVysledek = gameService.prubeznyVysledekZapasu(gameId);
         model.addAttribute("prubeznyVysledek",prubeznyVysledek);
@@ -177,9 +179,10 @@ public class GameController {
         playerService.prijmeniAjmeno(guest_players);
         model.addAttribute("guest_players", guest_players);
 
-
-        List<Goal> goalList = goalService.goalsFromGame(gameId);
-        model.addAttribute("goalList",goalList);
+        model.addAttribute("goalListPeriod1",goalService.goalsForPeriod(gameId,1));
+        model.addAttribute("goalListPeriod2",goalService.goalsForPeriod(gameId,2));
+        model.addAttribute("goalListPeriod3",goalService.goalsForPeriod(gameId,3));
+        model.addAttribute("goalListOvertime",goalService.goalsForPeriod(gameId,4));
 
         String prubeznyVysledek = gameService.prubeznyVysledekZapasu(gameId);
         model.addAttribute("prubeznyVysledek",prubeznyVysledek);

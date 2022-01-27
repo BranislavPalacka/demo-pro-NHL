@@ -14,7 +14,7 @@
                 <h1>Game - vyplnění informací</h1>
             </div>
             <div class="col" align="center">
-                <a type="button" class="btn btn-outline-success" th:href="@{'http://localhost:8080/game_filled/'+${game.id}}" role="button">ULOŽIT HRU</a>
+                <a type="button" class="btn btn-outline-success" th:href="@{'http://localhost:8080/game_filled/'+${game.id}}" role="button">SAVE GAME</a>
             </div>
         </div>
     </div>
@@ -27,23 +27,23 @@
                     <thead>
                     <tr>
                         <th scope="col" class="col-1">ID</th>
-                        <th scope="col" class="col-1">datum</th>
+                        <th scope="col" class="col-1">date</th>
                         <th scope="col" class="col-1"></th>
-                        <th scope="col" class="col-3">domácí</th>
+                        <th scope="col" class="col-3">home team</th>
                         <th scope="col" class="col-1"></th>
-                        <th scope="col" class="col-3">hosté</th>
+                        <th scope="col" class="col-3">guest team</th>
                         <th scope="col" class="col-1">score</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr>
-                        <td th:text="${game.id}"></td>
-                        <td th:text="${game.date}"></td>
+                        <td class ="h5" th:text="${game.id}"></td>
+                        <td class ="h5" th:text="${game.date}"></td>
                         <td><a type="button" class="btn btn-outline-primary btn-sm" th:href="@{'http://localhost:8080/team_all_players_for_season/'+${game.season}+'/'+${game.home}+'/'+${game.id}}"  role="button">Hráč+</a></td>
                         <td class="h5 text-primary" th:text="${game.home_team}"></td>
                         <td><a type="button" class="btn btn-outline-danger btn-sm" th:href="@{'http://localhost:8080/team_all_players_for_season/'+${game.season}+'/'+${game.guest}+'/'+${game.id}}"  role="button">Hráč+</a></td>
                         <td class="h5 text-danger" th:text="${game.guest_team}"></td>
-                        <td th:text="${prubeznyVysledek}"></td>
+                        <td class="h5" th:text="${prubeznyVysledek}"></td>
                     </tr>
                     </tbody>
                 </table>
@@ -51,9 +51,9 @@
         </div>
     </div>
 
-    <div class="container col-10"><br></div>
+    <br></div>
 
-    <div class="container col-12">
+    <div class="container col-11">
         <div class="row justify-content-center">
             <div class="col">
                 <form method="post" action="#" th:action="@{'http://localhost:8080/game_fill/'+${game.id}}" th:object="${goal}">
@@ -69,29 +69,29 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td class="col-1">
-                                    <input type="text" class="form-control-sm form-control" th:field="*{minute}" />
+                                <td class="col-1" align="left">
+                                    <input type="text" class="form-control-sm form-control my-auto col-8 h5" th:field="*{minute}" />
                                 </td>
-                                <td class="col-1">
-                                    <select class="form-select" th:field="*{author}" >
+                                <td class="col-2">
+                                    <select class="form-select col-12 my-auto h5" th:field="*{author}" >
                                         <option selected th:value="@{-1}"></option>
                                         <option th:each="player : ${home_players}" th:value="${player.id}" th:text="${player.name}"></option>
                                     </select>
                                 </td>
-                                <td class="col-1">
-                                    <select class="form-select" th:field="*{assistance1}">
+                                <td class="col-2">
+                                    <select class="form-select col-12 my-auto h5" th:field="*{assistance1}">
                                         <option selected th:value="@{-1}"></option>
                                         <option th:each="player : ${home_players}" th:value="${player.id}" th:text="${player.name}"></option>
                                     </select>
                                 </td>
-                                <td class="col-1">
-                                    <select class="form-select" th:field="*{assistance2}">
+                                <td class="col-2">
+                                    <select class="form-select col-12 my-auto h5" th:field="*{assistance2}">
                                         <option selected th:value="@{-1}"></option>
                                         <option th:each="player : ${home_players}" th:value="${player.id}" th:text="${player.name}"></option>
                                     </select>
                                 </td>
-                                <td class="col-1">
-                                    <button class="btn btn-primary btn-sm" type="submit">Uložit</button>
+                                <td class="col-1" align="right">
+                                    <button class="btn btn-primary btn-sm mx-auto col-12 h5" type="submit">Save</button>
                                 </td>
                             </tr>
                         </tbody>
@@ -113,29 +113,29 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td class="col-1">
-                                    <input type="text" class="form-control form-control-sm" th:field="*{minute}" />
+                                <td class="col-1" align="left">
+                                    <input type="text" class="form-control-sm form-control my-auto col-8 h5" th:field="*{minute}" />
                                 </td>
-                                <td class="col-1">
-                                    <select class="form-select" th:field="*{author}" >
+                                <td class="col-2">
+                                    <select class="form-select col-12 my-auto h5" th:field="*{author}" >
                                         <option selected th:value="@{-1}"></option>
-                                        <option th:each="player : ${guest_players}" th:value="${player.id}" th:text="${player.name}"></option>
+                                        <option th:each="player : ${home_players}" th:value="${player.id}" th:text="${player.name}"></option>
                                     </select>
                                 </td>
-                                <td class="col-1">
-                                    <select class="form-select" th:field="*{assistance1}">
+                                <td class="col-2">
+                                    <select class="form-select col-12 my-auto h5" th:field="*{assistance1}">
                                         <option selected th:value="@{-1}"></option>
-                                        <option th:each="player : ${guest_players}" th:value="${player.id}" th:text="${player.name}"></option>
+                                        <option th:each="player : ${home_players}" th:value="${player.id}" th:text="${player.name}"></option>
                                     </select>
                                 </td>
-                                <td class="col-1">
-                                    <select class="form-select" th:field="*{assistance2}">
+                                <td class="col-2">
+                                    <select class="form-select col-12 my-auto h5" th:field="*{assistance2}">
                                         <option selected th:value="@{-1}"></option>
-                                        <option th:each="player : ${guest_players}" th:value="${player.id}" th:text="${player.name}"></option>
+                                        <option th:each="player : ${home_players}" th:value="${player.id}" th:text="${player.name}"></option>
                                     </select>
                                 </td>
-                                <td class="col-1">
-                                    <button class="btn btn-danger btn-sm" type="submit">Uložit</button>
+                                <td class="col-1" align="right">
+                                    <button class="btn btn-danger btn-sm mx-auto col-12 h5" type="submit">Save</button>
                                 </td>
                             </tr>
                         </tbody>
@@ -148,8 +148,7 @@
     </br></br>
     <div class="container col-10">
         <div class="row">
-            <div class="col-10">
-                <h4>Game - goals</h4>
+            <div class="col-8">
                 <table class="table table-striped table-hover">
                     <thead>
                         <tr>
@@ -162,17 +161,78 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr th:each="goal : ${goalList}">
-                            <td th:text="${goal.minute}"></td>
-                            <td th:text="${goal.author_name}"></td>
-                            <td th:text="${goal.assistance1_name}"></td>
-                            <td th:text="${goal.assistance2_name}"></td>
-                            <td th:text="${goal.team_name}"></td>
-                            <td>
+                        <tr th:each="goal : ${goalListPeriod1}">
+                            <td th:if="${goal.id == lastGoalId}" class="text-success col-1 h5" th:text="${goal.minute}" ></td>
+                            <td th:unless="${goal.id == lastGoalId}" class="col-1" th:text="${goal.minute}" ></td>
+                            <td class="col-2" th:text="${goal.author_name}"></td>
+                            <td class="col-2" th:text="${goal.assistance1_name}"></td>
+                            <td class="col-2" th:text="${goal.assistance2_name}" ></td>
+                            <td th:text="${goal.team_name}" th:if="${goal.team == game.home}" class="text-primary col-2"></td>
+                            <td th:text="${goal.team_name}" th:if="${goal.team == game.guest}" class="text-danger col-2"></td>
+                            <td class="col-1">
                                 <a class="btn btn-sm btn-outline-danger" th:href="@{'http://localhost:8080/game_fill/'+${game.id}+'/'+${goal.id}}" role="button">DEL</a>
                             </td>
-                            <td th:if="${goal.id == lastGoalId}" class="table-success">
-                                <span th:if="${goal.id == lastGoalId}"></span>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-8">
+                <table class="table table-striped table-hover">
+                    <tbody>
+                        <tr th:each="goal : ${goalListPeriod2}">
+                            <td th:if="${goal.id == lastGoalId}" class="text-success col-1 h5" th:text="${goal.minute}" ></td>
+                            <td th:unless="${goal.id == lastGoalId}" class="col-1" th:text="${goal.minute}" ></td>
+                            <td class="col-2" th:text="${goal.author_name}"></td>
+                            <td class="col-2" th:text="${goal.assistance1_name}"></td>
+                            <td class="col-2" th:text="${goal.assistance2_name}" ></td>
+                            <td th:text="${goal.team_name}" th:if="${goal.team == game.home}" class="text-primary col-2"></td>
+                            <td th:text="${goal.team_name}" th:if="${goal.team == game.guest}" class="text-danger col-2"></td>
+                            <td class="col-1">
+                                <a class="btn btn-sm btn-outline-danger" th:href="@{'http://localhost:8080/game_fill/'+${game.id}+'/'+${goal.id}}" role="button">DEL</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-8">
+                <table class="table table-striped table-hover">
+                    <tbody>
+                    <tbody>
+                    <tr th:each="goal : ${goalListPeriod3}">
+                        <td th:if="${goal.id == lastGoalId}" class="text-success col-1 h5" th:text="${goal.minute}" ></td>
+                        <td th:unless="${goal.id == lastGoalId}" class="col-1" th:text="${goal.minute}" ></td>
+                        <td class="col-2" th:text="${goal.author_name}"></td>
+                        <td class="col-2" th:text="${goal.assistance1_name}"></td>
+                        <td class="col-2" th:text="${goal.assistance2_name}" ></td>
+                        <td th:text="${goal.team_name}" th:if="${goal.team == game.home}" class="text-primary col-2"></td>
+                        <td th:text="${goal.team_name}" th:if="${goal.team == game.guest}" class="text-danger col-2"></td>
+                        <td class="col-1">
+                            <a class="btn btn-sm btn-outline-danger" th:href="@{'http://localhost:8080/game_fill/'+${game.id}+'/'+${goal.id}}" role="button">DEL</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-8">
+                <table class="table table-striped table-hover">
+                    <tbody>
+                    <tbody>
+                        <tr th:each="goal : ${goalListOvertime}">
+                            <td th:if="${goal.id == lastGoalId}" class="text-success col-1 h5" th:text="${goal.minute}" ></td>
+                            <td th:unless="${goal.id == lastGoalId}" class="col-1" th:text="${goal.minute}" ></td>
+                            <td class="col-2" th:text="${goal.author_name}"></td>
+                            <td class="col-2" th:text="${goal.assistance1_name}"></td>
+                            <td class="col-2" th:text="${goal.assistance2_name}" ></td>
+                            <td th:text="${goal.team_name}" th:if="${goal.team == game.home}" class="text-primary col-2"></td>
+                            <td th:text="${goal.team_name}" th:if="${goal.team == game.guest}" class="text-danger col-2"></td>
+                            <td class="col-1">
+                                <a class="btn btn-sm btn-outline-danger" th:href="@{'http://localhost:8080/game_fill/'+${game.id}+'/'+${goal.id}}" role="button">DEL</a>
                             </td>
                         </tr>
                     </tbody>

@@ -1,5 +1,6 @@
 package com.example.demo.repositories;
 
+import com.example.demo.Services.PlayerService;
 import com.example.demo.model.Game;
 import com.example.demo.model.Player;
 import com.example.demo.model.Team;
@@ -16,6 +17,7 @@ import javax.persistence.PersistenceContext;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Date;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,14 +28,10 @@ public class TeamRepository {
     private final EntityManager entityManager;
 
     private final GameRepositoryNew gameRepositoryNew;
-    private final TeamRepositoryNew teamRepositoryNew;
-    private final PlayerRepositoryNew playerRepositoryNew;
 
-    public TeamRepository(EntityManager entityManager, GameRepositoryNew gameRepositoryNew, TeamRepositoryNew teamRepositoryNew, PlayerRepositoryNew playerRepositoryNew) {
+    public TeamRepository(EntityManager entityManager, GameRepositoryNew gameRepositoryNew) {
         this.entityManager = entityManager;
         this.gameRepositoryNew = gameRepositoryNew;
-        this.teamRepositoryNew = teamRepositoryNew;
-        this.playerRepositoryNew = playerRepositoryNew;
     }
 
     public List<Team> queryForTeams() {
@@ -68,6 +66,15 @@ public class TeamRepository {
 
     public List<Player> teamAllPlayersForSeason(String teamName, Integer season) {
         List<Player> playersList = entityManager.createNativeQuery("SELECT * FROM player WHERE team_id_" + season + "=" + teamIdByName(teamName), Player.class).getResultList();
+
+        for (Player player : playersList) {
+            int poloha =  (player.getName().indexOf(' ') + 1);
+            String prijmeni = player.getName().substring(poloha);
+            String jmeno = player.getName().substring(0,poloha-1);
+            player.setName(prijmeni+" "+jmeno);
+        }
+
+        playersList.sort(Comparator.comparing(Player::getName));
         return playersList;
     }
 

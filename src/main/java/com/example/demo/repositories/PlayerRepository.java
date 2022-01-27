@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 @Component
@@ -137,6 +138,7 @@ public class PlayerRepository {
         entityManager.merge(player);
     }
 
+    // zastaralá a nepoužívaná
     public List<Player> prijmeniAjmeno(List<Player> playersList){
         for (Player player : playersList) {
             int poloha =  (player.getName().indexOf(' ') + 1);
