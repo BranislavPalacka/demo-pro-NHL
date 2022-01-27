@@ -17,4 +17,5 @@ public interface GameService {
     Game gameSave(Long gameId);
     List<Game> gamesForSeason(Long season);
     List<Game> teamGames(Long teamId, Long season, String side);
+    String prubeznyVysledekZapasu (Long gameId);
 }

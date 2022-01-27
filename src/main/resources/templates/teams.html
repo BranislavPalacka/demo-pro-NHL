@@ -34,7 +34,8 @@
                     <tbody>
                         <tr th:each="team : ${Atlantic}">
                             <td>
-                                <a th:href="@{'http://localhost:8080/team_all_players_for_season/'+${season}+'/'+${team.id}}" class="link-dark text-decoration-none" th:text="${team.name}"></a>
+                                <a th:href="@{'http://localhost:8080/team_all_players_for_season/'+${season}+'/'+${team.id}+'/0'}"
+                                   class="link-dark text-decoration-none" th:text="${team.name}"></a>
                             </td>
                         </tr>
                     </tbody>
@@ -50,7 +51,8 @@
                     <tbody>
                         <tr th:each="team : ${Metropolitan}">
                             <td>
-                                <a th:href="@{'http://localhost:8080/team_all_players_for_season/'+${season}+'/'+${team.id}}" class="link-dark text-decoration-none" th:text="${team.name}"></a>
+                                <a th:href="@{'http://localhost:8080/team_all_players_for_season/'+${season}+'/'+${team.id}+'/0'}"
+                                   class="link-dark text-decoration-none" th:text="${team.name}"></a>
                             </td>
                         </tr>
                     </tbody>
@@ -71,7 +73,8 @@
                     <tbody>
                         <tr th:each="team : ${Central}">
                             <td>
-                                <a th:href="@{'http://localhost:8080/team_all_players_for_season/'+${season}+'/'+${team.id}}" class="link-dark text-decoration-none" th:text="${team.name}"></a>
+                                <a th:href="@{'http://localhost:8080/team_all_players_for_season/'+${season}+'/'+${team.id}+'/0'}"
+                                   class="link-dark text-decoration-none" th:text="${team.name}"></a>
                             </td>
                         </tr>
                     </tbody>
@@ -87,7 +90,8 @@
                     <tbody>
                         <tr th:each="team : ${Pacific}">
                             <td>
-                                <a th:href="@{'http://localhost:8080/team_all_players_for_season/'+${season}+'/'+${team.id}}" class="link-dark text-decoration-none" th:text="${team.name}"></a>
+                                <a th:href="@{'http://localhost:8080/team_all_players_for_season/'+${season}+'/'+${team.id}+'/0'}"
+                                   class="link-dark text-decoration-none" th:text="${team.name}"></a>
                             </td>
                         </tr>
                     </tbody>

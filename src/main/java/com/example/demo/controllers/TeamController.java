@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.persistence.EntityManager;
 import java.util.Arrays;
@@ -67,8 +68,8 @@ public class TeamController {
         return "team_registration_success";
     }
 
-    @GetMapping("/team_all_players_for_season/{season}/{teamId}")
-    public String teamPlayers (@PathVariable Integer season,@PathVariable Long teamId,Model model){
+    @GetMapping("/team_all_players_for_season/{season}/{teamId}/{gameId}")
+    public String teamPlayers (@PathVariable Integer season,@PathVariable Long teamId,@PathVariable Long gameId,Model model){
         Team team = teamRepositoryNew.findById(teamId).get();
         model.addAttribute("team",team);
 
@@ -86,30 +87,13 @@ public class TeamController {
         return "team_all_players_for_season";
     }
 
-//    @GetMapping("/team_all_players_for_season/{season}/{teamId}/{gameId}")
-//    public String teamPlayersAddFromGame (@PathVariable Integer season,@PathVariable Long teamId,@PathVariable Long gameId, Model model){
-//        Team team = teamRepositoryNew.findById(teamId).get();
-//        model.addAttribute("team",team);
-//
-//        List<Player> playersList = teamService.getTeamAllPlayersForSeason(team.getName(),season);
-//        model.addAttribute("listOfPlayers",playersList);
-//
-//        model.addAttribute("gameId",gameId);
-//        model.addAttribute("season",season);
-//
-//        Player player = new Player();
-//        model.addAttribute("playerNew",player);
-//
-//        String message ="";
-//        model.addAttribute("message",message);
-//
-//        return "team_all_players_for_season";
-//    }
-
     @Transactional
-    @PostMapping("/team_all_players_for_season/{season}/{teamId}")
-    public String teamPlayersAdd (@PathVariable Integer season,@PathVariable Long teamId,@ModelAttribute("playerNew") Player playerToSave, Model model){
+    @PostMapping("/team_all_players_for_season/{season}/{teamId}/{gameId}")
+    public String teamPlayersAdd (@PathVariable Integer season,@PathVariable Long teamId,@PathVariable Long gameId,
+                                  @ModelAttribute("playerNew")
+            Player playerToSave, Model model){
         String message ="";
+//        System.out.println(gameId);
 
         model.addAttribute("season",season);
 
@@ -127,6 +111,12 @@ public class TeamController {
             message = "saved player - "+playerToSave.getName();
         }
 
+        if (gameId != 0){
+//            String returnAddress = "game_fill/"+gameId;
+//            System.out.println(returnAddress);
+            return "redirect:/game_fill/"+gameId;
+        }
+
         model.addAttribute("message",message);
 
         List<Player> playersList = teamService.getTeamAllPlayersForSeason(team.getName(),season);
@@ -139,8 +129,9 @@ public class TeamController {
     }
 
     @Transactional
-    @GetMapping("/team_all_players_for_season/{season}/{teamId}/{playerId}")
-    public String teamPlayersChange (@PathVariable Integer season,@PathVariable Long teamId,@PathVariable String playerId,Model model){
+    @GetMapping("/team_all_players_for_season/{season}/{teamId}/{gameId}/{playerId}")
+    public String teamPlayersChange (@PathVariable Integer season,@PathVariable Long teamId,@PathVariable Long gameId,
+                                     @PathVariable String playerId,Model model){
         String actionSelected = playerId.substring(playerId.length()-1);
         Long playerID = Long.valueOf(playerId.substring(0,(playerId.length()-1)));
         String message= "";
@@ -162,7 +153,6 @@ public class TeamController {
         model.addAttribute("listOfPlayers",playersList);
 
         model.addAttribute("season",season);
-
 
         return "team_all_players_for_season";
     }

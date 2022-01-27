@@ -18,10 +18,10 @@
             <h2><span th:text="@{${team.name} +' | players | season '+ ${season} + ' | count: ' +${listOfPlayers.size()}}"></span></h2>
         </div>
         <div>
-            <a class="btn btn-outline-primary" th:href="@{'http://localhost:8080/team_all_players_for_season/2018/'+${team.id}}" role="button">2018</a>
-            <a class="btn btn-outline-primary" th:href="@{'http://localhost:8080/team_all_players_for_season/2019/'+${team.id}}" role="button">2019</a>
-            <a class="btn btn-outline-primary disabled" th:href="@{'http://localhost:8080/team_all_players_for_season/2020/'+${team.id}}" role="button" aria-disabled="true">2020</a>
-            <a class="btn btn-outline-primary" th:href="@{'http://localhost:8080/team_all_players_for_season/2021/'+${team.id}}" role="button">2021</a>
+            <a class="btn btn-outline-primary" th:href="@{'http://localhost:8080/team_all_players_for_season/2018/'+${team.id}+'/0'}" role="button">2018</a>
+            <a class="btn btn-outline-primary" th:href="@{'http://localhost:8080/team_all_players_for_season/2019/'+${team.id}+'/0'}" role="button">2019</a>
+            <a class="btn btn-outline-primary disabled" th:href="@{'http://localhost:8080/team_all_players_for_season/2020/'+${team.id}+'/0'}" role="button" aria-disabled="true">2020</a>
+            <a class="btn btn-outline-primary" th:href="@{'http://localhost:8080/team_all_players_for_season/2021/'+${team.id}+'/0'}" role="button">2021</a>
             <a class="btn btn-outline-warning" th:href="@{'http://localhost:8080/teams/'+${season}}" role="button">All teams</a>
         </div>
     </div>
@@ -38,7 +38,7 @@
                         <tr th:each="player : ${listOfPlayers}">
                             <td th:text="${player.name}"></td>
                             <td>
-                                <a class="btn btn-sm btn-outline-danger" th:href="@{'http://localhost:8080/team_all_players_for_season/'+${season}+'/'+${team.id}+'/'+${player.id}+'d'}" role="button">DEL</a>
+                                <a class="btn btn-sm btn-outline-danger" th:href="@{'http://localhost:8080/team_all_players_for_season/'+${season}+'/'+${team.id}+'/'+${gameId}+'/'+${player.id}+'d'}" role="button">DEL</a>
                             </td>
                         </tr>
                     </tbody>
@@ -46,7 +46,8 @@
             </div>
             <div class="col-1"></div>
             <div class="col">
-                <form  method="post" action="#" th:action="@{'http://localhost:8080/team_all_players_for_season/'+${season}+'/'+${team.id}}" th:object="${playerNew}">
+                <form  method="post" action="#" th:action="@{'http://localhost:8080/team_all_players_for_season/'+${season}+'/'+${team.id}+'/'+${gameId}}"
+                       th:object="${playerNew}">
                     <div class="row row-cols">
                         <table class="table table-striped">
                             <thead>

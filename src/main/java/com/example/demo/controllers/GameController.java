@@ -109,7 +109,6 @@ public class GameController {
         Game game = gameRepositoryNew.findById(gameId).get();
         model.addAttribute("game",game);
 
-
         Goal goal = new Goal();
         model.addAttribute("goal",goal);;
 
@@ -123,6 +122,12 @@ public class GameController {
 
         List<Goal> goalList = goalService.goalsFromGame(gameId);
         model.addAttribute("goalList",goalList);
+
+        String prubeznyVysledek = gameService.prubeznyVysledekZapasu(gameId);
+        model.addAttribute("prubeznyVysledek",prubeznyVysledek);
+
+        Long lastGoalId = goalService.lastGoalFromGame(gameId).getId();
+        model.addAttribute("lastGoalId",lastGoalId);
 
         return "game_fill";
     }
@@ -148,6 +153,9 @@ public class GameController {
         List<Goal> goalList = goalService.goalsFromGame(gameId);
         model.addAttribute("goalList",goalList);
 
+        String prubeznyVysledek = gameService.prubeznyVysledekZapasu(gameId);
+        model.addAttribute("prubeznyVysledek",prubeznyVysledek);
+
         return "game_fill";
     }
 
@@ -172,6 +180,9 @@ public class GameController {
 
         List<Goal> goalList = goalService.goalsFromGame(gameId);
         model.addAttribute("goalList",goalList);
+
+        String prubeznyVysledek = gameService.prubeznyVysledekZapasu(gameId);
+        model.addAttribute("prubeznyVysledek",prubeznyVysledek);
 
         return "game_fill";
     }

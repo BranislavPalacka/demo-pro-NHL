@@ -70,4 +70,9 @@ public class GameServiceImpl implements GameService {
     public List<Game> teamGames(Long teamId, Long season, String side) {
         return gameRepository.teamGames(teamId,season,side);
     }
+
+    @Override
+    public String prubeznyVysledekZapasu(Long gameId) {
+        return gameRepository.prubeznyVysledekZapasu(gameId);
+    }
 }

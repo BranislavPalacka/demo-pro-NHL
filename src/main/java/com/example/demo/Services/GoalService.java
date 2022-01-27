@@ -10,4 +10,5 @@ public interface GoalService {
     List<Goal> goalsFromGame(Long gameID);
     Goal goalToSave (Goal goal,Long gameID,String season);
     List<Goal> goalsForPeriod(Long gameID, Integer period);
+    Goal lastGoalFromGame(Long gameID);
 }

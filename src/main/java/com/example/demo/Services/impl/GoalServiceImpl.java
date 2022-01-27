@@ -43,4 +43,9 @@ public class GoalServiceImpl implements GoalService {
     public List<Goal> goalsForPeriod(Long gameID, Integer period) {
         return goalRepository.goalsForPeriod(gameID, period);
     }
+
+    @Override
+    public Goal lastGoalFromGame(Long gameID) {
+        return goalRepository.lastGoalFromGame(gameID);
+    }
 }

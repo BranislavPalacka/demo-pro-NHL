@@ -153,4 +153,11 @@ public class GameRepository {
 
         return entityManager.createNativeQuery("SELECT * FROM game WHERE guest="+ teamId +" AND season="+ season,Game.class ).getResultList();
     }
+
+    public String prubeznyVysledekZapasu (Long gameId){
+        Game game = gameRepositoryNew.findById(gameId).get();
+        int homeTeamGoals = entityManager.createNativeQuery("SELECT * FROM goal WHERE game="+gameId+" AND team="+game.getHome()).getResultList().size();
+        int guestTeamGoals = entityManager.createNativeQuery("SELECT * FROM goal WHERE game="+gameId+" AND team="+game.getGuest()).getResultList().size();
+        return homeTeamGoals+":"+guestTeamGoals;
+    }
 }

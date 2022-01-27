@@ -67,4 +67,13 @@ public class GoalRepository {
         }
         return goalList;
     }
+
+    public Goal lastGoalFromGame(Long gameID){
+        List<Goal> goals = entityManager.createNativeQuery("SELECT * FROM goal WHERE game="+ gameID,Goal.class).getResultList();
+        if (goals.isEmpty()) {
+            Goal emptyGoal = new Goal();
+            return emptyGoal;
+        }
+        return goals.get(goals.size()-1);
+    }
 }
