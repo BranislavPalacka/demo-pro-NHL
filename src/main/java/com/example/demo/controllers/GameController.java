@@ -8,15 +8,18 @@ import com.example.demo.model.Game;
 import com.example.demo.model.Goal;
 import com.example.demo.model.Player;
 import com.example.demo.model.Team;
+import com.example.demo.repositories.GameRepository;
 import com.example.demo.repositories.GameRepositoryNew;
 import com.example.demo.repositories.GoalRepositoryNew;
 import com.example.demo.repositories.TeamRepositoryNew;
+import com.example.demo.series.serie3;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 public class GameController {
@@ -28,8 +31,9 @@ public class GameController {
     private final GameService gameService;
     private final GoalRepositoryNew goalRepositoryNew;
     private final PlayerService playerService;
+    private final GameRepository gameRepository;
 
-    public GameController(GameRepositoryNew gameRepositoryNew, GoalService goalService, TeamRepositoryNew teamRepositoryNew, TeamService teamService, GameService gameService, GoalRepositoryNew goalRepositoryNew, PlayerService playerService) {
+    public GameController(GameRepositoryNew gameRepositoryNew, GoalService goalService, TeamRepositoryNew teamRepositoryNew, TeamService teamService, GameService gameService, GoalRepositoryNew goalRepositoryNew, PlayerService playerService, GameRepository gameRepository) {
         this.gameRepositoryNew = gameRepositoryNew;
         this.goalService = goalService;
         this.teamRepositoryNew = teamRepositoryNew;
@@ -37,6 +41,7 @@ public class GameController {
         this.gameService = gameService;
         this.goalRepositoryNew = goalRepositoryNew;
         this.playerService = playerService;
+        this.gameRepository = gameRepository;
     }
 
     @GetMapping("/game_registration")
@@ -75,8 +80,6 @@ public class GameController {
         List<Game> gameList = gameService.gamesForSeason(season);
         model.addAttribute("gameList",gameList);
         model.addAttribute("season",season);
-        List<Team> teamList = (List<Team>) teamRepositoryNew.findAll();
-        model.addAttribute("teamList",teamList);
 
         return "games";
     }
@@ -192,8 +195,8 @@ public class GameController {
 
 
 
-    @GetMapping("/game_filled/{gameId}")
-    public String vyplnenaHra(@PathVariable Long gameId, Model model){
+    @GetMapping("/game_filled/{gameId}/{samostatneNajezdy}")
+    public String vyplnenaHra(@PathVariable Long gameId,@PathVariable Integer samostatneNajezdy, Model model){
 
         List<Goal> goalListFirstPeriod = goalService.goalsForPeriod(gameId,1);
         model.addAttribute("goalListFirstPeriod",goalListFirstPeriod);
@@ -204,10 +207,36 @@ public class GameController {
         List<Goal> goalListOvertime = goalService.goalsForPeriod(gameId,4);
         model.addAttribute("goalListOvertime",goalListOvertime);
 
-        Game game = gameService.gameSave(gameId);
+        Game game = gameService.gameSave(gameId, samostatneNajezdy);
         model.addAttribute("game",game);
 
         return "game_filled";
+    }
+
+    @GetMapping("/games_test")
+    public String gamesListTest(Model model){
+        String strana ="home";
+
+        int pocet = 0;
+        int pocetTeamu = 0;
+        List <serie3> serie3List = new ArrayList<>();
+
+        List<Game> gameList = new ArrayList<>();
+        List<Team> teamList = teamService.getAllTeamsForSeason(2018L);
+        pocetTeamu = teamList.size();
+        for (Team team : teamList) {
+            gameList = gameService.teamGames(team.getId(),2018L,strana);
+            serie3List = gameService.serie3List(gameList, strana);
+            pocet += serie3List.size();
+        }
+        model.addAttribute("gameList",gameList);
+
+        System.out.println("Celek teamu: "+pocetTeamu);
+        System.out.println("Celek sérií: "+pocet);
+        System.out.println("průměr: "+pocet/pocetTeamu);
+
+
+        return "games_test";
     }
 
 }

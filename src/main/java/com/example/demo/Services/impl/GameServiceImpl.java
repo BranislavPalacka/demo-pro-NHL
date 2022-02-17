@@ -6,6 +6,7 @@ import com.example.demo.model.Goal;
 import com.example.demo.model.Team;
 import com.example.demo.repositories.GameRepository;
 import com.example.demo.repositories.GameRepositoryNew;
+import com.example.demo.series.serie3;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -42,8 +43,8 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public Integer gameBet(Long gameId) {
-        return gameRepository.gameBet(gameId);
+    public Integer gameBet(Long gameId, Integer samostatneNajezdy) {
+        return gameRepository.gameBet(gameId,samostatneNajezdy);
     }
 
     @Override
@@ -52,13 +53,13 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public String gameResult(Long gameId) {
-        return gameRepository.gameResult(gameId);
+    public String gameResult(Long gameId, Integer samostatneNajezdy) {
+        return gameRepository.gameResult(gameId,samostatneNajezdy);
     }
 
     @Override
-    public Game gameSave(Long gameId) {
-        return gameRepository.gameSave(gameId);
+    public Game gameSave(Long gameId, Integer samostatneNajezdy) {
+        return gameRepository.gameSave(gameId,samostatneNajezdy);
     }
 
     @Override
@@ -74,5 +75,10 @@ public class GameServiceImpl implements GameService {
     @Override
     public String prubeznyVysledekZapasu(Long gameId) {
         return gameRepository.prubeznyVysledekZapasu(gameId);
+    }
+
+    @Override
+    public List<serie3> serie3List(List<Game> gameList, String strana) {
+        return gameRepository.serie3List(gameList,strana);
     }
 }

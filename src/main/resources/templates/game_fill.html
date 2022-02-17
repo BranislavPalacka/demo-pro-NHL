@@ -14,7 +14,9 @@
                 <h1>Game - vyplnění informací</h1>
             </div>
             <div class="col" align="center">
-                <a type="button" class="btn btn-outline-success" th:href="@{'http://localhost:8080/game_filled/'+${game.id}}" role="button">SAVE GAME</a>
+                <a type="button" class="btn btn-success" th:href="@{'http://localhost:8080/game_filled/'+${game.id}+'/0'}" role="button">SAVE GAME</a>
+                <a type="button" class="btn btn-outline-primary" th:href="@{'http://localhost:8080/game_filled/'+${game.id}+'/1'}" role="button">SN HOME</a>
+                <a type="button" class="btn btn-outline-danger" th:href="@{'http://localhost:8080/game_filled/'+${game.id}+'/2'}" role="button">SN GUST</a>
             </div>
         </div>
     </div>

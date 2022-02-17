@@ -62,4 +62,9 @@ public class TeamServiceImpl implements TeamService {
     public String teamNameById(Long id) {
         return teamRepository.teamNameById(id);
     }
+
+    @Override
+    public List<Team> getAllTeamsForSeason(Long season) {
+        return teamRepository.getAllTeamsForSeason(season);
+    }
 }

@@ -110,4 +110,7 @@ public class TeamRepository {
         }
     }
 
+    public List<Team> getAllTeamsForSeason (Long season){
+        return entityManager.createNativeQuery("SELECT * FROM team where division_2018 IS NOT null",Team.class).getResultList();
+    }
 }

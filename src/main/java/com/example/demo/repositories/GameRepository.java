@@ -4,6 +4,7 @@ import com.example.demo.Services.GoalService;
 import com.example.demo.model.Game;
 import com.example.demo.model.Goal;
 import com.example.demo.model.Team;
+import com.example.demo.series.serie3;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -88,7 +89,7 @@ public class GameRepository {
         return result;
     }
 
-    public Integer gameBet(Long gameId){
+    public Integer gameBet(Long gameId, Integer samostatneNajezdy){
         Integer homeID = gameTeamID(gameId,"home");
         Integer guestID = gameTeamID(gameId,"guest");
 
@@ -106,10 +107,14 @@ public class GameRepository {
             if(home_goals>guest_goals) result=10;
             if(home_goals<guest_goals) result=20;
         }
+        // samostatne najezdy
+        if (samostatneNajezdy ==1) result=10;
+        if (samostatneNajezdy ==2) result=20;
+
         return result;
     }
 
-    public String gameResult(Long gameId){
+    public String gameResult(Long gameId, Integer samostatneNajezdy){
         Integer homeID = gameTeamID(gameId,"home");
         Integer guestID = gameTeamID(gameId,"guest");
 
@@ -122,13 +127,16 @@ public class GameRepository {
                 .count();
 
         Game game = gameRepositoryNew.findById(gameId).get();
+
         if (game.getProdlouzeni4sazka() != 0) return home_goals +":"+ guest_goals + "p";
+        if (samostatneNajezdy ==1) return (home_goals+1) +":"+ guest_goals + "n";
+        if (samostatneNajezdy ==2) return home_goals +":"+ (guest_goals+1) + "n";
 
         return home_goals+":"+guest_goals;
     }
 
     @Transactional
-    public Game gameSave(Long gameId) {
+    public Game gameSave(Long gameId, Integer samostatneNajezdy) {
         Game game = gameRepositoryNew.findById(gameId).get();
 
         game.setTretina1sazka(periodBet(gameId,1));
@@ -139,8 +147,8 @@ public class GameRepository {
         game.setTretina2vysledek(periodResult(gameId,2));
         game.setTretina3vysledek(periodResult(gameId,3));
         game.setProdlouzeni4vysledek(periodResult(gameId,4));
-        game.setVysledek_sazka(gameBet(gameId));
-        game.setVysledek(gameResult(gameId));
+        game.setVysledek_sazka(gameBet(gameId, samostatneNajezdy));
+        game.setVysledek(gameResult(gameId, samostatneNajezdy));
 
         return game;
     }
@@ -161,4 +169,59 @@ public class GameRepository {
         int guestTeamGoals = entityManager.createNativeQuery("SELECT * FROM goal WHERE game="+gameId+" AND team="+game.getGuest()).getResultList().size();
         return homeTeamGoals+":"+guestTeamGoals;
     }
+
+    //vyřeš si kdyžtak posunutí o víc než 1 opačný zápas
+    public List<serie3> serie3List(List<Game> gameList, String strana){
+        List<serie3> serie3s = new ArrayList<>();
+
+        if (strana == "home"){
+            System.out.println(gameList.get(0).getHome_team() +" - home");
+            for (int i=0;i<gameList.size()-2;i++) {
+                if (gameList.get(i).getRound_home() + 1 == gameList.get(i + 1).getRound_home() && //zjisti zda jsou zapasy za sebou
+                        gameList.get(i).getRound_home() + 2 == gameList.get(i + 2).getRound_home()) {
+
+                    serie3 serie = new serie3(gameList.get(i), gameList.get(i + 1), gameList.get(i + 2));
+                    serie3s.add(serie);
+
+                    System.out.println(gameList.get(i).getRound_home() + " " + gameList.get(i + 1).getRound_home() + " " + gameList.get(i + 2).getRound_home());
+
+                    // hleda další serii
+                    i = i + 2;
+                    for (int j = i; j < gameList.size() - 2; j++) {
+                        if (gameList.get(j).getRound_home() + 1 != gameList.get(j + 1).getRound_home()) {
+                            i = j;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        if (strana == "guest"){
+            System.out.println(gameList.get(0).getGuest_team() +" - guest");
+            for (int i=0;i<gameList.size()-2;i++) {
+                if (gameList.get(i).getRound_guest() + 1 == gameList.get(i + 1).getRound_guest() && //zjisti zda jsou zapasy za sebou
+                        gameList.get(i).getRound_guest() + 2 == gameList.get(i + 2).getRound_guest()) {
+
+                    serie3 serie = new serie3(gameList.get(i), gameList.get(i + 1), gameList.get(i + 2));
+                    serie3s.add(serie);
+
+                    System.out.println(gameList.get(i).getRound_guest() + " " + gameList.get(i + 1).getRound_guest() + " " + gameList.get(i + 2).getRound_guest());
+
+                    // hleda další serii
+                    i = i + 2;
+                    for (int j = i; j < gameList.size() - 2; j++) {
+                        if (gameList.get(j).getRound_guest() + 1 != gameList.get(j + 1).getRound_guest()) {
+                            i = j;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        System.out.println("----------------------------------");
+        return serie3s;
+    }
+
 }

@@ -19,41 +19,22 @@
         <div class="row col-12">
             <div class="col-1"></div>
             <div class="col-10">
-                <table class="table table-striped table-bordered table-primary">
+                <table class="table table-striped table-bordered">
                     <thead>
                         <tr align="center">
                             <th scope="col">id</th>
                             <th scope="col">date</th>
                             <th scope="col">home</th>
                             <th scope="col">guest</th>
-                            <th scope="col">result</th>
-                            <th scope="col">result.bet</th>
-                            <th scope="col">period1</th>
-                            <th scope="col">result1.bet</th>
-                            <th scope="col">period2</th>
-                            <th scope="col">result2.bet</th>
-                            <th scope="col">period3</th>
-                            <th scope="col">result3.bet</th>
-                            <th scope="col">overtime</th>
-                            <th scope="col">overtime.bet</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr align="center">
+                        <tr align="center" class="h4">
                             <td th:text="${game.id}"></td>
                             <td th:text="${game.date}"></td>
                             <td th:text="${game.home_team}"></td>
                             <td th:text="${game.guest_team}"></td>
-                            <td class="table-warning" th:text="${game.vysledek}"></td>
-                            <td th:text="${game.vysledek_sazka}"></td>
-                            <td class="table-warning" th:text="${game.tretina1vysledek}"></td>
-                            <td th:text="${game.tretina1sazka}"></td>
-                            <td class="table-warning" th:text="${game.tretina2vysledek}"></td>
-                            <td th:text="${game.tretina2sazka}"></td>
-                            <td class="table-warning" th:text="${game.tretina3vysledek}"></td>
-                            <td th:text="${game.tretina3sazka}"></td>
-                            <td class="table-warning" th:text="${game.prodlouzeni4vysledek}"></td>
-                            <td th:text="${game.prodlouzeni4sazka}"></td>
+                            <td th:text="${game.vysledek} +' ('+ ${game.tretina1vysledek} +','+ ${game.tretina2vysledek}+','+ ${game.tretina3vysledek}+','+ ${game.prodlouzeni4vysledek}+')'"></td>
                         </tr>
                     </tbody>
                 </table>
