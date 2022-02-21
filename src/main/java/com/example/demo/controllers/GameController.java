@@ -4,21 +4,12 @@ import com.example.demo.Services.GameService;
 import com.example.demo.Services.GoalService;
 import com.example.demo.Services.PlayerService;
 import com.example.demo.Services.TeamService;
-import com.example.demo.model.Game;
-import com.example.demo.model.Goal;
-import com.example.demo.model.Player;
-import com.example.demo.model.Team;
-import com.example.demo.repositories.GameRepository;
-import com.example.demo.repositories.GameRepositoryNew;
-import com.example.demo.repositories.GoalRepositoryNew;
-import com.example.demo.repositories.TeamRepositoryNew;
-import com.example.demo.series.serie3;
+import com.example.demo.model.*;
+import com.example.demo.repositories.*;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -32,8 +23,9 @@ public class GameController {
     private final GoalRepositoryNew goalRepositoryNew;
     private final PlayerService playerService;
     private final GameRepository gameRepository;
+    private final AllSeriesRepository allSeriesRepository;
 
-    public GameController(GameRepositoryNew gameRepositoryNew, GoalService goalService, TeamRepositoryNew teamRepositoryNew, TeamService teamService, GameService gameService, GoalRepositoryNew goalRepositoryNew, PlayerService playerService, GameRepository gameRepository) {
+    public GameController(GameRepositoryNew gameRepositoryNew, GoalService goalService, TeamRepositoryNew teamRepositoryNew, TeamService teamService, GameService gameService, GoalRepositoryNew goalRepositoryNew, PlayerService playerService, GameRepository gameRepository, AllSeriesRepository allSeriesRepository) {
         this.gameRepositoryNew = gameRepositoryNew;
         this.goalService = goalService;
         this.teamRepositoryNew = teamRepositoryNew;
@@ -42,6 +34,7 @@ public class GameController {
         this.goalRepositoryNew = goalRepositoryNew;
         this.playerService = playerService;
         this.gameRepository = gameRepository;
+        this.allSeriesRepository = allSeriesRepository;
     }
 
     @GetMapping("/game_registration")
@@ -215,26 +208,50 @@ public class GameController {
 
     @GetMapping("/games_test")
     public String gamesListTest(Model model){
+        int seriesLength = 4;
+        int seriesPause = 2;
+
+        System.out.println("\nDelaka serie = "+seriesLength +" -- "+"pauza = "+seriesPause+"\n");
+
         String strana ="home";
+        List<Game> gameList = gameService.teamGames(48L,2018L,strana);
 
-        int pocet = 0;
-        int pocetTeamu = 0;
-        List <serie3> serie3List = new ArrayList<>();
-
-        List<Game> gameList = new ArrayList<>();
-        List<Team> teamList = teamService.getAllTeamsForSeason(2018L);
-        pocetTeamu = teamList.size();
-        for (Team team : teamList) {
-            gameList = gameService.teamGames(team.getId(),2018L,strana);
-            serie3List = gameService.serie3List(gameList, strana);
-            pocet += serie3List.size();
+        List<AllSeries> allSeriesList = allSeriesRepository.AllSeriesList(gameList,seriesLength,seriesPause);
+        for (AllSeries allSeries : allSeriesList){
+            System.out.println(allSeries.getGame1().getRound_home()+" "+allSeries.getGame2().getRound_home()+" "+allSeries.getGame3().getRound_home());
         }
+
+//        double pocet = 0;
+//        double pocetTeamu = 0;
+//        double jednicky = 0;
+//        double neJednaPrvniZapas =0;
+//
+//        List <serie3> serie3List = new ArrayList<>();
+//
+//        List<Game> gameList = new ArrayList<>();
+//        List<Team> teamList = teamService.getAllTeamsForSeason(2018L);
+//        pocetTeamu = teamList.size();
+//        for (Team team : teamList) {
+//            gameList = gameService.teamGames(team.getId(),2018L,strana);
+//            serie3List = gameService.serie3List(gameList, strana);
+//            pocet += serie3List.size();
+//
+//            for (serie3 s: serie3List) {
+//                //if (s.getGame1().getVysledek_sazka() != 1 && s.getGame2().getVysledek_sazka()!=1 && (s.getGame3().getVysledek_sazka()==1 || s.getGame3().getVysledek_sazka()==10)) jednicky++;
+//                if (s.getGame1().getVysledek_sazka() == 1 && (s.getGame2().getVysledek_sazka() ==2 || s.getGame2().getVysledek_sazka() >9)) jednicky++;
+//                if (s.getGame1().getVysledek_sazka() == 1) neJednaPrvniZapas++;
+//            }
+//
+//        }
         model.addAttribute("gameList",gameList);
 
-        System.out.println("Celek teamu: "+pocetTeamu);
-        System.out.println("Celek sérií: "+pocet);
-        System.out.println("průměr: "+pocet/pocetTeamu);
 
+
+//        System.out.println("Celek teamu: "+pocetTeamu);
+//        System.out.println("Celek sérií: "+pocet);
+//        System.out.println("průměr: "+pocet/pocetTeamu);
+//
+//        System.out.println("počet prvních vyhraných zápasů " +strana+ ": " +jednicky+ "/"+neJednaPrvniZapas+ "  Statisticky: " + jednicky/neJednaPrvniZapas);
 
         return "games_test";
     }
