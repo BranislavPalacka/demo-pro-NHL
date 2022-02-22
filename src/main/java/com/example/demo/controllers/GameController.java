@@ -208,13 +208,13 @@ public class GameController {
 
     @GetMapping("/games_test")
     public String gamesListTest(Model model){
-        int seriesLength = 4;
-        int seriesPause = 2;
+        int seriesLength = 5;
+        int seriesPause = 1;
 
         System.out.println("\nDelaka serie = "+seriesLength +" -- "+"pauza = "+seriesPause+"\n");
 
         String strana ="home";
-        List<Game> gameList = gameService.teamGames(48L,2018L,strana);
+        List<Game> gameList = gameService.teamGames(44L,2018L,strana);
 
         List<AllSeries> allSeriesList = allSeriesRepository.AllSeriesList(gameList,seriesLength,seriesPause);
         for (AllSeries allSeries : allSeriesList){

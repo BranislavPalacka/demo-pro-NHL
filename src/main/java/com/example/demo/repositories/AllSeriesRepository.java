@@ -38,14 +38,14 @@ public class AllSeriesRepository {
 
             // pause control before series
             for (int y = 1; y <= seriesPause; y++) {
-                if (i - y < 0) {
-                    break;
-                }
-                if (gameList.get(i).getRound_home() - y == gameList.get(i - y).getRound_home()) {
-                    break;
-                }
-                if (gameList.get(i-y).getRound_home() >= gameList.get(i).getRound_home()-seriesPause) {
-                    break;
+                if (i - y >= 0) {
+
+                    if (gameList.get(i).getRound_home() - y == gameList.get(i - y).getRound_home()) {
+                        break;
+                    }
+                    if (gameList.get(i-y).getRound_home() >= gameList.get(i).getRound_home()-seriesPause) {
+                        break;
+                    }
                 }
                 pauseOK = true;
             }
