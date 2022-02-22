@@ -208,50 +208,24 @@ public class GameController {
 
     @GetMapping("/games_test")
     public String gamesListTest(Model model){
-        int seriesLength = 5;
+        int seriesLength = 3;
         int seriesPause = 1;
+        Team team = teamRepositoryNew.findById(47L).get();
+        String strana ="guest";
 
+        System.out.println("\n"+team.getName()+" -- "+strana);
         System.out.println("\nDelaka serie = "+seriesLength +" -- "+"pauza = "+seriesPause+"\n");
 
-        String strana ="home";
-        List<Game> gameList = gameService.teamGames(44L,2018L,strana);
+        List<Game> gameList = gameService.teamGames(team.getId(),2018L,strana);
 
-        List<AllSeries> allSeriesList = allSeriesRepository.AllSeriesList(gameList,seriesLength,seriesPause);
+        List<AllSeries> allSeriesList = allSeriesRepository.AllSeriesList(gameList,seriesLength,seriesPause,strana);
         for (AllSeries allSeries : allSeriesList){
-            System.out.println(allSeries.getGame1().getRound_home()+" "+allSeries.getGame2().getRound_home()+" "+allSeries.getGame3().getRound_home());
+            if (strana.equals("home")) System.out.println(allSeries.getGame1().getRound_home()+" "+allSeries.getGame2().getRound_home()+" "+allSeries.getGame3().getRound_home());
+            if (strana.equals("guest")) System.out.println(allSeries.getGame1().getRound_guest()+" "+allSeries.getGame2().getRound_guest()+" "+allSeries.getGame3().getRound_guest());
         }
 
-//        double pocet = 0;
-//        double pocetTeamu = 0;
-//        double jednicky = 0;
-//        double neJednaPrvniZapas =0;
-//
-//        List <serie3> serie3List = new ArrayList<>();
-//
-//        List<Game> gameList = new ArrayList<>();
-//        List<Team> teamList = teamService.getAllTeamsForSeason(2018L);
-//        pocetTeamu = teamList.size();
-//        for (Team team : teamList) {
-//            gameList = gameService.teamGames(team.getId(),2018L,strana);
-//            serie3List = gameService.serie3List(gameList, strana);
-//            pocet += serie3List.size();
-//
-//            for (serie3 s: serie3List) {
-//                //if (s.getGame1().getVysledek_sazka() != 1 && s.getGame2().getVysledek_sazka()!=1 && (s.getGame3().getVysledek_sazka()==1 || s.getGame3().getVysledek_sazka()==10)) jednicky++;
-//                if (s.getGame1().getVysledek_sazka() == 1 && (s.getGame2().getVysledek_sazka() ==2 || s.getGame2().getVysledek_sazka() >9)) jednicky++;
-//                if (s.getGame1().getVysledek_sazka() == 1) neJednaPrvniZapas++;
-//            }
-//
-//        }
+
         model.addAttribute("gameList",gameList);
-
-
-
-//        System.out.println("Celek teamu: "+pocetTeamu);
-//        System.out.println("Celek sérií: "+pocet);
-//        System.out.println("průměr: "+pocet/pocetTeamu);
-//
-//        System.out.println("počet prvních vyhraných zápasů " +strana+ ": " +jednicky+ "/"+neJednaPrvniZapas+ "  Statisticky: " + jednicky/neJednaPrvniZapas);
 
         return "games_test";
     }
