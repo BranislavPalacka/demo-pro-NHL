@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,11 +21,13 @@ public class GameRepository {
     private final EntityManager entityManager;
     private final GameRepositoryNew gameRepositoryNew;
     private final GoalService goalService;
+    private final TeamRepositoryNew teamRepositoryNew;
 
-    public GameRepository(EntityManager entityManager, GameRepositoryNew gameRepositoryNew, GoalService goalService) {
+    public GameRepository(EntityManager entityManager, GameRepositoryNew gameRepositoryNew, GoalService goalService, TeamRepositoryNew teamRepositoryNew) {
         this.entityManager = entityManager;
         this.gameRepositoryNew = gameRepositoryNew;
         this.goalService = goalService;
+        this.teamRepositoryNew = teamRepositoryNew;
     }
 
 
@@ -161,6 +162,55 @@ public class GameRepository {
         if (side.equals("home")) return entityManager.createNativeQuery("SELECT * FROM game WHERE home="+ teamId +" AND season="+ season,Game.class ).getResultList();
 
         return entityManager.createNativeQuery("SELECT * FROM game WHERE guest="+ teamId +" AND season="+ season,Game.class ).getResultList();
+    }
+
+    public List<Long> teamIdsFromTheOtherDivision(String division,Long season){
+        String otherDivision = "Metropolitan";
+        if (division.equals("Metropolitan")) otherDivision = "Atlantic";
+        if (division.equals("Central")) otherDivision = "Pacific";
+        if (division.equals("Pacific")) otherDivision = "Central";
+
+        List<Team> teamlist = new ArrayList<>();
+        List<Long> listLong = new ArrayList<>();
+        if (season == 2018) teamlist = entityManager.createNativeQuery("SELECT * FROM team WHERE division_2018='"+otherDivision+"'",Team.class).getResultList();
+        if (season == 2019) teamlist = entityManager.createNativeQuery("SELECT * FROM team WHERE division_2019='"+otherDivision+"'",Team.class).getResultList();
+        if (season == 2021) teamlist = entityManager.createNativeQuery("SELECT * FROM team WHERE division_2021='"+otherDivision+"'",Team.class).getResultList();
+
+        for (Team team : teamlist) {
+            listLong.add(team.getId());
+        }
+        return listLong;
+    }
+
+    /**
+     * Vrátí List of games s teamy z druhé divize
+     */
+    public List<Game> teamGamesWithOtherDivision(Long teamId, Long season, String side){
+        Team team = teamRepositoryNew.findById(teamId).get();
+        List<Long> teamIDs = new ArrayList<>();
+        List<Game> gameListDone = new ArrayList<>();
+        List<Game> gameList = teamGames(teamId,season,side);
+
+        if (season == 2018) teamIDs = teamIdsFromTheOtherDivision(team.getDivision_2018(),season);
+        if (season == 2019) teamIDs = teamIdsFromTheOtherDivision(team.getDivision_2019(),season);
+        if (season == 2021) teamIDs = teamIdsFromTheOtherDivision(team.getDivision_2021(),season);
+
+
+            if (side.equals("home")){
+                for (Game game: gameList){
+                    for (Long l:teamIDs){
+                        if (game.getGuest() == l.intValue()) gameListDone.add(game);;
+                    }
+                }
+            }
+        if (side.equals("guest")){
+            for (Game game: gameList){
+                for (Long l:teamIDs){
+                    if (game.getHome() == l.intValue()) gameListDone.add(game);
+                }
+            }
+        }
+        return gameListDone;
     }
 
     public String prubeznyVysledekZapasu (Long gameId){
