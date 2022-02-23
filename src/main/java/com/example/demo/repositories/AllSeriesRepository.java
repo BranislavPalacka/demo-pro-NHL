@@ -65,7 +65,7 @@ public class AllSeriesRepository {
                         if (j == seriesLength - 2) {
                             allSeries.setGame1(gameList.get(i));
                             allSeries.setGame2(gameList.get(i + 1));
-                            allSeries.setGame3(gameList.get(i + 2));
+                            if (seriesLength >= 3) allSeries.setGame4(gameList.get(i + 2));
                             if (seriesLength >= 4) allSeries.setGame4(gameList.get(i + 3));
                             if (seriesLength >= 5) allSeries.setGame5(gameList.get(i + 4));
                             if (seriesLength >= 6) allSeries.setGame6(gameList.get(i + 5));
@@ -108,7 +108,7 @@ public class AllSeriesRepository {
                         if (j == seriesLength - 2) {
                             allSeries.setGame1(gameList.get(i));
                             allSeries.setGame2(gameList.get(i + 1));
-                            allSeries.setGame3(gameList.get(i + 2));
+                            if (seriesLength >= 3) allSeries.setGame4(gameList.get(i + 2));
                             if (seriesLength >= 4) allSeries.setGame4(gameList.get(i + 3));
                             if (seriesLength >= 5) allSeries.setGame5(gameList.get(i + 4));
                             if (seriesLength >= 6) allSeries.setGame6(gameList.get(i + 5));
