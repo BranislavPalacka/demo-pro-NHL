@@ -64,8 +64,8 @@ public class AllSeriesRepository {
                         }
                         if (j == seriesLength - 2) {
                             allSeries.setGame1(gameList.get(i));
-                            allSeries.setGame2(gameList.get(i + 1));
-                            if (seriesLength >= 3) allSeries.setGame4(gameList.get(i + 2));
+                            allSeries.setGame2(gameList.get(i+1));
+                            if (seriesLength >= 3) allSeries.setGame3(gameList.get(i + 2));
                             if (seriesLength >= 4) allSeries.setGame4(gameList.get(i + 3));
                             if (seriesLength >= 5) allSeries.setGame5(gameList.get(i + 4));
                             if (seriesLength >= 6) allSeries.setGame6(gameList.get(i + 5));
@@ -108,7 +108,7 @@ public class AllSeriesRepository {
                         if (j == seriesLength - 2) {
                             allSeries.setGame1(gameList.get(i));
                             allSeries.setGame2(gameList.get(i + 1));
-                            if (seriesLength >= 3) allSeries.setGame4(gameList.get(i + 2));
+                            if (seriesLength >= 3) allSeries.setGame3(gameList.get(i + 2));
                             if (seriesLength >= 4) allSeries.setGame4(gameList.get(i + 3));
                             if (seriesLength >= 5) allSeries.setGame5(gameList.get(i + 4));
                             if (seriesLength >= 6) allSeries.setGame6(gameList.get(i + 5));
@@ -124,5 +124,71 @@ public class AllSeriesRepository {
             }
         }
         return seriesList;
+    }
+
+    public void allSeriesPrint(AllSeries allSeries,String strana, int seriesLength) {
+        if (strana.equals("guest")){
+            if (seriesLength > 1) {
+                System.out.println();
+                System.out.print("Rounds: " + allSeries.getGame1().getRound_guest() + " " + allSeries.getGame2().getRound_guest());
+            }
+            if (seriesLength > 2) System.out.print(" " + allSeries.getGame3().getRound_guest());
+            if (seriesLength > 3) System.out.print(" " + allSeries.getGame4().getRound_guest());
+            if (seriesLength > 4) System.out.print(" " + allSeries.getGame5().getRound_guest());
+            if (seriesLength > 5) System.out.print(" " + allSeries.getGame6().getRound_guest());
+            if (seriesLength > 6) System.out.print(" " + allSeries.getGame7().getRound_guest());
+            if (seriesLength > 7) System.out.print(" " + allSeries.getGame8().getRound_guest());
+            if (seriesLength > 8) System.out.print(" " + allSeries.getGame9().getRound_guest());
+            if (seriesLength > 9) System.out.print(" " + allSeries.getGame10().getRound_guest());
+
+            if (seriesLength > 1) {
+                System.out.println();
+                System.out.print("Results: " + allSeries.getGame1().getVysledek_sazka() + " " + allSeries.getGame2().getVysledek_sazka());
+            }
+            if (seriesLength > 2) System.out.print(" " + allSeries.getGame3().getVysledek_sazka());
+            if (seriesLength > 3) System.out.print(" " + allSeries.getGame4().getVysledek_sazka());
+            if (seriesLength > 4) System.out.print(" " + allSeries.getGame5().getVysledek_sazka());
+            if (seriesLength > 5) System.out.print(" " + allSeries.getGame6().getVysledek_sazka());
+            if (seriesLength > 6) System.out.print(" " + allSeries.getGame7().getVysledek_sazka());
+            if (seriesLength > 7) System.out.print(" " + allSeries.getGame8().getVysledek_sazka());
+            if (seriesLength > 8) System.out.print(" " + allSeries.getGame9().getVysledek_sazka());
+            if (seriesLength > 9) System.out.print(" " + allSeries.getGame10().getVysledek_sazka());
+        }
+        if (strana.equals("home")){
+            if (seriesLength > 1) {
+                System.out.println();
+                System.out.print("Rounds: " + allSeries.getGame1().getRound_home() + " " + allSeries.getGame2().getRound_home());
+            }
+            if (seriesLength > 2) System.out.print(" " + allSeries.getGame3().getRound_home());
+            if (seriesLength > 3) System.out.print(" " + allSeries.getGame4().getRound_home());
+            if (seriesLength > 4) System.out.print(" " + allSeries.getGame5().getRound_home());
+            if (seriesLength > 5) System.out.print(" " + allSeries.getGame6().getRound_home());
+            if (seriesLength > 6) System.out.print(" " + allSeries.getGame7().getRound_home());
+            if (seriesLength > 7) System.out.print(" " + allSeries.getGame8().getRound_home());
+            if (seriesLength > 8) System.out.print(" " + allSeries.getGame9().getRound_home());
+            if (seriesLength > 9) System.out.print(" " + allSeries.getGame10().getRound_home());
+
+            if (seriesLength > 1) {
+                System.out.println();
+                System.out.print("Results: " + allSeries.getGame1().getVysledek_sazka() + " " + allSeries.getGame2().getVysledek_sazka());
+            }
+            if (seriesLength > 2) System.out.print(" " + allSeries.getGame3().getVysledek_sazka());
+            if (seriesLength > 3) System.out.print(" " + allSeries.getGame4().getVysledek_sazka());
+            if (seriesLength > 4) System.out.print(" " + allSeries.getGame5().getVysledek_sazka());
+            if (seriesLength > 5) System.out.print(" " + allSeries.getGame6().getVysledek_sazka());
+            if (seriesLength > 6) System.out.print(" " + allSeries.getGame7().getVysledek_sazka());
+            if (seriesLength > 7) System.out.print(" " + allSeries.getGame8().getVysledek_sazka());
+            if (seriesLength > 8) System.out.print(" " + allSeries.getGame9().getVysledek_sazka());
+            if (seriesLength > 9) System.out.print(" " + allSeries.getGame10().getVysledek_sazka());
+        }
+    }
+
+    public boolean jeSazka (Game game, int result){
+        if (result == 1 || result == 2){
+            if (game.getVysledek_sazka() == result) return true;
+        }else if (result == 0) {
+            if(game.getVysledek_sazka()>9) return true;
+        }
+        return false;
     }
 }

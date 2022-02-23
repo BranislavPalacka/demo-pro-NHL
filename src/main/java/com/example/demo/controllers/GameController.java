@@ -208,10 +208,10 @@ public class GameController {
 
     @GetMapping("/games_test")
     public String gamesListTest(Model model){
-        int seriesLength = 2;
+        int seriesLength = 4;
         int seriesPause = 1;
-        Team team = teamRepositoryNew.findById(30L).get();
-        String strana ="guest";
+        Team team = teamRepositoryNew.findById(48L).get();
+        String strana ="home";
 
         System.out.println("\n"+team.getName()+" -- "+strana);
         System.out.println("\nDelaka serie = "+seriesLength +" -- "+"pauza = "+seriesPause+"\n");
@@ -222,14 +222,10 @@ public class GameController {
 
         List<Game> listOtherDivisionGames = gameRepository.teamGamesWithOtherDivision(team.getId(),2018L,strana);
 
-        List<AllSeries> allSeriesList = allSeriesRepository.AllSeriesList(listOtherDivisionGames,seriesLength,seriesPause,strana);
+        List<AllSeries> allSeriesList = allSeriesRepository.AllSeriesList(gameList,seriesLength,seriesPause,strana);
 
         for (AllSeries allSeries : allSeriesList){
-            if (strana.equals("home")) System.out.println(allSeries.getGame1().getRound_home()+" "+allSeries.getGame2().getRound_home());
-            if (strana.equals("guest")) {
-                System.out.println(allSeries.getGame1().getRound_guest()+" "+allSeries.getGame2().getRound_guest());
-                System.out.println(allSeries.getGame1().getVysledek_sazka() + " " + allSeries.getGame2().getVysledek_sazka());
-            }
+                allSeriesRepository.allSeriesPrint(allSeries,strana,seriesLength);
         }
 
         model.addAttribute("gameList",gameList);
