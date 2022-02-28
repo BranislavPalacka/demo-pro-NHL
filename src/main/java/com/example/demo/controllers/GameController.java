@@ -208,10 +208,10 @@ public class GameController {
 
     @GetMapping("/games_test")
     public String gamesListTest(Model model){
-        int seriesLength = 4;
-        int seriesPause = 1;
+        int seriesLength = 3;
+        int seriesPause = 2;
         Team team = teamRepositoryNew.findById(48L).get();
-        String strana ="home";
+        String strana ="guest";
 
         System.out.println("\n"+team.getName()+" -- "+strana);
         System.out.println("\nDelaka serie = "+seriesLength +" -- "+"pauza = "+seriesPause+"\n");
@@ -220,13 +220,29 @@ public class GameController {
 
         List<Team> teamList = teamService.getAllTeamsForSeason(2018L);
 
-        List<Game> listOtherDivisionGames = gameRepository.teamGamesWithOtherDivision(team.getId(),2018L,strana);
+        int count = 0;
+        int goluVZapase = 0;
+        double golu = 6.5;
 
-        List<AllSeries> allSeriesList = allSeriesRepository.AllSeriesList(gameList,seriesLength,seriesPause,strana);
 
-        for (AllSeries allSeries : allSeriesList){
-                allSeriesRepository.allSeriesPrint(allSeries,strana,seriesLength);
+        for (Team t: teamList) {
+            List<Game> listOtherDivisionGames = gameRepository.teamGamesWithOtherDivision(t.getId(),2018L,strana);
+            gameList = gameService.teamGames(t.getId(),2018L,strana);
+
+            List<AllSeries> allSeriesList = allSeriesRepository.AllSeriesList(gameList,seriesLength,seriesPause,strana);
+
+            System.out.print("\n"+t.getName());
+            for (AllSeries allSeries : allSeriesList){
+                if ((allSeriesRepository.goluVZapase(allSeries.getGame3())<golu)) goluVZapase++;
+                count++;
+          }
+            System.out.println();
         }
+        System.out.println("----------------------");
+        System.out.println("celkem serií: "+count);
+        System.out.println("golu v zapase méně než "+golu+": "+goluVZapase+" --> "+goluVZapase*100/count+"%");
+
+
 
         model.addAttribute("gameList",gameList);
 

@@ -4,6 +4,7 @@ import com.example.demo.Services.GameService;
 import com.example.demo.Services.GoalService;
 import com.example.demo.model.AllSeries;
 import com.example.demo.model.Game;
+import com.example.demo.model.Goal;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
@@ -27,18 +28,18 @@ public class AllSeriesRepository {
 
 
     /**
-     *funkce převezme List Her a najde v něm požadované série
+     * funkce převezme List Her a najde v něm požadované série
      *
-     * @param gameList - seznam her k prohledání
+     * @param gameList     - seznam her k prohledání
      * @param seriesLength - kolik her za sebou má série obsahovat
-     * @param seriesPause - kolik her na stejné straně jí nesmí předcházet
-     * @param side - home/guest
-     * @return list<'AllSeries>
+     * @param seriesPause  - kolik her na stejné straně jí nesmí předcházet
+     * @param side         - home/guest
+     * @return list<' AllSeries>
      */
-    public List<AllSeries> AllSeriesList(List<Game> gameList, int seriesLength, int seriesPause, String side ){
-        List <AllSeries> seriesList = new ArrayList<>();
+    public List<AllSeries> AllSeriesList(List<Game> gameList, int seriesLength, int seriesPause, String side) {
+        List<AllSeries> seriesList = new ArrayList<>();
 
-        if (side.equals("home") ) {
+        if (side.equals("home")) {
             for (int i = 0; i < gameList.size() - seriesLength + 1; i++) {
                 AllSeries allSeries = new AllSeries();
                 boolean pauseOK = false;
@@ -64,7 +65,7 @@ public class AllSeriesRepository {
                         }
                         if (j == seriesLength - 2) {
                             allSeries.setGame1(gameList.get(i));
-                            allSeries.setGame2(gameList.get(i+1));
+                            allSeries.setGame2(gameList.get(i + 1));
                             if (seriesLength >= 3) allSeries.setGame3(gameList.get(i + 2));
                             if (seriesLength >= 4) allSeries.setGame4(gameList.get(i + 3));
                             if (seriesLength >= 5) allSeries.setGame5(gameList.get(i + 4));
@@ -81,7 +82,7 @@ public class AllSeriesRepository {
             }
         }
 
-        if (side.equals("guest") ) {
+        if (side.equals("guest")) {
             for (int i = 0; i < gameList.size() - seriesLength + 1; i++) {
                 AllSeries allSeries = new AllSeries();
                 boolean pauseOK = false;
@@ -126,8 +127,11 @@ public class AllSeriesRepository {
         return seriesList;
     }
 
-    public void allSeriesPrint(AllSeries allSeries,String strana, int seriesLength) {
-        if (strana.equals("guest")){
+    /**
+     * vytiskne do konzole cisla kol pro serie a pod ne vysledky zapasu
+     */
+    public void allSeriesPrint(AllSeries allSeries, String strana, int seriesLength) {
+        if (strana.equals("guest")) {
             if (seriesLength > 1) {
                 System.out.println();
                 System.out.print("Rounds: " + allSeries.getGame1().getRound_guest() + " " + allSeries.getGame2().getRound_guest());
@@ -154,7 +158,7 @@ public class AllSeriesRepository {
             if (seriesLength > 8) System.out.print(" " + allSeries.getGame9().getVysledek_sazka());
             if (seriesLength > 9) System.out.print(" " + allSeries.getGame10().getVysledek_sazka());
         }
-        if (strana.equals("home")){
+        if (strana.equals("home")) {
             if (seriesLength > 1) {
                 System.out.println();
                 System.out.print("Rounds: " + allSeries.getGame1().getRound_home() + " " + allSeries.getGame2().getRound_home());
@@ -183,12 +187,61 @@ public class AllSeriesRepository {
         }
     }
 
-    public boolean jeSazka (Game game, int result){
-        if (result == 1 || result == 2){
+    /**
+     * Zjsti, zda zadaná hra dopadla dle očekávání
+     *
+     * @return booleen
+     */
+    public boolean jeSazka(Game game, int result) {
+        if (result == 1 || result == 2) {
             if (game.getVysledek_sazka() == result) return true;
-        }else if (result == 0) {
-            if(game.getVysledek_sazka()>9) return true;
+        } else if (result == 0) {
+            if (game.getVysledek_sazka() > 9) return true;
         }
         return false;
+    }
+
+    public boolean jeSazkaSerie(AllSeries allSeries, int bet1) {
+        return jeSazka(allSeries.getGame1(), bet1);
+    }
+    public boolean jeSazkaSerie(AllSeries allSeries, int bet1, int bet2) {
+        return jeSazkaSerie(allSeries, bet1) && jeSazka(allSeries.getGame2(), bet2);
+    }
+    public boolean jeSazkaSerie(AllSeries allSeries, int bet1, int bet2, int bet3) {
+        return jeSazkaSerie(allSeries, bet1, bet2) && jeSazka(allSeries.getGame3(), bet3);
+    }
+    public boolean jeSazkaSerie(AllSeries allSeries, int bet1, int bet2, int bet3, int bet4) {
+        return jeSazkaSerie(allSeries, bet1, bet2,bet3) && jeSazka(allSeries.getGame4(), bet4);
+    }
+    public boolean jeSazkaSerie(AllSeries allSeries, int bet1, int bet2, int bet3, int bet4, int bet5) {
+        return jeSazkaSerie(allSeries, bet1, bet2,bet3,bet4) && jeSazka(allSeries.getGame5(), bet5);
+    }
+    public boolean jeSazkaSerie(AllSeries allSeries, int bet1, int bet2, int bet3, int bet4, int bet5, int bet6) {
+        return jeSazkaSerie(allSeries, bet1, bet2,bet3,bet4,bet5) && jeSazka(allSeries.getGame6(), bet5);
+    }
+
+    /**
+     * Pro hledání sázky X tého zápasu v serii
+     * @param allSeries - serie
+     * @param gameNumber - číslo zápasu v sérii
+     * @param bet - sázka
+     * @return boolean
+     */
+    public boolean jeSazkaZapasCislo(AllSeries allSeries, int gameNumber, int bet){
+        if (gameNumber == 1) return jeSazka(allSeries.getGame1(),bet);
+        if (gameNumber == 2) return jeSazka(allSeries.getGame2(),bet);
+        if (gameNumber == 3) return jeSazka(allSeries.getGame3(),bet);
+        if (gameNumber == 4) return jeSazka(allSeries.getGame4(),bet);
+        if (gameNumber == 5) return jeSazka(allSeries.getGame5(),bet);
+        return false;
+    }
+
+    public Integer goluVZapase (Game game){
+        return entityManager.createNativeQuery("SELECT * FROM goal WHERE game="+ game.getId(), Goal.class).getResultList().size();
+    }
+
+
+    public Integer goluVeTretine (Game game,int tretina){
+        return null;
     }
 }

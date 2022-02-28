@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Game - Series</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container col-11">
+        <div class="row justify-content-center">
+            <div class="col">
+                <form method="post" action="analytic_game_series">
+                    <table class="table">
+                        <thead class="table-primary">
+                            <tr>
+                                <th scope="col">games</th>
+                                <th scope="col">pause</th>
+                                <th scope="col">side</th>
+                                <th scope="col">season</th>
+                                <th scope="col">game No.</th>
+                                <th scope="col">goals</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="col-2" align="left">
+                                    <select class="form-select col-12 my-auto h5" name="games">
+                                        <option selected></option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                        <option>4</option>
+                                        <option>5</option>
+                                        <option>6</option>
+                                    </select>
+                                </td>
+                                <td class="col-2">
+                                    <select class="form-select col-12 my-auto h5" name="pause">
+                                        <option selected></option>
+                                        <option>1</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                        <option>4</option>
+                                    </select>
+                                </td>
+                                <td class="col-2">
+                                    <select class="form-select col-12 my-auto h5" name="side">
+                                        <option selected></option>
+                                        <option>home</option>
+                                        <option>guest</option>
+                                    </select>
+                                </td>
+                                <td class="col-2">
+                                    <select class="form-select col-12 my-auto h5" name="season">
+                                        <option selected></option>
+                                        <option>2018</option>
+                                        <option>2019</option>
+                                    </select>
+                                </td>
+                                <td class="col-2">
+                                    <select class="form-select col-12 my-auto h5" name="gameNo">
+                                        <option selected></option>
+                                        <option>first_game</option>
+                                        <option>second_game</option>
+                                        <option>third_game</option>
+                                        <option>fourth_game</option>
+                                    </select>
+                                </td>
+                                <td class="col-2">
+                                    <select class="form-select col-12 my-auto h5" name="goals">
+                                        <option selected></option>
+                                        <option>4.0</option>
+                                        <option>4.5</option>
+                                        <option>5.0</option>
+                                        <option>5.5</option>
+                                        <option>6.0</option>
+                                        <option>6.5</option>
+                                        <option>7.0</option>
+                                        <option>7.5</option>
+                                    </select>
+                                </td>
+                                <td class="col-1" align="right">
+                                    <button class="btn btn-primary btn-sm mx-auto col-12 h5" type="submit">Analyze</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
