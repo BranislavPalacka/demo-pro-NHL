@@ -67,4 +67,14 @@ public class TeamServiceImpl implements TeamService {
     public List<Team> getAllTeamsForSeason(Long season) {
         return teamRepository.getAllTeamsForSeason(season);
     }
+
+    @Override
+    public List<Team> getAllConferenceTeamsForSeason(Long season, String conference) {
+        return teamRepository.getAllConferenceTeamsForSeason(season,conference);
+    }
+
+    @Override
+    public List<Team> getAllDivisionTeamsForSeason_2018(Long season, String division) {
+        return teamRepository.getAllDivisionTeamsForSeason_2018(season,division);
+    }
 }

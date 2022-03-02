@@ -5,11 +5,13 @@ import com.example.demo.Services.GoalService;
 import com.example.demo.model.AllSeries;
 import com.example.demo.model.Game;
 import com.example.demo.model.Goal;
+import com.example.demo.model.Team;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Component
@@ -244,4 +246,63 @@ public class AllSeriesRepository {
     public Integer goluVeTretine (Game game,int tretina){
         return null;
     }
+
+    public List<Boolean[]> seriePrvniGolVZapaseJedenTeam(List <AllSeries> allSeriesList, Integer series){
+        List<Boolean[]> prvniGoly = new ArrayList<>();
+
+        if (allSeriesList.size()>0) {
+            int teamId = 0;
+            int id = 0;
+            List<Goal> goalList = new ArrayList<>();
+
+            // zjisti kterého teamu je to serie
+            if (allSeriesList.get(0).getGame1().getHome().intValue() == allSeriesList.get(0).getGame2().getHome().intValue()) {
+                teamId = allSeriesList.get(0).getGame1().getHome();
+            } else teamId = allSeriesList.get(0).getGame1().getGuest();
+
+
+            for (AllSeries allseries : allSeriesList) {
+                Boolean[] pole = new Boolean[series];
+
+                goalList = entityManager.createNativeQuery("SELECT * FROM goal WHERE game=" + allseries.getGame1().getId()
+                        + " ORDER BY minute", Goal.class).getResultList();
+                if (goalList.size() > 0) id = goalList.get(0).getTeam().intValue();
+                pole[0] = teamId == id;
+
+                goalList = entityManager.createNativeQuery("SELECT * FROM goal WHERE game=" + allseries.getGame2().getId()
+                        + " ORDER BY minute", Goal.class).getResultList();
+                if (goalList.size() > 0) id = goalList.get(0).getTeam().intValue();
+                pole[1] = teamId == id;
+
+
+                if (series > 2) {
+                    goalList = entityManager.createNativeQuery("SELECT * FROM goal WHERE game=" + allseries.getGame3().getId()
+                            + " ORDER BY minute", Goal.class).getResultList();
+                    if (goalList.size() > 0) id = goalList.get(0).getTeam().intValue();
+                    pole[2] = teamId == id;
+                }
+                if (series > 3) {
+                    goalList = entityManager.createNativeQuery("SELECT * FROM goal WHERE game=" + allseries.getGame4().getId()
+                            + " ORDER BY minute", Goal.class).getResultList();
+                    if (goalList.size() > 0) id = goalList.get(0).getTeam().intValue();
+                    pole[3] = teamId == id;
+                }
+                if (series > 4) {
+                    goalList = entityManager.createNativeQuery("SELECT * FROM goal WHERE game=" + allseries.getGame5().getId()
+                            + " ORDER BY minute", Goal.class).getResultList();
+                    if (goalList.size() > 0) id = goalList.get(0).getTeam().intValue();
+                    pole[4] = teamId == id;
+                }
+                if (series > 5) {
+                    goalList = entityManager.createNativeQuery("SELECT * FROM goal WHERE game=" + allseries.getGame6().getId()
+                            + " ORDER BY minute", Goal.class).getResultList();
+                    if (goalList.size() > 0) id = goalList.get(0).getTeam().intValue();
+                    pole[5] = teamId == id;
+                }
+                prvniGoly.add(pole);
+            }
+        }
+        return prvniGoly;
+    }
+
 }

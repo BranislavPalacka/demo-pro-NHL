@@ -56,6 +56,7 @@ public class AnalyzeController {
 
         List<Team> teamList = teamService.getAllTeamsForSeason(season);
 
+//        List<Team> teamList = teamService.getAllConferenceTeamsForSeason(2018L,"Eastern");
         int count = 0;
         int goluVZapase = 0;
 
@@ -70,6 +71,7 @@ public class AnalyzeController {
                 if (gameNo.equals("second_game") && allSeriesRepository.goluVZapase(allSeries.getGame2())<goals) goluVZapase++;
                 if (gameNo.equals("third_game") && allSeriesRepository.goluVZapase(allSeries.getGame3())<goals) goluVZapase++;
                 if (gameNo.equals("fourth_game") && allSeriesRepository.goluVZapase(allSeries.getGame4())<goals) goluVZapase++;
+                if (gameNo.equals("fifth_game") && allSeriesRepository.goluVZapase(allSeries.getGame5())<goals) goluVZapase++;
                 count++;
             }
         }

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -210,40 +211,46 @@ public class GameController {
     public String gamesListTest(Model model){
         int seriesLength = 3;
         int seriesPause = 2;
-        Team team = teamRepositoryNew.findById(48L).get();
-        String strana ="guest";
+        Team team = teamRepositoryNew.findById(30L).get();
+        String strana ="home";
 
-        System.out.println("\n"+team.getName()+" -- "+strana);
+//        System.out.println("\n"+team.getName()+" -- "+strana);
         System.out.println("\nDelaka serie = "+seriesLength +" -- "+"pauza = "+seriesPause+"\n");
 
         List<Game> gameList = gameService.teamGames(team.getId(),2018L,strana);
-
         List<Team> teamList = teamService.getAllTeamsForSeason(2018L);
 
-        int count = 0;
-        int goluVZapase = 0;
-        double golu = 6.5;
+        int pravda=0, nepravda =0;
 
-
-        for (Team t: teamList) {
-            List<Game> listOtherDivisionGames = gameRepository.teamGamesWithOtherDivision(t.getId(),2018L,strana);
+        for (Team t:teamList){
             gameList = gameService.teamGames(t.getId(),2018L,strana);
+            System.out.println(t.getName());
 
             List<AllSeries> allSeriesList = allSeriesRepository.AllSeriesList(gameList,seriesLength,seriesPause,strana);
+            List<Boolean[]> toPrintList = allSeriesRepository.seriePrvniGolVZapaseJedenTeam(allSeriesList,seriesLength);
 
-            System.out.print("\n"+t.getName());
-            for (AllSeries allSeries : allSeriesList){
-                if ((allSeriesRepository.goluVZapase(allSeries.getGame3())<golu)) goluVZapase++;
-                count++;
-          }
-            System.out.println();
+            for (Boolean[] bool: toPrintList) {
+                for (int i=0;i<seriesLength;i++){
+                    if(bool[i]){
+                        pravda++;
+                    }else nepravda++;
+                }
+            }
+
         }
-        System.out.println("----------------------");
-        System.out.println("celkem serií: "+count);
-        System.out.println("golu v zapase méně než "+golu+": "+goluVZapase+" --> "+goluVZapase*100/count+"%");
 
 
+//        for (Boolean[] bool: toPrintList) {
+//            System.out.println(Arrays.toString(bool));
+//        }
 
+        System.out.println();
+        System.out.println("pravda: "+pravda);
+        System.out.println("nepravda: "+nepravda);
+        System.out.println("celkem: "+(pravda+nepravda)+ " --> " +pravda*100/(nepravda+pravda)+"%");
+
+
+        gameList = gameService.teamGames(team.getId(),2018L,strana);
         model.addAttribute("gameList",gameList);
 
         return "games_test";

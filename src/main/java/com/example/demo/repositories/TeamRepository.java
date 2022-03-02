@@ -113,4 +113,10 @@ public class TeamRepository {
     public List<Team> getAllTeamsForSeason (Long season){
         return entityManager.createNativeQuery("SELECT * FROM team where division_2018 IS NOT null",Team.class).getResultList();
     }
+    public List<Team> getAllConferenceTeamsForSeason (Long season, String conference){
+        return entityManager.createNativeQuery("SELECT * FROM team where division_"+season+" IS NOT null AND conference='"+conference+"'",Team.class).getResultList();
+    }
+    public List<Team> getAllDivisionTeamsForSeason_2018 (Long season, String division){
+        return entityManager.createNativeQuery("SELECT * FROM team where division_2018 IS NOT null AND division_"+season+"='"+division+"'",Team.class).getResultList();
+    }
 }
