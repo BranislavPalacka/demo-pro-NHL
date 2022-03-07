@@ -1,16 +1,13 @@
 package com.example.demo.controllers;
 
-import com.example.demo.Services.GameService;
-import com.example.demo.Services.GoalService;
-import com.example.demo.Services.PlayerService;
-import com.example.demo.Services.TeamService;
+import com.example.demo.Services.*;
 import com.example.demo.model.*;
 import com.example.demo.repositories.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -25,8 +22,10 @@ public class GameController {
     private final PlayerService playerService;
     private final GameRepository gameRepository;
     private final AllSeriesRepository allSeriesRepository;
+    private final AllSeriesService allSeriesService;
+    private final SeasonRepository seasonRepository;
 
-    public GameController(GameRepositoryNew gameRepositoryNew, GoalService goalService, TeamRepositoryNew teamRepositoryNew, TeamService teamService, GameService gameService, GoalRepositoryNew goalRepositoryNew, PlayerService playerService, GameRepository gameRepository, AllSeriesRepository allSeriesRepository) {
+    public GameController(GameRepositoryNew gameRepositoryNew, GoalService goalService, TeamRepositoryNew teamRepositoryNew, TeamService teamService, GameService gameService, GoalRepositoryNew goalRepositoryNew, PlayerService playerService, GameRepository gameRepository, AllSeriesRepository allSeriesRepository, AllSeriesService allSeriesService, SeasonRepository seasonRepository) {
         this.gameRepositoryNew = gameRepositoryNew;
         this.goalService = goalService;
         this.teamRepositoryNew = teamRepositoryNew;
@@ -36,6 +35,8 @@ public class GameController {
         this.playerService = playerService;
         this.gameRepository = gameRepository;
         this.allSeriesRepository = allSeriesRepository;
+        this.allSeriesService = allSeriesService;
+        this.seasonRepository = seasonRepository;
     }
 
     @GetMapping("/game_registration")
@@ -209,10 +210,11 @@ public class GameController {
 
     @GetMapping("/games_test")
     public String gamesListTest(Model model){
-        int seriesLength = 3;
+        int seriesLength = 4;
         int seriesPause = 2;
         Team team = teamRepositoryNew.findById(30L).get();
         String strana ="home";
+        List<Boolean> analyseFirstGoal = new ArrayList<>();
 
 //        System.out.println("\n"+team.getName()+" -- "+strana);
         System.out.println("\nDelaka serie = "+seriesLength +" -- "+"pauza = "+seriesPause+"\n");
@@ -224,10 +226,11 @@ public class GameController {
 
         for (Team t:teamList){
             gameList = gameService.teamGames(t.getId(),2018L,strana);
-            System.out.println(t.getName());
 
-            List<AllSeries> allSeriesList = allSeriesRepository.AllSeriesList(gameList,seriesLength,seriesPause,strana);
-            List<Boolean[]> toPrintList = allSeriesRepository.seriePrvniGolVZapaseJedenTeam(allSeriesList,seriesLength);
+            List<AllSeries> allSeriesList = allSeriesService.AllSeriesList(gameList,seriesLength,seriesPause,strana);
+            List<Boolean[]> toPrintList = allSeriesService.seriePrvniGolVZapaseJedenTeam(allSeriesList,seriesLength);
+            List<Boolean> analyseFirstGoalTeam = allSeriesRepository.analyseFirstGoalSeriesListHG(toPrintList,2,"yes");
+            analyseFirstGoal.addAll(analyseFirstGoalTeam);
 
             for (Boolean[] bool: toPrintList) {
                 for (int i=0;i<seriesLength;i++){
@@ -236,7 +239,6 @@ public class GameController {
                     }else nepravda++;
                 }
             }
-
         }
 
 
@@ -244,14 +246,26 @@ public class GameController {
 //            System.out.println(Arrays.toString(bool));
 //        }
 
-        System.out.println();
-        System.out.println("pravda: "+pravda);
-        System.out.println("nepravda: "+nepravda);
-        System.out.println("celkem: "+(pravda+nepravda)+ " --> " +pravda*100/(nepravda+pravda)+"%");
+//        System.out.println();
+//        System.out.println("pravda: "+pravda);
+//        System.out.println("nepravda: "+nepravda);
+//        System.out.println("celkem: "+(pravda+nepravda)+ " --> " +pravda*100/(nepravda+pravda)+"%");
 
 
         gameList = gameService.teamGames(team.getId(),2018L,strana);
         model.addAttribute("gameList",gameList);
+
+//        Boolean[] testovaciPole = {false,false,true,false,true,true,false};
+//        System.out.println("vysledek: "+allSeriesRepository.analyseFirstGoalSeriesHG(testovaciPole,2,"yes"));
+
+        System.out.println("delka Analyse: "+analyseFirstGoal.size());
+        int T = 0;
+        int F = 0;
+        for (Boolean bool : analyseFirstGoal) {
+            if (bool) T++;
+        }
+        F=analyseFirstGoal.size()-T;
+        System.out.println("True: "+T+"   False: "+F+"   --> "+T*100/analyseFirstGoal.size()+"%");
 
         return "games_test";
     }

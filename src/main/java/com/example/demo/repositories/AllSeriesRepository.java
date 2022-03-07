@@ -305,4 +305,86 @@ public class AllSeriesRepository {
         return prvniGoly;
     }
 
+    public List<Boolean> analyseFirstGoalSeries (Boolean[] firstgoals, int serieBeforeLength){
+        List<Boolean> returnList = new ArrayList<>();
+        int size = firstgoals.length;
+        boolean serieOk = false;
+
+        if (size>0) {
+            for (int i = 0; i < (size-serieBeforeLength); i++){
+                for (int j = 0;j<serieBeforeLength-1;j++){
+                    if (firstgoals[i+j] == firstgoals[i+1+j]){
+                        serieOk = true;
+                    }else {
+                        serieOk = false;
+                        break;
+                    }
+                }
+                if (serieOk && firstgoals[i+serieBeforeLength] != firstgoals[i]) {
+                    returnList.add(true);
+                    serieOk = false;
+                }else if(serieOk){
+                    returnList.add(false);
+                    serieOk = false;
+                }
+            }
+        }
+        return returnList;
+    }
+
+    public List<Boolean> analyseFirstGoalSeriesList(List<Boolean[]> booleanList,int serieBeforeLength){
+        List<Boolean> returnList = new ArrayList<>();
+
+        for (Boolean[] booleans : booleanList){
+            returnList.addAll(analyseFirstGoalSeries(booleans,serieBeforeLength));
+        }
+
+        return returnList;
+    }
+
+    /**
+     * Porovná, zda v sérii prvních golu je posloupnost = domaci, domaci, hoste .....
+     * @param firstgoals Pole prvních gólů
+     * @param serieBeforeLength Jak dlouhá série má předcházet před změnou
+     * @param ourTeam Kdo má dát první gól, yes = Team vlastnící posloupnost
+     * @return List of Booleans
+     */
+    public List<Boolean> analyseFirstGoalSeriesHG (Boolean[] firstgoals, int serieBeforeLength, String ourTeam) {
+        List<Boolean> returnList = new ArrayList<>();
+        int size = firstgoals.length;
+        boolean coHledam = ourTeam.equals("yes");
+        boolean serieOk = false;
+
+        if (size>0) {
+            for (int i = 0; i < (size-serieBeforeLength); i++){
+                for (int j = 0;j<serieBeforeLength-1;j++){
+                    if (firstgoals[i+j] == coHledam && firstgoals[i+1+j] == coHledam){
+                        serieOk = true;
+                    }else {
+                        serieOk = false;
+                        break;
+                    }
+                }
+                if (serieOk && firstgoals[i+serieBeforeLength] != coHledam) {
+                    returnList.add(true);
+                    serieOk = false;
+                }else if(serieOk){
+                    returnList.add(false);
+                    serieOk = false;
+                }
+            }
+        }
+        return returnList;
+    }
+
+    public List<Boolean> analyseFirstGoalSeriesListHG(List<Boolean[]> booleanList,int serieBeforeLength, String ourTeam){
+        List<Boolean> returnList = new ArrayList<>();
+
+        for (Boolean[] booleans : booleanList){
+            returnList.addAll(analyseFirstGoalSeriesHG(booleans,serieBeforeLength,ourTeam));
+        }
+
+        return returnList;
+    }
+
 }
