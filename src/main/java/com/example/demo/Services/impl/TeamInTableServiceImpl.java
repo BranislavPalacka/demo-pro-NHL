@@ -35,4 +35,9 @@ public class TeamInTableServiceImpl implements TeamInTableService {
     public Integer compareTeamsUpToDate(Long teamId1, Long teamId2, String actualDate) {
         return teamInTableRepository.compareTeamsUpToDate(teamId1,teamId2,actualDate);
     }
+
+    @Override
+    public TeamInTable getTeamUpToDateAgainstTeam(Long teamId, Long teamId2, String actualDate, Integer season) {
+        return teamInTableRepository.getTeamUpToDateAgainstTeam(teamId,teamId2,actualDate,season);
+    }
 }

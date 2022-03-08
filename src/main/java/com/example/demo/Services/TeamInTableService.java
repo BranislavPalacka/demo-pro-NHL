@@ -11,4 +11,5 @@ public interface TeamInTableService {
     List<TeamInTable> getDivisionTableUpToDate(String actualDate, Integer season, String division);
     Integer getTeamDivisionPositionUpToDate(Long teamId,String actualDate);
     Integer compareTeamsUpToDate(Long teamId1, Long teamId2, String actualDate);
+    TeamInTable getTeamUpToDateAgainstTeam(Long teamId, Long teamId2, String actualDate, Integer season);
 }

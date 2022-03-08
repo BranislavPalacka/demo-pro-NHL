@@ -40,13 +40,15 @@ public class AnalyzeController {
 
     @GetMapping("/analytic_game_series")
     public String game(){
-        List<TeamInTable> teamInTableList = teamInTableService.getDivisionTableUpToDate("2019-01-10",2018,"Central");
+        List<TeamInTable> teamInTableList = teamInTableService.getDivisionTableUpToDate("2019-03-09",2018,"Central");
+        System.out.println();
         for (TeamInTable team: teamInTableList) {
             System.out.println(team.getName()+" | points: "+team.getPoints()+" | score: "+team.getGoalsPlus()+":"+team.getGoalsMinus()+
                     " | winsOrder: "+ team.getWinsOrder()+" | rounds: "+team.getRounds()+" | result: "+team.getWins()+":"+team.getLosses()+":"+team.getDraws());
         }
 
         System.out.println(teamInTableService.compareTeamsUpToDate(41L,43L,"2019-01-10"));
+        System.out.println(teamInTableService.getTeamUpToDateAgainstTeam(41L,44L,"2019-01-10",2018));
 
         return "analytic_game_series";
     }
