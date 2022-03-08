@@ -47,8 +47,7 @@ public class TeamRepository {
     }
 
     public List<Team> teamListDivision(String divisionName, Integer season){
-        List<Team> teamListDivision = entityManager.createNativeQuery("SELECT * FROM team WHERE division_"+season+"='"+divisionName+"'",Team.class).getResultList();
-        return teamListDivision;
+        return (List<Team>) entityManager.createNativeQuery("SELECT * FROM team WHERE division_"+season+"='"+divisionName+"'",Team.class).getResultList();
     }
 
     public Integer teamIdByName(String teamName){
@@ -118,5 +117,9 @@ public class TeamRepository {
     }
     public List<Team> getAllDivisionTeamsForSeason_2018 (Long season, String division){
         return entityManager.createNativeQuery("SELECT * FROM team where division_2018 IS NOT null AND division_"+season+"='"+division+"'",Team.class).getResultList();
+    }
+
+    public String teamsDivision (Long teamId, Integer season){
+        return (String) entityManager.createNativeQuery("SELECT division_"+season+" FROM team where id="+teamId).getSingleResult();
     }
 }

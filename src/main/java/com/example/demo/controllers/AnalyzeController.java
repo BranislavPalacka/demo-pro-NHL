@@ -1,14 +1,10 @@
 package com.example.demo.controllers;
 
-import com.example.demo.Services.GameService;
-import com.example.demo.Services.GoalService;
-import com.example.demo.Services.PlayerService;
-import com.example.demo.Services.TeamService;
+import com.example.demo.Services.*;
 import com.example.demo.model.*;
 import com.example.demo.repositories.*;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,8 +21,10 @@ public class AnalyzeController {
     private final PlayerService playerService;
     private final GameRepository gameRepository;
     private final AllSeriesRepository allSeriesRepository;
+    private final TeamInTableService teamInTableService;
+    private final SeasonService seasonService;
 
-    public AnalyzeController(GameRepositoryNew gameRepositoryNew, GoalService goalService, TeamRepositoryNew teamRepositoryNew, TeamService teamService, GameService gameService, GoalRepositoryNew goalRepositoryNew, PlayerService playerService, GameRepository gameRepository, AllSeriesRepository allSeriesRepository) {
+    public AnalyzeController(GameRepositoryNew gameRepositoryNew, GoalService goalService, TeamRepositoryNew teamRepositoryNew, TeamService teamService, GameService gameService, GoalRepositoryNew goalRepositoryNew, PlayerService playerService, GameRepository gameRepository, AllSeriesRepository allSeriesRepository, TeamInTableService teamInTableService, SeasonService seasonService) {
         this.gameRepositoryNew = gameRepositoryNew;
         this.goalService = goalService;
         this.teamRepositoryNew = teamRepositoryNew;
@@ -36,11 +34,21 @@ public class AnalyzeController {
         this.playerService = playerService;
         this.gameRepository = gameRepository;
         this.allSeriesRepository = allSeriesRepository;
+        this.teamInTableService = teamInTableService;
+        this.seasonService = seasonService;
     }
 
     @GetMapping("/analytic_game_series")
     public String game(){
-            return "analytic_game_series";
+        List<TeamInTable> teamInTableList = teamInTableService.getDivisionTableUpToDate("2019-01-10",2018,"Central");
+        for (TeamInTable team: teamInTableList) {
+            System.out.println(team.getName()+" | points: "+team.getPoints()+" | score: "+team.getGoalsPlus()+":"+team.getGoalsMinus()+
+                    " | winsOrder: "+ team.getWinsOrder()+" | rounds: "+team.getRounds()+" | result: "+team.getWins()+":"+team.getLosses()+":"+team.getDraws());
+        }
+
+        System.out.println(teamInTableService.compareTeamsUpToDate(41L,43L,"2019-01-10"));
+
+        return "analytic_game_series";
     }
 
     @PostMapping("/analytic_game_series")

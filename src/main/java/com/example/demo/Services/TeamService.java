@@ -16,4 +16,5 @@ public interface TeamService {
     List<Team> getAllTeamsForSeason (Long season);
     List<Team> getAllConferenceTeamsForSeason (Long season, String conference);
     List<Team> getAllDivisionTeamsForSeason_2018 (Long season, String division);
+    String teamsDivision (Long teamId, Integer season);
 }

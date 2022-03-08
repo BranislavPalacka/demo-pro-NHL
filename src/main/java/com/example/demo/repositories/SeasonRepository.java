@@ -1,7 +1,6 @@
 package com.example.demo.repositories;
 
 import com.example.demo.model.Season;
-import com.example.demo.model.Team;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
@@ -23,6 +22,10 @@ public class SeasonRepository {
         EntityManager em = entityManager;
         Season returnSeason = (Season) em.createNativeQuery("SELECT * FROM season WHERE year="+season,Season.class).getSingleResult();
         return returnSeason;
+    }
+
+    public List<Season> getAllSeasons(){
+        return entityManager.createNativeQuery("SELECT * FROM season",Season.class).getResultList();
     }
 
 }
