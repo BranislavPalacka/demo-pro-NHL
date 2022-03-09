@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.time.LocalDate;
 import java.util.List;
 
 @Component
@@ -26,6 +27,22 @@ public class SeasonRepository {
 
     public List<Season> getAllSeasons(){
         return entityManager.createNativeQuery("SELECT * FROM season",Season.class).getResultList();
+    }
+
+    public Integer getSeasonIntFromDate (String actualDate){
+        List<Season> seasonList = getAllSeasons();
+        LocalDate dataActual = LocalDate.parse(actualDate);
+        LocalDate dateStart;
+        LocalDate dateEnd;
+
+        for (Season season: seasonList) {
+            dateStart = season.getStart_date().toLocalDate().minusDays(1L);
+            dateEnd = season.getLast_date().toLocalDate().plusDays(1L);
+            if (dataActual.isAfter(dateStart) && dataActual.isBefore(dateEnd)) {
+                return season.getYear();
+            }
+        }
+        return null;
     }
 
 }

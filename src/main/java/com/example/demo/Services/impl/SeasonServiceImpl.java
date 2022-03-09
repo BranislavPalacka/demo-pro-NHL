@@ -25,4 +25,9 @@ public class SeasonServiceImpl implements SeasonService {
     public Season getSeason(Integer season) {
         return seasonRepository.getSeason(season);
     }
+
+    @Override
+    public Integer getSeasonIntFromDate(String actualDate) {
+        return seasonRepository.getSeasonIntFromDate(actualDate);
+    }
 }

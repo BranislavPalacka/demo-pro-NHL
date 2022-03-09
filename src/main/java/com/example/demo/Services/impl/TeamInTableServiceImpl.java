@@ -17,8 +17,8 @@ public class TeamInTableServiceImpl implements TeamInTableService {
     }
 
     @Override
-    public TeamInTable getTeamUpToDate(Long teamId, String actualDate, Integer season) {
-        return teamInTableRepository.getTeamUpToDate(teamId,actualDate,season);
+    public TeamInTable getTeamUpToDate(Long teamId, String actualDate) {
+        return teamInTableRepository.getTeamUpToDate(teamId,actualDate);
     }
 
     @Override
@@ -37,7 +37,7 @@ public class TeamInTableServiceImpl implements TeamInTableService {
     }
 
     @Override
-    public TeamInTable getTeamUpToDateAgainstTeam(Long teamId, Long teamId2, String actualDate, Integer season) {
-        return teamInTableRepository.getTeamUpToDateAgainstTeam(teamId,teamId2,actualDate,season);
+    public TeamInTable getTeamUpToDateAgainstTeam(Long teamId, Long teamId2, String actualDate) {
+        return teamInTableRepository.getTeamUpToDateAgainstTeam(teamId,teamId2,actualDate);
     }
 }

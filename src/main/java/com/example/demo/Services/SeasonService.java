@@ -7,4 +7,5 @@ import java.util.List;
 public interface SeasonService {
     List<Season> getAllSeasons();
     Season getSeason(Integer season);
+    Integer getSeasonIntFromDate (String actualDate);
 }

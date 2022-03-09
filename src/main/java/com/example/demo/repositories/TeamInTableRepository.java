@@ -1,16 +1,19 @@
 package com.example.demo.repositories;
 
+import com.example.demo.Services.SeasonService;
 import com.example.demo.Services.TeamService;
 import com.example.demo.model.Game;
-import com.example.demo.model.Season;
 import com.example.demo.model.Team;
 import com.example.demo.model.TeamInTable;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.sql.Date;
-import java.util.*;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 @Component
 public class TeamInTableRepository {
@@ -18,28 +21,28 @@ public class TeamInTableRepository {
     @PersistenceContext
     private final EntityManager entityManager;
     private final TeamRepositoryNew teamRepositoryNew;
-    private final TeamRepository teamRepository;
-    private final SeasonRepository seasonRepository;
     private final TeamService teamService;
+    private final SeasonService seasonService;
 
 
-    public TeamInTableRepository(EntityManager entityManager, TeamRepositoryNew teamRepositoryNew, TeamRepository teamRepository, SeasonRepository seasonRepository, TeamService teamService) {
+    public TeamInTableRepository(EntityManager entityManager, TeamRepositoryNew teamRepositoryNew, TeamService teamService, SeasonService seasonService) {
         this.entityManager = entityManager;
         this.teamRepositoryNew = teamRepositoryNew;
-        this.teamRepository = teamRepository;
-        this.seasonRepository = seasonRepository;
         this.teamService = teamService;
+        this.seasonService = seasonService;
     }
 
-    public TeamInTable getTeamUpToDate(Long teamId, String actualDate, Integer season) {
+    public TeamInTable getTeamUpToDate(Long teamId, String actualDate) {
+        Integer season = seasonService.getSeasonIntFromDate(actualDate);
         EntityManager em = entityManager;
         Team team =  teamRepositoryNew.findById(teamId).get();
         TeamInTable teamInTable = new TeamInTable();
+        LocalDate date = LocalDate.parse(actualDate).plusDays(1L);
 
         teamInTable.setTeamId(teamId);
         teamInTable.setName(team.getName());
 
-        List<Game> gameList = em.createNativeQuery("SELECT * FROM game WHERE season="+season+" AND (home="+teamId+" OR guest="+teamId+") AND date<'"+actualDate+"'",Game.class).getResultList();
+        List<Game> gameList = em.createNativeQuery("SELECT * FROM game WHERE season="+season+" AND (home="+teamId+" OR guest="+teamId+") AND date<'"+date+"'",Game.class).getResultList();
 
         String vysledek = "";
         int goalsHomeTeam = 0;
@@ -155,34 +158,20 @@ public class TeamInTableRepository {
 
     public List<TeamInTable> getDivisionTableUpToDate(String actualDate, Integer season, String division){
         List<TeamInTable> teamsInTable = new ArrayList<>();
-        List<Team> teamList = teamRepository.teamListDivision(division,season);
+        List<Team> teamList = teamService.teamListDivision(division,season);
 
         for (Team team : teamList) {
-            teamsInTable.add(getTeamUpToDate(team.getId(),actualDate,season));
+            teamsInTable.add(getTeamUpToDate(team.getId(),actualDate));
         }
         Collections.sort(teamsInTable,Comparator.comparing(TeamInTable::getPoints).reversed());
         return teamsInTable;
     }
 
-    private Integer getSeasonFromDate (String actualDate){
-        List<Season> seasonList = seasonRepository.getAllSeasons();
-        Date dataActual = Date.valueOf(actualDate);
-        Date dateStart = Date.valueOf("2000-01-01");
-        Date dateEnd = Date.valueOf("2000-01-02");
-
-        for (Season season: seasonList) {
-            dateStart = season.getStart_date();
-            dateEnd = season.getLast_date();
-            if (dataActual.after(dateStart) && dataActual.before(dateEnd)) return season.getYear();
-        }
-     return null;
-    }
-
     /**
-     * Najde pořadí temu v divizy k určenému datu. (toto datum se nepočítá)
+     * Najde pořadí temu v divizy k určenému datu včetně
      */
     public Integer getTeamDivisionPositionUpToDate(Long teamId,String actualDate){
-        Integer season = getSeasonFromDate(actualDate);
+        Integer season = seasonService.getSeasonIntFromDate(actualDate);
         String division = teamService.teamsDivision(teamId,season);
         List<TeamInTable> table = getDivisionTableUpToDate(actualDate,season,division);
 
@@ -204,16 +193,18 @@ public class TeamInTableRepository {
         return secondTeamPosition-firstTeamPosition;
     }
 
-    public TeamInTable getTeamUpToDateAgainstTeam(Long teamId, Long teamId2, String actualDate, Integer season) {
+    public TeamInTable getTeamUpToDateAgainstTeam(Long teamId, Long teamId2, String actualDate) {
+        Integer season = seasonService.getSeasonIntFromDate(actualDate);
         EntityManager em = entityManager;
         Team team =  teamRepositoryNew.findById(teamId).get();
         TeamInTable teamInTable = new TeamInTable();
+        LocalDate date = LocalDate.parse(actualDate).plusDays(1L);
 
         teamInTable.setTeamId(teamId);
         teamInTable.setName(team.getName());
 
-        List<Game> gameList = em.createNativeQuery("SELECT * FROM game WHERE season="+season+" AND (home=" +teamId+
-                " AND guest=" +teamId2+ ") OR (home=" +teamId2+ " AND guest="+teamId+") AND date<'"+actualDate+"'",Game.class).getResultList();
+        List<Game> gameList = em.createNativeQuery("SELECT * FROM game WHERE season="+season+" AND ((home=" +teamId+
+                " AND guest=" +teamId2+ ") OR (home=" +teamId2+ " AND guest="+teamId+")) AND date<'"+date+"'",Game.class).getResultList();
 
         String vysledek = "";
         int goalsHomeTeam = 0;

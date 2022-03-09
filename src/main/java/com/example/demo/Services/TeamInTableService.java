@@ -7,9 +7,9 @@ import com.example.demo.model.TeamInTable;
 import java.util.List;
 
 public interface TeamInTableService {
-    TeamInTable getTeamUpToDate(Long teamId, String actualDate, Integer season);
+    TeamInTable getTeamUpToDate(Long teamId, String actualDate);
     List<TeamInTable> getDivisionTableUpToDate(String actualDate, Integer season, String division);
     Integer getTeamDivisionPositionUpToDate(Long teamId,String actualDate);
     Integer compareTeamsUpToDate(Long teamId1, Long teamId2, String actualDate);
-    TeamInTable getTeamUpToDateAgainstTeam(Long teamId, Long teamId2, String actualDate, Integer season);
+    TeamInTable getTeamUpToDateAgainstTeam(Long teamId, Long teamId2, String actualDate);
 }

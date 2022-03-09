@@ -12,43 +12,29 @@ import java.util.List;
 @Controller
 public class AnalyzeController {
 
-    private final GameRepositoryNew gameRepositoryNew;
-    private final GoalService goalService;
-    private final TeamRepositoryNew teamRepositoryNew;
     private final TeamService teamService;
     private final GameService gameService;
-    private final GoalRepositoryNew goalRepositoryNew;
-    private final PlayerService playerService;
-    private final GameRepository gameRepository;
     private final AllSeriesRepository allSeriesRepository;
     private final TeamInTableService teamInTableService;
-    private final SeasonService seasonService;
 
-    public AnalyzeController(GameRepositoryNew gameRepositoryNew, GoalService goalService, TeamRepositoryNew teamRepositoryNew, TeamService teamService, GameService gameService, GoalRepositoryNew goalRepositoryNew, PlayerService playerService, GameRepository gameRepository, AllSeriesRepository allSeriesRepository, TeamInTableService teamInTableService, SeasonService seasonService) {
-        this.gameRepositoryNew = gameRepositoryNew;
-        this.goalService = goalService;
-        this.teamRepositoryNew = teamRepositoryNew;
+    public AnalyzeController(TeamService teamService, GameService gameService, AllSeriesRepository allSeriesRepository, TeamInTableService teamInTableService) {
         this.teamService = teamService;
         this.gameService = gameService;
-        this.goalRepositoryNew = goalRepositoryNew;
-        this.playerService = playerService;
-        this.gameRepository = gameRepository;
         this.allSeriesRepository = allSeriesRepository;
         this.teamInTableService = teamInTableService;
-        this.seasonService = seasonService;
     }
 
     @GetMapping("/analytic_game_series")
     public String game(){
-        List<TeamInTable> teamInTableList = teamInTableService.getDivisionTableUpToDate("2019-03-09",2018,"Central");
+        List<TeamInTable> teamInTableList = teamInTableService.getDivisionTableUpToDate("2019-04-06",2018,"Central");
         System.out.println();
         for (TeamInTable team: teamInTableList) {
             System.out.println(team.getName()+" | points: "+team.getPoints()+" | score: "+team.getGoalsPlus()+":"+team.getGoalsMinus()+
                     " | winsOrder: "+ team.getWinsOrder()+" | rounds: "+team.getRounds()+" | result: "+team.getWins()+":"+team.getLosses()+":"+team.getDraws());
         }
 
-        System.out.println(teamInTableService.compareTeamsUpToDate(41L,43L,"2019-01-10"));
-        System.out.println(teamInTableService.getTeamUpToDateAgainstTeam(41L,44L,"2019-01-10",2018));
+        System.out.println(teamInTableService.compareTeamsUpToDate(41L,43L,"2019-04-06"));
+        System.out.println(teamInTableService.getTeamUpToDateAgainstTeam(41L,44L,"2018-12-10"));
 
         return "analytic_game_series";
     }
