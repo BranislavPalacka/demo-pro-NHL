@@ -1,6 +1,7 @@
 package com.example.demo.Services.impl;
 
 import com.example.demo.Services.GoalService;
+import com.example.demo.model.Game;
 import com.example.demo.model.Goal;
 import com.example.demo.repositories.GoalRepository;
 import com.example.demo.repositories.GoalRepositoryNew;
@@ -47,5 +48,10 @@ public class GoalServiceImpl implements GoalService {
     @Override
     public Goal lastGoalFromGame(Long gameID) {
         return goalRepository.lastGoalFromGame(gameID);
+    }
+
+    @Override
+    public Long getTeamIdFromFirstGoalInGame(Game game) {
+        return goalRepository.getTeamIdFromFirstGoalInGame(game);
     }
 }

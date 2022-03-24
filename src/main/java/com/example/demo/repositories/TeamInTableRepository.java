@@ -170,9 +170,9 @@ public class TeamInTableRepository {
     /**
      * Najde pořadí temu v divizy k určenému datu včetně
      */
-    public Integer getTeamDivisionPositionUpToDate(Long teamId,String actualDate){
+    public Integer getTeamDivisionPositionUpToDate(Integer teamId,String actualDate){
         Integer season = seasonService.getSeasonIntFromDate(actualDate);
-        String division = teamService.teamsDivision(teamId,season);
+        String division = teamService.teamsDivision(teamId.longValue(),season);
         List<TeamInTable> table = getDivisionTableUpToDate(actualDate,season,division);
 
         int counter = 0;
@@ -187,20 +187,20 @@ public class TeamInTableRepository {
      * porovná vzájemné umístění v tabulce
      * @return +X první team je lepší o X pozic. -X druhý team je lepší o X pozic
      */
-    public Integer compareTeamsUpToDate(Long teamId1, Long teamId2, String actualDate){
+    public Integer compareTeamsUpToDate(Integer teamId1, Integer teamId2, String actualDate){
         int firstTeamPosition = getTeamDivisionPositionUpToDate(teamId1,actualDate);
         int secondTeamPosition = getTeamDivisionPositionUpToDate(teamId2,actualDate);
         return secondTeamPosition-firstTeamPosition;
     }
 
-    public TeamInTable getTeamUpToDateAgainstTeam(Long teamId, Long teamId2, String actualDate) {
+    public TeamInTable getTeamUpToDateAgainstTeam(Integer teamId, Integer teamId2, String actualDate) {
         Integer season = seasonService.getSeasonIntFromDate(actualDate);
         EntityManager em = entityManager;
-        Team team =  teamRepositoryNew.findById(teamId).get();
+        Team team =  teamRepositoryNew.findById(teamId.longValue()).get();
         TeamInTable teamInTable = new TeamInTable();
         LocalDate date = LocalDate.parse(actualDate).plusDays(1L);
 
-        teamInTable.setTeamId(teamId);
+        teamInTable.setTeamId(teamId.longValue());
         teamInTable.setName(team.getName());
 
         List<Game> gameList = em.createNativeQuery("SELECT * FROM game WHERE season="+season+" AND ((home=" +teamId+
@@ -212,7 +212,7 @@ public class TeamInTableRepository {
         int rounds = 0;
 
         for (Game game: gameList ) {
-            rounds = getRounds(teamId, teamInTable, rounds, game);
+            rounds = getRounds(teamId.longValue(), teamInTable, rounds, game);
         }
         teamInTable.setRounds(rounds);
 

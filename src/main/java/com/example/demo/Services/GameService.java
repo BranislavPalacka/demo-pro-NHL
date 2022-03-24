@@ -20,4 +20,5 @@ public interface GameService {
     List<Game> teamGames(Long teamId, Long season, String side);
     String prubeznyVysledekZapasu (Long gameId);
     List<serie3> serie3List(List<Game> gameList, String strana);
+    Integer getGameResultforRound (Long teamId, Long season, Integer roundNumber);
 }

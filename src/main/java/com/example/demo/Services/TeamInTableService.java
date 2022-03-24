@@ -9,7 +9,7 @@ import java.util.List;
 public interface TeamInTableService {
     TeamInTable getTeamUpToDate(Long teamId, String actualDate);
     List<TeamInTable> getDivisionTableUpToDate(String actualDate, Integer season, String division);
-    Integer getTeamDivisionPositionUpToDate(Long teamId,String actualDate);
-    Integer compareTeamsUpToDate(Long teamId1, Long teamId2, String actualDate);
-    TeamInTable getTeamUpToDateAgainstTeam(Long teamId, Long teamId2, String actualDate);
+    Integer getTeamDivisionPositionUpToDate(Integer teamId,String actualDate);
+    Integer compareTeamsUpToDate(Integer teamId1, Integer teamId2, String actualDate);
+    TeamInTable getTeamUpToDateAgainstTeam(Integer teamId, Integer teamId2, String actualDate);
 }

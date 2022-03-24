@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Team - detail</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+</head>
+
+<body>
+    <div><br></div>
+    <div class="container col-6">
+        <div class="row justify-content-center">
+            <div class="col">
+                <form method="post" action="analytic_game_series">
+                    <table class="table h5">
+                        <thead>
+                            <tr>
+                                <th scope="col">KDO</th>
+                                <th scope="col">SERIE</th>
+                                <th scope="col">PROTI KOMU</th>
+                                <th scope="col">SEZÓNA</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="col-2" align="left">
+                                    <select class="form-select col-12 my-auto h5 rounded" name="team">
+                                        <option selected>vyber team</option>
+                                        <option>Eastern</option>
+                                        <option>Western</option>
+                                        <option>Atlantic</option>
+                                        <option>Metropolitan</option>
+                                        <option>Central</option>
+                                        <option>Pacific</option>
+                                        <option th:each="team : ${teamList}" th:text="${team.name}" th:value="${team.id}"></option>
+                                    </select>
+                                </td>
+                                <td class="col-2">
+                                    <select class="form-select col-12 my-auto h5 rounded" name="series">
+                                        <option selected>bez filtru</option>
+                                        <option>Home3</option>
+                                        <option>Home4</option>
+                                        <option>Home5</option>
+                                        <option>Guest3</option>
+                                        <option>Guest4</option>
+                                        <option>Guest5</option>
+                                    </select>
+                                </td>
+                                <td class="col-2" align="left">
+                                    <select class="form-select col-12 my-auto h5 rounded" name="against">
+                                        <option selected>bez filtru</option>
+                                        <option>Eastern</option>
+                                        <option>Western</option>
+                                        <option>Atlantic</option>
+                                        <option>Metropolitan</option>
+                                        <option>Central</option>
+                                        <option>Pacific</option>
+                                        <option th:each="team : ${teamList}" th:text="${team.name}" th:value="${team.id}"></option>
+                                    </select>
+                                </td>
+                                <td class="col-2">
+                                    <select class="form-select col-12 my-auto h5 rounded" name="season">
+                                        <option selected>2018</option>
+                                        <option>2019</option>
+                                    </select>
+                                </td>
+                                <td class="col-1" align="right">
+                                    <button class="btn btn-success btn-sm mx-auto col-12 h5" type="submit">Zobrazit</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div><br></div>
+    <div class="col-12 row align-items-start">
+        <div class="col col-1"> </div>
+        <div class="col">
+            <table class="table table-hover col-10">
+                <thead class="h5">
+                    <tr align="center" class="table-secondary">
+                        <th scope="col">ZÁPASY</th>
+                        <th scope="col" colspan="2">Výhra</th>
+                        <th scope="col" colspan="2">Prohra</th>
+                        <th scope="col" colspan="2">Remíza</th>
+                        <th scope="col" colspan="2">Remíza+V</th>
+                        <th scope="col" colspan="2">Remíza+P</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row" align="left" class="table-light">CELKEM</th>
+                        <td align="center" th:text="${winsNumber}"></td>
+                        <td align="center" th:text="${winsPercent}+'%'"></td>
+                        <td align="center" th:text="${lostNumber}"></td>
+                        <td align="center" th:text="${lostPercent}+'%'"></td>
+                        <td align="center" th:text="${tieNumber}"></td>
+                        <td align="center" th:text="${tiePercent}+'%'"></td>
+                        <td align="center" th:text="${tieWinsNumber}"></td>
+                        <td align="center" th:text="${tieWinsPercent}+'%'"></td>
+                        <td align="center" th:text="${tieLostNumber}"></td>
+                        <td align="center" th:text="${tieLostPercent}+'%'"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" align="left" class="table-light">DOMA</th>
+                        <td align="center" th:text="${winsNumberHome}"></td>
+                        <td align="center" th:text="${winsPercentHome}+'%'"></td>
+                        <td align="center" th:text="${lostNumberHome}"></td>
+                        <td align="center" th:text="${lostPercentHome}+'%'"></td>
+                        <td align="center" th:text="${tieNumberHome}"></td>
+                        <td align="center" th:text="${tiePercentHome}+'%'"></td>
+                        <td align="center" th:text="${tieWinsNumberHome}"></td>
+                        <td align="center" th:text="${tieWinsPercentHome}+'%'"></td>
+                        <td align="center" th:text="${tieLostNumberHome}"></td>
+                        <td align="center" th:text="${tieLostPercentHome}+'%'"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" align="left" class="table-light">VENKU</th>
+                        <td align="center" th:text="${winsNumberGuest}"></td>
+                        <td align="center" th:text="${winsPercentGuest}+'%'"></td>
+                        <td align="center" th:text="${lostNumberGuest}"></td>
+                        <td align="center" th:text="${lostPercentGuest}+'%'"></td>
+                        <td align="center" th:text="${tieNumberGuest}"></td>
+                        <td align="center" th:text="${tiePercentGuest}+'%'"></td>
+                        <td align="center" th:text="${tieWinsNumberGuest}"></td>
+                        <td align="center" th:text="${tieWinsPercentGuest}+'%'"></td>
+                        <td align="center" th:text="${tieLostNumberGuest}"></td>
+                        <td align="center" th:text="${tieLostPercentGuest}+'%'"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col">
+            <table class="table table-hover col-6">
+                <thead class="h5">
+                <tr align="center" class="table-secondary">
+                    <th scope="col">TŘETINY</th>
+                    <th scope="col" colspan="2">Výhra 1 třetiny</th>
+                    <th scope="col" colspan="2">Výhra 2 třetin</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th scope="row" align="left" class="table-light">CELKEM</th>
+                    <td align="center" th:text="${winsNumber1Period}"></td>
+                    <td align="center" th:text="${winsPercent1Period}+'%'"></td>
+                    <td align="center" th:text="${winsNumber2Periods}"></td>
+                    <td align="center" th:text="${winsPercent2Periods}+'%'"></td>
+                </tr>
+                <tr>
+                    <th scope="row" align="left" class="table-light">DOMA</th>
+                    <td align="center" th:text="${winsNumberHome1Period}"></td>
+                    <td align="center" th:text="${winsPercentHome1Period}+'%'"></td>
+                    <td align="center" th:text="${winsNumberHome2Periods}"></td>
+                    <td align="center" th:text="${winsPercentHome2Periods}+'%'"></td>
+                </tr>
+                <tr>
+                    <th scope="row" align="left" class="table-light">VENKU</th>
+                    <td align="center" th:text="${winsNumberGuest1Period}"></td>
+                    <td align="center" th:text="${winsPercentGuest1Period}+'%'"></td>
+                    <td align="center" th:text="${winsNumberGuest2Periods}"></td>
+                    <td align="center" th:text="${winsPercentGuest2Periods}+'%'"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+
+</html>

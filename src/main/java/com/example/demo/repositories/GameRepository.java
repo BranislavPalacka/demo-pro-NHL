@@ -274,4 +274,17 @@ public class GameRepository {
         return serie3s;
     }
 
+    /**
+     * @return Vysledek z pohledu teamu volajícího metodu
+     */
+    public Integer getGameResultforRound (Long teamId, Long season, Integer roundNumber){
+        Game game = (Game) entityManager.createNativeQuery("SELECT * FROM game WHERE season="+season+" AND (round_home="+roundNumber+" AND home="+teamId+") OR (round_guest="+roundNumber+" AND guest="+teamId+")",Game.class).getSingleResult();
+        if (game.getGuest() == teamId.intValue()){
+            if (game.getVysledek_sazka() == 2) return 1;
+            if (game.getVysledek_sazka() == 20) return 10;
+            if (game.getVysledek_sazka() == 1) return 2;
+            if (game.getVysledek_sazka() == 10) return 20;
+        }
+        return game.getVysledek_sazka();
+    }
 }

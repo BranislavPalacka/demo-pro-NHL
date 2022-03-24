@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -16,25 +17,64 @@ public class AnalyzeController {
     private final GameService gameService;
     private final AllSeriesRepository allSeriesRepository;
     private final TeamInTableService teamInTableService;
+    private final GoalService goalService;
 
-    public AnalyzeController(TeamService teamService, GameService gameService, AllSeriesRepository allSeriesRepository, TeamInTableService teamInTableService) {
+    public AnalyzeController(TeamService teamService, GameService gameService, AllSeriesRepository allSeriesRepository, TeamInTableService teamInTableService, GoalService goalService) {
         this.teamService = teamService;
         this.gameService = gameService;
         this.allSeriesRepository = allSeriesRepository;
         this.teamInTableService = teamInTableService;
+        this.goalService = goalService;
     }
 
     @GetMapping("/analytic_game_series")
     public String game(){
-        List<TeamInTable> teamInTableList = teamInTableService.getDivisionTableUpToDate("2019-04-06",2018,"Central");
-        System.out.println();
-        for (TeamInTable team: teamInTableList) {
-            System.out.println(team.getName()+" | points: "+team.getPoints()+" | score: "+team.getGoalsPlus()+":"+team.getGoalsMinus()+
-                    " | winsOrder: "+ team.getWinsOrder()+" | rounds: "+team.getRounds()+" | result: "+team.getWins()+":"+team.getLosses()+":"+team.getDraws());
+//        List<TeamInTable> teamInTableList = teamInTableService.getDivisionTableUpToDate("2018-10-04",2018,"Central");
+//        System.out.println();
+//        for (TeamInTable team: teamInTableList) {
+//            System.out.println(team.getName()+" | points: "+team.getPoints()+" | score: "+team.getGoalsPlus()+":"+team.getGoalsMinus()+
+//                    " | winsOrder: "+ team.getWinsOrder()+" | rounds: "+team.getRounds()+" | result: "+team.getWins()+":"+team.getLosses()+":"+team.getDraws());
+//        }
+//
+//        System.out.println(teamInTableService.compareTeamsUpToDate(44,42,"2018-10-04"));
+//        System.out.println(teamInTableService.getTeamUpToDateAgainstTeam(41,44,"2018-12-10"));
+
+        // zapas guest, vitezstvi, rozdil v tabulce 2 a jina divize
+        int stratingRound = 10;
+        int comparedDifferance = 2;
+        int vysledek = 2;
+        int resultAll = 0;
+        int gameCounterAll = 0;
+        Long season = 2018L;
+        String side = "guest";
+
+        List<Team>teamList = teamService.getAllTeamsForSeason(season);
+        System.out.println("\n"+side+" -- startingRound = "+stratingRound+" | comparedDifferance = "+comparedDifferance+" | vysledek = "+vysledek);
+
+        for (Team team: teamList){
+            List<Game> gameList = gameService.teamGames(team.getId(), season,side);
+            int result = 0;
+            int gameCounter = 0;
+
+            for (Game game : gameList) {
+                if (game.getRound_guest()>=stratingRound){
+                    if (!teamService.teamsDivision(game.getHome().longValue(),season.intValue()).equals(teamService.teamsDivision(game.getGuest().longValue(),season.intValue()))){
+                        LocalDate date = game.getDate().toLocalDate().minusDays(-1);
+                        if(teamInTableService.compareTeamsUpToDate(game.getGuest(),game.getHome(),game.getDate().toString()) >= comparedDifferance &&
+                                goalService.getTeamIdFromFirstGoalInGame(game).intValue() == game.getGuest()) {
+                            gameCounter++;
+                            if (game.getVysledek_sazka() == vysledek) result++;
+                        }
+                    }
+                }
+            }
+            resultAll += result;
+            gameCounterAll += gameCounter;
+            if(gameCounter>0) System.out.print("\n"+gameList.get(0).getGuest_team() + " - celkem: "+gameList.size()+" | započítáno: "+gameCounter+" | "+result+"/"+gameCounter+" = "+result*100/gameCounter+"%");
         }
 
-        System.out.println(teamInTableService.compareTeamsUpToDate(41L,43L,"2019-04-06"));
-        System.out.println(teamInTableService.getTeamUpToDateAgainstTeam(41L,44L,"2018-12-10"));
+        System.out.println("\nCelkem: "+teamList.size()*41+" | započítáno: "+gameCounterAll+" | "+resultAll+"/"+gameCounterAll+" = "+resultAll*100/gameCounterAll+"%");
+
 
         return "analytic_game_series";
     }

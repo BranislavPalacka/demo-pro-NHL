@@ -27,17 +27,17 @@ public class TeamInTableServiceImpl implements TeamInTableService {
     }
 
     @Override
-    public Integer getTeamDivisionPositionUpToDate(Long teamId, String actualDate) {
+    public Integer getTeamDivisionPositionUpToDate(Integer teamId, String actualDate) {
         return teamInTableRepository.getTeamDivisionPositionUpToDate(teamId,actualDate);
     }
 
     @Override
-    public Integer compareTeamsUpToDate(Long teamId1, Long teamId2, String actualDate) {
+    public Integer compareTeamsUpToDate(Integer teamId1, Integer teamId2, String actualDate) {
         return teamInTableRepository.compareTeamsUpToDate(teamId1,teamId2,actualDate);
     }
 
     @Override
-    public TeamInTable getTeamUpToDateAgainstTeam(Long teamId, Long teamId2, String actualDate) {
+    public TeamInTable getTeamUpToDateAgainstTeam(Integer teamId, Integer teamId2, String actualDate) {
         return teamInTableRepository.getTeamUpToDateAgainstTeam(teamId,teamId2,actualDate);
     }
 }

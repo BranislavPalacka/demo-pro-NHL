@@ -82,4 +82,21 @@ public class TeamServiceImpl implements TeamService {
     public String teamsDivision(Long teamId, Integer season) {
         return teamRepository.teamsDivision(teamId,season);
     }
+
+    @Override
+    public Integer teamGameResults(Long teamId, Integer season, int result, String side) {
+        return teamRepository.teamGameResults(teamId,season,result,side);
+    }
+
+    @Override
+    public Integer get1PeriodWinsCount(Long teamId, Long season, String side) {
+        return teamRepository.get1PeriodWinsCount(teamId,season,side);
+    }
+
+    @Override
+    public Integer get2PeriodsWinsCount(Long teamId, Long season, String side) {
+        return teamRepository.get2PeriodsWinsCount(teamId,season,side);
+    }
+
+
 }

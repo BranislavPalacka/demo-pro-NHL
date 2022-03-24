@@ -1,6 +1,7 @@
 package com.example.demo.repositories;
 
 import com.example.demo.Services.PlayerService;
+import com.example.demo.model.Game;
 import com.example.demo.model.Goal;
 import org.springframework.stereotype.Component;
 
@@ -79,4 +80,8 @@ public class GoalRepository {
         return goals.get(goals.size()-1);
     }
 
+    public Long getTeamIdFromFirstGoalInGame(Game game){
+        Goal goal = (Goal) entityManager.createNativeQuery("SELECT * FROM goal WHERE game="+game.getId()+" ORDER BY minute LIMIT 1;",Goal.class).getSingleResult();
+        return goal.getTeam();
+    }
 }

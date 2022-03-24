@@ -81,4 +81,9 @@ public class GameServiceImpl implements GameService {
     public List<serie3> serie3List(List<Game> gameList, String strana) {
         return gameRepository.serie3List(gameList,strana);
     }
+
+    @Override
+    public Integer getGameResultforRound(Long teamId, Long season, Integer roundNumber) {
+        return gameRepository.getGameResultforRound(teamId,season,roundNumber);
+    }
 }
