@@ -98,5 +98,15 @@ public class TeamServiceImpl implements TeamService {
         return teamRepository.get2PeriodsWinsCount(teamId,season,side);
     }
 
+    @Override
+    public Integer getSumTeamGoalsInGamesByGameResult(Long teamId, Long season, String side, Integer gameResult) {
+        return teamRepository.getSumTeamGoalsInGamesByGameResult(teamId,season,side,gameResult);
+    }
+
+    @Override
+    public Integer getSumTeamFirstGoalsInGamesByGameResult(Long teamId, Long season, String side, Integer gameResult) {
+        return teamRepository.getSumTeamFirstGoalsInGamesByGameResult(teamId,season,side,gameResult);
+    }
+
 
 }

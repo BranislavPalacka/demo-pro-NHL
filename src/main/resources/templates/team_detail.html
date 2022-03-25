@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <title>Team - detail</title>
@@ -165,6 +165,110 @@
                     <td align="center" th:text="${winsNumberGuest2Periods}"></td>
                     <td align="center" th:text="${winsPercentGuest2Periods}+'%'"></td>
                 </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div><br></div>
+    <div class="col-12 row align-items-start">
+        <div class="col col-1"> </div>
+        <div class="col">
+            <table class="table table-hover col-5">
+                <thead class="h5">
+                <tr align="center" class="table-secondary">
+                    <th scope="col">GÓLY</th>
+                    <th scope="col" colspan="2">Výhra</th>
+                    <th scope="col" colspan="2">Prohra</th>
+                    <th scope="col" colspan="2">Remíza</th>
+                    <th scope="col" colspan="2">Celekem</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th scope="row" align="left" class="table-light">CELKEM</th>
+                    <td align="center" th:text="${winsGoalNumber}"></td>
+                    <td align="center" th:text="${winsGoalAverage}"></td>
+                    <td align="center" th:text="${lostGoalNumber}"></td>
+                    <td align="center" th:text="${lostGoalAverage}"></td>
+                    <td align="center" th:text="${tieGoalNumber}"></td>
+                    <td align="center" th:text="${tieGoalAverage}"></td>
+                    <td align="center" th:text="${sumGoalNumber}"></td>
+                    <td align="center" th:text="${sumGoalAverage}"></td>
+                </tr>
+                <tr>
+                    <th scope="row" align="left" class="table-light">DOMA</th>
+                    <td align="center" th:text="${winsGoalHomeNumber}"></td>
+                    <td align="center" th:text="${winsGoalHomeAverage}"></td>
+                    <td align="center" th:text="${lostGoalHomeNumber}"></td>
+                    <td align="center" th:text="${lostGoalHomeAverage}"></td>
+                    <td align="center" th:text="${tieGoalHomeNumber}"></td>
+                    <td align="center" th:text="${tieGoalHomeAverage}"></td>
+                    <td align="center" th:text="${sumGoalHomeNumber}"></td>
+                    <td align="center" th:text="${sumGoalHomeAverage}"></td>
+                </tr>
+                <tr>
+                    <th scope="row" align="left" class="table-light">VENKU</th>
+                    <td align="center" th:text="${winsGoalGuestNumber}"></td>
+                    <td align="center" th:text="${winsGoalGuestAverage}"></td>
+                    <td align="center" th:text="${lostGoalGuestNumber}"></td>
+                    <td align="center" th:text="${lostGoalGuestAverage}"></td>
+                    <td align="center" th:text="${tieGoalGuestNumber}"></td>
+                    <td align="center" th:text="${tieGoalGuestAverage}"></td>
+                    <td align="center" th:text="${sumGoalGuestNumber}"></td>
+                    <td align="center" th:text="${sumGoalGuestAverage}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div><br></div>
+    <div class="col-12 row align-items-start">
+        <div class="col col-1"> </div>
+        <div class="col">
+            <table class="table table-hover col-5">
+                <thead class="h5">
+                    <tr align="center" class="table-secondary">
+                        <th scope="col">PRVNÍ GÓL</th>
+                        <th scope="col" colspan="2">Výhra</th>
+                        <th scope="col" colspan="2">Prohra</th>
+                        <th scope="col" colspan="2">Remíza</th>
+                        <th scope="col" colspan="2">Celekem</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row" align="left" class="table-light">CELKEM</th>
+                        <td align="center" th:text="${winsFirstGoalNumber}"></td>
+                        <td align="center" th:text="${winsPercentFirstGoal}+'%'"></td>
+                        <td align="center" th:text="${lostFirstGoalNumber}"></td>
+                        <td align="center" th:text="${lostPercentFirstGoal}+'%'"></td>
+                        <td align="center" th:text="${tieFirstGoalNumber}"></td>
+                        <td align="center" th:text="${tiePercentFirstGoal}+'%'"></td>
+                        <td align="center" th:text="${sumFirstGoalNumber}"></td>
+                        <td align="center" th:text="${sumPercentFirstGoal}+'%'"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" align="left" class="table-light">DOMA</th>
+                        <td align="center" th:text="${winsFirstGoalNumberHome}"></td>
+                        <td align="center" th:text="${winsPercentFirstGoalHome}+'%'"></td>
+                        <td align="center" th:text="${lostFirstGoalNumberHome}"></td>
+                        <td align="center" th:text="${lostPercentFirstGoalHome}+'%'"></td>
+                        <td align="center" th:text="${tieFirstGoalNumberHome}"></td>
+                        <td align="center" th:text="${tiePercentFirstGoalHome}+'%'"></td>
+                        <td align="center" th:text="${sumFirstGoalNumberHome}"></td>
+                        <td align="center" th:text="${sumPercentFirstGoalHome}+'%'"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" align="left" class="table-light">VENKU</th>
+                        <td align="center" th:text="${winsFirstGoalNumberGuest}"></td>
+                        <td align="center" th:text="${winsPercentFirstGoalGuest}+'%'"></td>
+                        <td align="center" th:text="${lostFirstGoalNumberGuest}"></td>
+                        <td align="center" th:text="${lostPercentFirstGoalGuest}+'%'"></td>
+                        <td align="center" th:text="${tieFirstGoalNumberGuest}"></td>
+                        <td align="center" th:text="${tiePercentFirstGoalGuest}+'%'"></td>
+                        <td align="center" th:text="${sumFirstGoalNumberGuest}"></td>
+                        <td align="center" th:text="${sumPercentFirstGoalGuest}+'%'"></td>
+                    </tr>
                 </tbody>
             </table>
         </div>

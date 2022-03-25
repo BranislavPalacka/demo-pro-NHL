@@ -2,6 +2,7 @@ package com.example.demo.repositories;
 
 import com.example.demo.Services.GameService;
 import com.example.demo.model.Game;
+import com.example.demo.model.Goal;
 import com.example.demo.model.Player;
 import com.example.demo.model.Team;
 import com.opencsv.CSVParser;
@@ -164,4 +165,25 @@ public class TeamRepository {
                 "AND tretina3sazka =1))", Game.class).getResultList().size();
         return counter;
     }
+
+    public Integer getSumTeamGoalsInGamesByGameResult(Long teamId, Long season, String side, Integer gameResult){
+        List<Game> gameList = entityManager.createNativeQuery("SELECT * FROM game WHERE "+side+"="+teamId+" AND season="+season+" AND vysledek_sazka="+gameResult,Game.class).getResultList();
+        int counter =0;
+        for (Game game : gameList) {
+            counter += entityManager.createNativeQuery("SELECT * FROM goal WHERE game="+game.getId()+" AND team="+teamId,Goal.class).getResultList().size();
+        }
+        return counter;
+    }
+    public Integer getSumTeamFirstGoalsInGamesByGameResult(Long teamId, Long season, String side, Integer gameResult){
+        List<Game> gameList = entityManager.createNativeQuery("SELECT * FROM game WHERE "+side+"="+teamId+" AND season="+season+" AND vysledek_sazka="+gameResult,Game.class).getResultList();
+        Goal goal = new Goal();
+        int counter =0;
+
+        for (Game game : gameList) {
+             goal = (Goal) entityManager.createNativeQuery("SELECT * FROM goal WHERE game="+game.getId()+" ORDER BY minute LIMIT 1",Goal.class).getSingleResult();
+             if (goal.getTeam().intValue() == teamId.intValue()) counter++;
+        }
+        return counter;
+    }
+
 }

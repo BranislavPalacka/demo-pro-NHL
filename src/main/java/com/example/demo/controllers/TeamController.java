@@ -242,6 +242,7 @@ public class TeamController {
         model.addAttribute("tieLostNumber",tieLostNumber);
         model.addAttribute("tieLostPercent",tieLostPercent);
 
+        // TAB Tretiny
         int winsNumber1Period = teamService.get1PeriodWinsCount(teamId,season.longValue(),"home")
                 +teamService.get1PeriodWinsCount(teamId,season.longValue(),"guest");
         int winsPercent1Period = winsNumber1Period*100/gamesCount;
@@ -273,6 +274,120 @@ public class TeamController {
         model.addAttribute("winsPercentGuest1Period",winsPercentGuest1Period);
         model.addAttribute("winsNumberGuest2Periods",winsNumberGuest2Periods);
         model.addAttribute("winsPercentGuest2Periods",winsPercentGuest2Periods);
+
+        // TAB GOLY
+        int winsGoalHomeNumber = teamService.getSumTeamGoalsInGamesByGameResult(teamId,season.longValue(),"home",1);
+        String winsGoalHomeAverage = String.format("%.2f",winsGoalHomeNumber/(double)winsNumberHome);
+        int lostGoalHomeNumber = teamService.getSumTeamGoalsInGamesByGameResult(teamId,season.longValue(),"home",2);
+        String lostGoalHomeAverage = String.format("%.2f",lostGoalHomeNumber/(double)lostNumberHome);
+        int tieGoalHomeNumber = teamService.getSumTeamGoalsInGamesByGameResult(teamId,season.longValue(),"home",10)+
+                teamService.getSumTeamGoalsInGamesByGameResult(teamId,season.longValue(),"home",20);
+        String tieGoalHomeAverage = String.format("%.2f",tieGoalHomeNumber/(double)tieNumberHome);
+        int sumGoalHomeNumber = winsGoalHomeNumber+lostGoalHomeNumber+tieGoalHomeNumber;
+        String sumGoalHomeAverage = String.format("%.2f",sumGoalHomeNumber/(double)(gamesCountHalf));
+
+        model.addAttribute("winsGoalHomeNumber",winsGoalHomeNumber);
+        model.addAttribute("winsGoalHomeAverage",winsGoalHomeAverage);
+        model.addAttribute("lostGoalHomeNumber",lostGoalHomeNumber);
+        model.addAttribute("lostGoalHomeAverage",lostGoalHomeAverage);
+        model.addAttribute("tieGoalHomeNumber",tieGoalHomeNumber);
+        model.addAttribute("tieGoalHomeAverage",tieGoalHomeAverage);
+        model.addAttribute("sumGoalHomeNumber",sumGoalHomeNumber);
+        model.addAttribute("sumGoalHomeAverage",sumGoalHomeAverage);
+
+        int winsGoalGuestNumber = teamService.getSumTeamGoalsInGamesByGameResult(teamId,season.longValue(),"guest",2);
+        String winsGoalGuestAverage = String.format("%.2f",winsGoalGuestNumber/(double)winsNumberGuest);
+        int lostGoalGuestNumber = teamService.getSumTeamGoalsInGamesByGameResult(teamId,season.longValue(),"guest",1);
+        String lostGoalGuestAverage = String.format("%.2f",lostGoalGuestNumber/(double)lostNumberGuest);
+        int tieGoalGuestNumber = teamService.getSumTeamGoalsInGamesByGameResult(teamId,season.longValue(),"guest",10)+
+                teamService.getSumTeamGoalsInGamesByGameResult(teamId,season.longValue(),"guest",20);
+        String tieGoalGuestAverage = String.format("%.2f",tieGoalGuestNumber/(double)tieNumberGuest);
+        int sumGoalGuestNumber = winsGoalGuestNumber+lostGoalGuestNumber+tieGoalGuestNumber;
+        String sumGoalGuestAverage = String.format("%.2f",sumGoalGuestNumber/(double)(gamesCountHalf));
+
+        model.addAttribute("winsGoalGuestNumber",winsGoalGuestNumber);
+        model.addAttribute("winsGoalGuestAverage",winsGoalGuestAverage);
+        model.addAttribute("lostGoalGuestNumber",lostGoalGuestNumber);
+        model.addAttribute("lostGoalGuestAverage",lostGoalGuestAverage);
+        model.addAttribute("tieGoalGuestNumber",tieGoalGuestNumber);
+        model.addAttribute("tieGoalGuestAverage",tieGoalGuestAverage);
+        model.addAttribute("sumGoalGuestNumber",sumGoalGuestNumber);
+        model.addAttribute("sumGoalGuestAverage",sumGoalGuestAverage);
+
+        int winsGoalNumber = winsGoalHomeNumber+winsGoalGuestNumber;
+        String winsGoalAverage = String.format("%.2f",winsGoalNumber/(double)winsNumber);
+        int lostGoalNumber = lostGoalHomeNumber+lostGoalGuestNumber;
+        String lostGoalAverage = String.format("%.2f",lostGoalNumber/(double)lostNumber);
+        int tieGoalNumber = tieGoalHomeNumber+tieGoalGuestNumber;
+        String tieGoalAverage = String.format("%.2f",tieGoalNumber/(double)tieNumber);
+        int sumGoalNumber = winsGoalNumber+lostGoalNumber+tieGoalNumber;
+        String sumGoalAverage = String.format("%.2f",sumGoalNumber/(double)(gamesCount));
+
+        model.addAttribute("winsGoalNumber",winsGoalNumber);
+        model.addAttribute("winsGoalAverage",winsGoalAverage);
+        model.addAttribute("lostGoalNumber",lostGoalNumber);
+        model.addAttribute("lostGoalAverage",lostGoalAverage);
+        model.addAttribute("tieGoalNumber",tieGoalNumber);
+        model.addAttribute("tieGoalAverage",tieGoalAverage);
+        model.addAttribute("sumGoalNumber",sumGoalNumber);
+        model.addAttribute("sumGoalAverage",sumGoalAverage);
+
+        // TAB PRVNI GOL
+        int winsFirstGoalNumberHome = teamService.getSumTeamFirstGoalsInGamesByGameResult(teamId,season.longValue(),"home",1);
+        int winsPercentFirstGoalHome = winsFirstGoalNumberHome*100/winsNumberHome;
+        int lostFirstGoalNumberHome = teamService.getSumTeamFirstGoalsInGamesByGameResult(teamId,season.longValue(),"home",2);
+        int lostPercentFirstGoalHome = lostFirstGoalNumberHome*100/lostNumberHome;
+        int tieFirstGoalNumberHome = teamService.getSumTeamFirstGoalsInGamesByGameResult(teamId,season.longValue(),"home",10)+
+                teamService.getSumTeamFirstGoalsInGamesByGameResult(teamId,season.longValue(),"home",20);
+        int tiePercentFirstGoalHome = tieFirstGoalNumberHome*100/tieNumberHome;
+        int sumFirstGoalNumberHome = winsFirstGoalNumberHome+lostFirstGoalNumberHome+tieFirstGoalNumberHome;
+        int sumPercentFirstGoalHome = sumFirstGoalNumberHome*100/gamesCountHalf;
+
+        model.addAttribute("winsFirstGoalNumberHome",winsFirstGoalNumberHome);
+        model.addAttribute("winsPercentFirstGoalHome",winsPercentFirstGoalHome);
+        model.addAttribute("lostFirstGoalNumberHome",lostFirstGoalNumberHome);
+        model.addAttribute("lostPercentFirstGoalHome",lostPercentFirstGoalHome);
+        model.addAttribute("tieFirstGoalNumberHome",tieFirstGoalNumberHome);
+        model.addAttribute("tiePercentFirstGoalHome",tiePercentFirstGoalHome);
+        model.addAttribute("sumFirstGoalNumberHome",sumFirstGoalNumberHome);
+        model.addAttribute("sumPercentFirstGoalHome",sumPercentFirstGoalHome);
+
+        int winsFirstGoalNumberGuest = teamService.getSumTeamFirstGoalsInGamesByGameResult(teamId,season.longValue(),"guest",2);
+        int winsPercentFirstGoalGuest = winsFirstGoalNumberGuest*100/winsNumberGuest;
+        int lostFirstGoalNumberGuest = teamService.getSumTeamFirstGoalsInGamesByGameResult(teamId,season.longValue(),"guest",1);
+        int lostPercentFirstGoalGuest = lostFirstGoalNumberGuest*100/lostNumberGuest;
+        int tieFirstGoalNumberGuest = teamService.getSumTeamFirstGoalsInGamesByGameResult(teamId,season.longValue(),"guest",10)+
+                teamService.getSumTeamFirstGoalsInGamesByGameResult(teamId,season.longValue(),"guest",20);
+        int tiePercentFirstGoalGuest = tieFirstGoalNumberGuest*100/tieNumberGuest;
+        int sumFirstGoalNumberGuest = winsFirstGoalNumberGuest+lostFirstGoalNumberGuest+tieFirstGoalNumberGuest;
+        int sumPercentFirstGoalGuest = sumFirstGoalNumberGuest*100/gamesCountHalf;
+
+        model.addAttribute("winsFirstGoalNumberGuest",winsFirstGoalNumberGuest);
+        model.addAttribute("winsPercentFirstGoalGuest",winsPercentFirstGoalGuest);
+        model.addAttribute("lostFirstGoalNumberGuest",lostFirstGoalNumberGuest);
+        model.addAttribute("lostPercentFirstGoalGuest",lostPercentFirstGoalGuest);
+        model.addAttribute("tieFirstGoalNumberGuest",tieFirstGoalNumberGuest);
+        model.addAttribute("tiePercentFirstGoalGuest",tiePercentFirstGoalGuest);
+        model.addAttribute("sumFirstGoalNumberGuest",sumFirstGoalNumberGuest);
+        model.addAttribute("sumPercentFirstGoalGuest",sumPercentFirstGoalGuest);
+
+        int winsFirstGoalNumber = winsFirstGoalNumberHome+winsFirstGoalNumberGuest;
+        int winsPercentFirstGoal = winsFirstGoalNumber*100/winsNumber;
+        int lostFirstGoalNumber = lostFirstGoalNumberHome+lostFirstGoalNumberGuest;
+        int lostPercentFirstGoal = lostFirstGoalNumber*100/lostNumber;
+        int tieFirstGoalNumber = tieFirstGoalNumberHome+tieFirstGoalNumberGuest;
+        int tiePercentFirstGoal = tieFirstGoalNumber*100/tieNumber;
+        int sumFirstGoalNumber = winsFirstGoalNumber + lostFirstGoalNumber + tieFirstGoalNumber;
+        int sumPercentFirstGoal = sumFirstGoalNumber*100/gamesCount;
+
+        model.addAttribute("winsFirstGoalNumber",winsFirstGoalNumber);
+        model.addAttribute("winsPercentFirstGoal",winsPercentFirstGoal);
+        model.addAttribute("lostFirstGoalNumber",lostFirstGoalNumber);
+        model.addAttribute("lostPercentFirstGoal",lostPercentFirstGoal);
+        model.addAttribute("tieFirstGoalNumber",tieFirstGoalNumber);
+        model.addAttribute("tiePercentFirstGoal",tiePercentFirstGoal);
+        model.addAttribute("sumFirstGoalNumber",sumFirstGoalNumber);
+        model.addAttribute("sumPercentFirstGoal",sumPercentFirstGoal);
 
         return "team_detail";
     }

@@ -20,5 +20,7 @@ public interface TeamService {
     Integer teamGameResults (Long teamId, Integer season, int result, String side);
     Integer get1PeriodWinsCount (Long teamId, Long season, String side);
     Integer get2PeriodsWinsCount (Long teamId, Long season, String side);
+    Integer getSumTeamGoalsInGamesByGameResult(Long teamId, Long season, String side, Integer gameResult);
+    Integer getSumTeamFirstGoalsInGamesByGameResult(Long teamId, Long season, String side, Integer gameResult);
 
 }
