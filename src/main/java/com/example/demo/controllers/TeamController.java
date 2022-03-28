@@ -389,6 +389,43 @@ public class TeamController {
         model.addAttribute("sumFirstGoalNumber",sumFirstGoalNumber);
         model.addAttribute("sumPercentFirstGoal",sumPercentFirstGoal);
 
+        // TAB Rozdíl gólů
+        String winsGoalDifferenceAvgHome = String.format("%.2f",teamService.getGoalDifference(teamId,season.longValue(),"home",1)/(double)winsNumberHome);
+        String lostGoalDifferenceAvgHome = String.format("%.2f",teamService.getGoalDifference(teamId,season.longValue(),"home",2)/(double)lostNumberHome);
+        String tieGoalDifferenceAvgHome = "0";
+        String sumGoalDifferenceAvgHome = String.format("%.2f",(teamService.getGoalDifference(teamId,season.longValue(),"home",1)+
+                teamService.getGoalDifference(teamId,season.longValue(),"home",2))/(double)(winsNumberHome+lostNumberHome));
+
+        model.addAttribute("winsGoalDifferenceAvgHome",winsGoalDifferenceAvgHome);
+        model.addAttribute("lostGoalDifferenceAvgHome",lostGoalDifferenceAvgHome);
+        model.addAttribute("tieGoalDifferenceAvgHome",tieGoalDifferenceAvgHome);
+        model.addAttribute("sumGoalDifferenceAvgHome",sumGoalDifferenceAvgHome);
+
+        String winsGoalDifferenceAvgGuest = String.format("%.2f",teamService.getGoalDifference(teamId,season.longValue(),"guest",2)/(double)winsNumberGuest);
+        String lostGoalDifferenceAvgGuest = String.format("%.2f",teamService.getGoalDifference(teamId,season.longValue(),"guest",1)/(double)lostNumberGuest);
+        String tieGoalDifferenceAvgGuest = "0";
+        String sumGoalDifferenceAvgGuest = String.format("%.2f",(teamService.getGoalDifference(teamId,season.longValue(),"guest",2)+
+                teamService.getGoalDifference(teamId,season.longValue(),"guest",1))/(double)(winsNumberGuest+lostNumberGuest));
+
+        model.addAttribute("winsGoalDifferenceAvgGuest",winsGoalDifferenceAvgGuest);
+        model.addAttribute("lostGoalDifferenceAvgGuest",lostGoalDifferenceAvgGuest);
+        model.addAttribute("tieGoalDifferenceAvgGuest",tieGoalDifferenceAvgGuest);
+        model.addAttribute("sumGoalDifferenceAvgGuest",sumGoalDifferenceAvgGuest);
+
+        String winsGoalDifferenceAvg = String.format("%.2f",(teamService.getGoalDifference(teamId,season.longValue(),"guest",2)+
+                teamService.getGoalDifference(teamId,season.longValue(),"home",1))/(double)(winsNumberGuest+winsNumberHome));
+        String lostGoalDifferenceAvg = String.format("%.2f",(teamService.getGoalDifference(teamId,season.longValue(),"guest",1)+
+                teamService.getGoalDifference(teamId,season.longValue(),"home",2))/(double)(lostNumberGuest+lostNumberHome));
+        String tieGoalDifferenceAvg = "0";
+        String sumGoalDifferenceAvg = String.format("%.2f",(teamService.getGoalDifference(teamId,season.longValue(),"guest",2)+
+                        teamService.getGoalDifference(teamId,season.longValue(),"home",1)+teamService.getGoalDifference(teamId,season.longValue(),"guest",1)+
+                        teamService.getGoalDifference(teamId,season.longValue(),"home",2))/(double)(lostNumberGuest+lostNumberHome+winsNumberGuest+winsNumberHome));
+
+        model.addAttribute("winsGoalDifferenceAvg",winsGoalDifferenceAvg);
+        model.addAttribute("lostGoalDifferenceAvg",lostGoalDifferenceAvg);
+        model.addAttribute("tieGoalDifferenceAvg",tieGoalDifferenceAvg);
+        model.addAttribute("sumGoalDifferenceAvg",sumGoalDifferenceAvg);
+
         return "team_detail";
     }
 }

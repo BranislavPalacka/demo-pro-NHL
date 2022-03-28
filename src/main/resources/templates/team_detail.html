@@ -180,7 +180,7 @@
                     <th scope="col" colspan="2">Výhra</th>
                     <th scope="col" colspan="2">Prohra</th>
                     <th scope="col" colspan="2">Remíza</th>
-                    <th scope="col" colspan="2">Celekem</th>
+                    <th scope="col" colspan="2">Celkem</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -224,15 +224,15 @@
     <div><br></div>
     <div class="col-12 row align-items-start">
         <div class="col col-1"> </div>
-        <div class="col">
-            <table class="table table-hover col-5">
+        <div class="col-5">
+            <table class="table table-hover">
                 <thead class="h5">
                     <tr align="center" class="table-secondary">
                         <th scope="col">PRVNÍ GÓL</th>
                         <th scope="col" colspan="2">Výhra</th>
                         <th scope="col" colspan="2">Prohra</th>
                         <th scope="col" colspan="2">Remíza</th>
-                        <th scope="col" colspan="2">Celekem</th>
+                        <th scope="col" colspan="2">Celkem</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -268,6 +268,43 @@
                         <td align="center" th:text="${tiePercentFirstGoalGuest}+'%'"></td>
                         <td align="center" th:text="${sumFirstGoalNumberGuest}"></td>
                         <td align="center" th:text="${sumPercentFirstGoalGuest}+'%'"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-1"></div>
+        <div class="col-3">
+            <table class="table table-hover">
+                <thead class="h5">
+                    <tr align="center" class="table-secondary">
+                        <th scope="col">ROZDÍL GÓLŮ</th>
+                        <th scope="col">Výhra</th>
+                        <th scope="col">Prohra</th>
+                        <th scope="col">Remíza</th>
+                        <th scope="col">Celkem</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row" align="left" class="table-light">CELKEM</th>
+                        <td align="center" th:text="${winsGoalDifferenceAvg}"></td>
+                        <td align="center" th:text="${lostGoalDifferenceAvg}"></td>
+                        <td align="center" th:text="${tieGoalDifferenceAvg}"></td>
+                        <td align="center" th:text="${sumGoalDifferenceAvg}"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" align="left" class="table-light">DOMA</th>
+                        <td align="center" th:text="${winsGoalDifferenceAvgHome}"></td>
+                        <td align="center" th:text="${lostGoalDifferenceAvgHome}"></td>
+                        <td align="center" th:text="${tieGoalDifferenceAvgHome}"></td>
+                        <td align="center" th:text="${sumGoalDifferenceAvgHome}"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" align="left" class="table-light">VENKU</th>
+                        <td align="center" th:text="${winsGoalDifferenceAvgGuest}"></td>
+                        <td align="center" th:text="${lostGoalDifferenceAvgGuest}"></td>
+                        <td align="center" th:text="${tieGoalDifferenceAvgGuest}"></td>
+                        <td align="center" th:text="${sumGoalDifferenceAvgGuest}"></td>
                     </tr>
                 </tbody>
             </table>

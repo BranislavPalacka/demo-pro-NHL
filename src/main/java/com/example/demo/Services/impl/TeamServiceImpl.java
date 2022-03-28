@@ -108,5 +108,10 @@ public class TeamServiceImpl implements TeamService {
         return teamRepository.getSumTeamFirstGoalsInGamesByGameResult(teamId,season,side,gameResult);
     }
 
+    @Override
+    public Integer getGoalDifference(Long teamId, Long season, String side, Integer gameResult) {
+        return teamRepository.getGoalDifference(teamId,season,side,gameResult);
+    }
+
 
 }

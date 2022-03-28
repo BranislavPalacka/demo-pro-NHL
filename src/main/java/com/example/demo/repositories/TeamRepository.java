@@ -186,4 +186,23 @@ public class TeamRepository {
         return counter;
     }
 
+    public Integer getGoalDifference(Long teamId, Long season, String side, Integer gameResult){
+        List<Game> gameList = entityManager.createNativeQuery("SELECT * FROM game WHERE "+side+"="+teamId+" AND season="+season+" AND vysledek_sazka="+gameResult,Game.class).getResultList();
+        int counterHome = 0;
+        int counterGuest = 0;
+        int position = 0;
+        int difference = 0;
+        String result = "";
+
+        for (Game game : gameList){
+            result = game.getVysledek();
+            position = result.indexOf(":");
+            counterHome = Integer.parseInt(result.substring(0,position));
+            counterGuest = Integer.parseInt(result.substring(position+1));
+            difference += Math.abs(counterHome-counterGuest);
+        }
+        return difference;
+    }
+
+
 }
